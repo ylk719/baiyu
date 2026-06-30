@@ -3,13 +3,16 @@
     padding: 0;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 html, body {
     width: 100%;
-    height: 100%;
     height: 100vh;
     height: 100dvh;
+    height: 100svh;
     overflow: hidden;
     overflow-y: hidden;
     font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -20,6 +23,8 @@ html, body {
     left: 0;
     right: 0;
     bottom: 0;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 @supports (height: 100dvh) {
@@ -28,10 +33,17 @@ html, body {
     }
 }
 
+@supports (height: 100svh) {
+    html, body {
+        height: 100svh;
+    }
+}
+
 body {
     background: #ffffff;
     min-height: 100vh;
     min-height: 100dvh;
+    min-height: 100svh;
 }
 
 .phone-container {
@@ -40,11 +52,14 @@ body {
     max-width: 100vw;
     margin: 0 auto;
     background: #ffffff;
-    height: 100%;
     height: 100vh;
     height: 100dvh;
+    height: 100svh;
     overflow: hidden;
-    overflow-y: hidden;
+    padding-top: env(safe-area-inset-top);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 @supports (height: 100dvh) {
@@ -53,12 +68,18 @@ body {
     }
 }
 
+@supports (height: 100svh) {
+    .phone-container {
+        height: 100svh;
+    }
+}
+
 .pages-wrapper {
     display: flex;
     width: 300%;
+    height: 100%;
     transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     touch-action: pan-x;
-    height: 100%;
 }
 
 .page {
@@ -67,8 +88,8 @@ body {
     display: flex;
     flex-direction: column;
     padding: 2.5vh 5vw 0;
-    padding-top: calc(2.5vh + env(safe-area-inset-top));
-    padding-bottom: calc(18vh + env(safe-area-inset-bottom));
+    padding-top: 2.5vh;
+    padding-bottom: 22vh;
     position: relative;
     height: 100%;
     overflow: hidden;
@@ -79,12 +100,41 @@ body {
     height: 0;
 }
 
+/* ========== 分页圆点 ========== */
+
+.page-dots {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: calc(14vh + env(safe-area-inset-bottom));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5vh;
+    z-index: 40;
+    pointer-events: none;
+}
+
+.page-dots .dot {
+    width: 1vh;
+    height: 1vh;
+    border-radius: 50%;
+    background: #d0d0d0;
+    transition: all 0.3s ease;
+}
+
+.page-dots .dot.active {
+    width: 3vh;
+    border-radius: 0.5vh;
+    background: #333;
+}
+
 /* ========== 第一页样式 ========== */
 
 .top-card {
     background: #ffffff;
     border-radius: 6vw;
-    box-shadow: 0 2vh 8vw rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1vh 6vw rgba(0, 0, 0, 0.05);
     overflow: visible;
     position: relative;
     flex-shrink: 0;
@@ -110,7 +160,7 @@ body {
     width: 22vw;
     height: 22vw;
     border-radius: 50%;
-    background: #f5f5f5;
+    background: #f8f8f8;
     border: 1.5vw solid #ffffff;
     display: flex;
     align-items: center;
@@ -118,7 +168,7 @@ body {
     font-size: 3.5vw;
     color: #aaa;
     font-weight: 500;
-    box-shadow: 0 2vh 6vw rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1.5vh 5vw rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: transform 0.2s;
     position: relative;
@@ -165,31 +215,12 @@ body {
     padding: 0 1vw;
 }
 
-.middle-section > .icon-grid-2x2 {
-    align-content: start;
-    gap: 3vh;
-    padding-top: 1vh;
+.middle-section > .icon-oval-container {
     flex: 1;
-    justify-items: center;
-}
-
-.middle-section > .icon-grid-2x2 .icon-btn {
-    width: 14vw;
-    height: 14vw;
-    border-radius: 4vw;
-}
-
-.middle-section > .icon-grid-2x2 .icon-btn svg {
-    width: 6vw;
-    height: 6vw;
-}
-
-.middle-section > .icon-grid-2x2 .app-icon {
-    gap: 1vh;
-}
-
-.middle-section > .icon-grid-2x2 .app-icon span {
-    font-size: 3.2vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2vh;
 }
 
 .polaroid-card {
@@ -197,7 +228,7 @@ body {
     background: #ffffff;
     border-radius: 1.5vw;
     padding: 2.5vw 2.5vw 3.5vw;
-    box-shadow: 0 2vh 6vw rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1.5vh 5vw rgba(0, 0, 0, 0.07);
     transform: rotate(-3deg);
     position: relative;
     max-width: 45vw;
@@ -210,14 +241,14 @@ body {
     transform: translateX(-50%) rotate(2deg);
     width: 18vw;
     height: 5vw;
-    background: rgba(230, 230, 230, 0.8);
+    background: rgba(230, 230, 230, 0.7);
     border-radius: 0.5vw;
 }
 
 .polaroid-image {
     width: 100%;
     aspect-ratio: 1;
-    background: #ebebeb;
+    background: #f5f5f5;
     border-radius: 1vw;
     overflow: hidden;
     position: relative;
@@ -268,6 +299,22 @@ body {
     font-weight: 500;
 }
 
+/* ========== 椭圆按钮容器 ========== */
+
+.icon-oval-container {
+    background: #ffffff;
+    border-radius: 50vh;
+    padding: 3vh 4vw;
+    box-shadow: 0 1vh 5vw rgba(0, 0, 0, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-oval-container .icon-grid-2x2 {
+    gap: 2.5vh;
+}
+
 .icon-grid-2x2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -291,7 +338,7 @@ body {
     height: 13.5vw;
     border-radius: 4vw;
     background: #ffffff;
-    box-shadow: 0 1vh 4vw rgba(0, 0, 0, 0.06);
+    box-shadow: 0 0.8vh 3vw rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -329,10 +376,10 @@ body {
 /* ========== 第二页样式 ========== */
 
 .game-card {
-    background: #f5f5f7;
+    background: #ffffff;
     border-radius: 9vw;
     padding: 2.5vw 3vw 4vw;
-    box-shadow: 0 3vh 10vw rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2vh 7vw rgba(0, 0, 0, 0.06);
     position: relative;
     flex-shrink: 0;
 }
@@ -367,9 +414,9 @@ body {
 
 .dpad-up, .dpad-down, .dpad-left, .dpad-right, .dpad-center {
     position: absolute;
-    background: #e8e8ea;
+    background: #f0f0f2;
     border-radius: 1.3vw;
-    box-shadow: 0 0.3vh 1vw rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0.2vh 0.8vw rgba(0, 0, 0, 0.06);
 }
 
 .dpad-up {
@@ -422,19 +469,19 @@ body {
 .dots-grid div {
     width: 1.3vw;
     height: 1.3vw;
-    background: #c0c0c4;
+    background: #c8c8cc;
     border-radius: 50%;
 }
 
 .joystick {
     width: 9.5vw;
     height: 9.5vw;
-    background: #e8e8ea;
+    background: #f0f0f2;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0.6vh 1.5vw rgba(0, 0, 0, 0.12), inset 0 0.1vh 0.6vw rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0.5vh 1.2vw rgba(0, 0, 0, 0.08), inset 0 0.1vh 0.5vw rgba(255, 255, 255, 0.8);
 }
 
 .joystick-inner {
@@ -442,7 +489,7 @@ body {
     height: 4.5vw;
     background: #ffb6c1;
     border-radius: 50%;
-    box-shadow: inset 0 0.6vh 1vw rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 0.5vh 0.8vw rgba(255, 255, 255, 0.5);
 }
 
 .game-screen {
@@ -450,14 +497,14 @@ body {
     aspect-ratio: 16/10;
     background: #1a1a1e;
     border-radius: 3vw;
-    border: 1.3vw solid #e0e0e3;
+    border: 1.3vw solid #f0f0f2;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 1vh 2.5vw rgba(0, 0, 0, 0.18);
+    box-shadow: 0 0.8vh 2vw rgba(0, 0, 0, 0.15);
 }
 
 .game-screen img {
@@ -482,9 +529,9 @@ body {
 .action-btn {
     width: 5vw;
     height: 5vw;
-    background: #e8e8ea;
+    background: #f0f0f2;
     border-radius: 50%;
-    box-shadow: 0 0.6vh 1vw rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0.5vh 0.8vw rgba(0, 0, 0, 0.06);
 }
 
 .page2-content {
@@ -499,27 +546,24 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 1.5vh;
+    gap: 2.5vh;
     min-height: 0;
-}
-
-.page2-col-right {
-    gap: 1.8vh;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .big-widget {
     width: 100%;
-    aspect-ratio: 1;
-    background: #f5f5f7;
-    border-radius: 6vw;
+    aspect-ratio: 4/3;
+    background: #ffffff;
+    border-radius: 5vw;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 1.5vh 5vw rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1vh 4vw rgba(0, 0, 0, 0.04);
     overflow: hidden;
     position: relative;
+    flex-shrink: 0;
 }
 
 .big-widget img {
@@ -556,7 +600,7 @@ body {
     background: #ffffff;
     padding: 2.5vw 2.5vw 7vw;
     border-radius: 1vw;
-    box-shadow: 0 1.5vh 6vw rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1.2vh 5vw rgba(0, 0, 0, 0.08);
     cursor: pointer;
 }
 
@@ -643,26 +687,26 @@ body {
 /* ========== 底部导航栏 ========== */
 
 .bottom-nav {
-    position: absolute;
-    bottom: calc(0.5vh + env(safe-area-inset-bottom));
-    left: 5vw;
-    right: 5vw;
-    height: 11vh;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 13vh;
     padding-bottom: env(safe-area-inset-bottom);
-    background: #f5f5f7;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    padding-left: calc(5vw + env(safe-area-inset-left));
+    padding-right: calc(5vw + env(safe-area-inset-right));
+    background: #ffffff;
     display: flex;
     justify-content: space-around;
-    align-items: center;
-    box-shadow: 0 1vh 5vw rgba(0, 0, 0, 0.06);
+    align-items: flex-start;
+    padding-top: 2vh;
     z-index: 50;
-    border-radius: 10vw;
+    box-shadow: 0 -0.5vh 3vw rgba(0, 0, 0, 0.04);
 }
 
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
     .bottom-nav {
-        height: calc(10vh + env(safe-area-inset-bottom));
+        height: calc(11vh + env(safe-area-inset-bottom));
         padding-bottom: env(safe-area-inset-bottom);
     }
 }
@@ -688,7 +732,7 @@ body {
     height: 12vw;
     border-radius: 3.5vw;
     background: #ffffff;
-    box-shadow: 0 0.8vh 2.5vw rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0.6vh 2vw rgba(0, 0, 0, 0.04);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -704,40 +748,10 @@ body {
     font-weight: 500;
 }
 
-/* 底部安全区 */
-.safe-area-bottom {
-    display: none;
-}
-
-.home-indicator {
-    display: none;
-}
-
-/* ========== 移动端全屏适配 ========== */
-
-.phone-container {
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
-}
-
-.page {
-    padding-left: calc(5vw + env(safe-area-inset-left));
-    padding-right: calc(5vw + env(safe-area-inset-right));
-}
-
-.bottom-nav {
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
-}
+/* ========== 移动端全屏适配补充 ========== */
 
 .pages-wrapper {
     touch-action: pan-x;
-}
-
-* {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select: none;
 }
 
 /* 横屏安全区适配 */
@@ -760,30 +774,30 @@ body {
         left: 50%;
         transform: translate(-50%, -50%);
         border-radius: 40px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
         overflow: hidden;
+        padding: 0;
     }
-    
+
     html, body {
         position: relative;
-        background: #f0f0f0;
+        background: #f5f5f5;
     }
-    
+
     .page {
         padding: 23px 21.5px 0;
-        padding-top: calc(23px + env(safe-area-inset-top));
-        padding-bottom: calc(168px + env(safe-area-inset-bottom));
+        padding-bottom: 205px;
     }
-    
+
     .top-card {
         border-radius: 25.8px;
     }
-    
+
     .card-image {
         height: 168px;
         border-radius: 25.8px 25.8px 0 0;
     }
-    
+
     .change-btn {
         margin: -46.6px auto 23.3px;
         width: 94.6px;
@@ -791,287 +805,305 @@ body {
         border-width: 6.45px;
         font-size: 15px;
     }
-    
+
     .card-content {
         padding: 0 25.8px 14px;
     }
-    
+
     .card-title {
         font-size: 16.3px;
         margin-bottom: 7.5px;
         letter-spacing: 2.15px;
     }
-    
+
     .card-subtitle {
         font-size: 13.8px;
         margin-bottom: 7.5px;
         letter-spacing: 0.86px;
     }
-    
+
     .card-desc {
         font-size: 13.8px;
         letter-spacing: 2.15px;
     }
-    
+
     .middle-section {
         gap: 21.5px;
         margin-top: 32.6px;
         padding: 0 4.3px;
     }
-    
-    .middle-section > .icon-grid-2x2 {
-        gap: 28px;
-        padding-top: 9.3px;
+
+    .middle-section > .icon-oval-container {
+        padding-top: 18.6px;
     }
-    
-    .middle-section > .icon-grid-2x2 .icon-btn {
+
+    .icon-oval-container {
+        border-radius: 200px;
+        padding: 28px 25px;
+    }
+
+    .middle-section > .icon-oval-container .icon-grid-2x2 {
+        gap: 23px;
+    }
+
+    .middle-section > .icon-oval-container .icon-grid-2x2 .icon-btn {
         width: 60.2px;
         height: 60.2px;
         border-radius: 17.2px;
     }
-    
-    .middle-section > .icon-grid-2x2 .icon-btn svg {
+
+    .middle-section > .icon-oval-container .icon-grid-2x2 .icon-btn svg {
         width: 25.8px;
         height: 25.8px;
     }
-    
-    .middle-section > .icon-grid-2x2 .app-icon {
+
+    .middle-section > .icon-oval-container .icon-grid-2x2 .app-icon {
         gap: 9.3px;
     }
-    
-    .middle-section > .icon-grid-2x2 .app-icon span {
+
+    .middle-section > .icon-oval-container .icon-grid-2x2 .app-icon span {
         font-size: 13.8px;
     }
-    
+
     .polaroid-card {
         border-radius: 6.45px;
         padding: 10.8px 10.8px 15px;
         max-width: 193.5px;
     }
-    
+
     .tape {
         top: -8.6px;
         width: 77.4px;
         height: 21.5px;
         border-radius: 2.15px;
     }
-    
+
     .polaroid-text {
         font-size: 12.9px;
         margin-top: 14px;
     }
-    
+
     .polaroid-title {
         font-size: 16.3px;
         margin-top: 7.4px;
     }
-    
+
     .icon-grid-2x2 {
         gap: 28px;
     }
-    
+
     .icon-grid-2x2.small {
         gap: 23.3px;
     }
-    
+
     .app-icon {
         gap: 11.2px;
     }
-    
+
     .icon-btn {
         width: 58px;
         height: 58px;
         border-radius: 17.2px;
     }
-    
+
     .icon-btn svg {
         width: 25.8px;
         height: 25.8px;
     }
-    
+
     .icon-grid-2x2.small .icon-btn {
         width: 51.6px;
         height: 51.6px;
         border-radius: 15px;
     }
-    
+
     .icon-grid-2x2.small .icon-btn svg {
         width: 21.5px;
         height: 21.5px;
     }
-    
+
     .app-icon span {
         font-size: 15px;
     }
-    
+
+    .page-dots {
+        bottom: 130px;
+        gap: 14px;
+    }
+
+    .page-dots .dot {
+        width: 9px;
+        height: 9px;
+    }
+
+    .page-dots .dot.active {
+        width: 28px;
+        border-radius: 4.5px;
+    }
+
     .game-card {
         border-radius: 38.7px;
         padding: 10.8px 12.9px 17.2px;
     }
-    
+
     .game-top-bar {
         height: 6.5px;
         border-radius: 3.4px;
         margin: 0 auto 11.2px;
     }
-    
+
     .game-body {
         gap: 8.6px;
     }
-    
+
     .game-left, .game-right {
         gap: 16.8px;
     }
-    
+
     .d-pad {
         width: 64.5px;
         height: 64.5px;
     }
-    
+
     .dpad-up, .dpad-down, .dpad-left, .dpad-right, .dpad-center {
         width: 21.5px;
         height: 21.5px;
         border-radius: 5.6px;
     }
-    
+
     .dots-grid {
         gap: 3.4px;
         padding: 5.6px;
     }
-    
+
     .dots-grid div {
         width: 5.6px;
         height: 5.6px;
     }
-    
+
     .joystick {
         width: 40.9px;
         height: 40.9px;
     }
-    
+
     .joystick-inner {
         width: 19.4px;
         height: 19.4px;
     }
-    
+
     .game-screen {
         border-radius: 12.9px;
         border-width: 5.6px;
     }
-    
+
     .game-screen .upload-hint {
         font-size: 13.8px;
     }
-    
+
     .action-buttons {
         gap: 6.45px;
     }
-    
+
     .action-btn {
         width: 21.5px;
         height: 21.5px;
     }
-    
+
     .page2-content {
         gap: 21.5px;
         margin-top: 32.6px;
     }
-    
+
     .page2-col-left, .page2-col-right {
-        gap: 14px;
+        gap: 23px;
     }
-    
-    .page2-col-right {
-        gap: 16.8px;
-    }
-    
+
     .big-widget {
-        border-radius: 25.8px;
+        border-radius: 21.5px;
     }
-    
+
     .upload-hint {
         font-size: 17.2px;
     }
-    
-    .widget-label {
-        font-size: 23.7px;
-        margin-top: 9.3px;
-        margin-bottom: 27.9px;
-    }
-    
+
     .photo-stack {
         height: 373px;
     }
-    
+
     .floating-photo {
         padding: 10.8px 10.8px 30.1px;
         border-radius: 4.3px;
     }
-    
+
     .photo-inner {
         border-radius: 2.6px;
     }
-    
+
     .photo-2 {
         top: 14px;
     }
-    
+
     .photo-caption {
         font-size: 15px;
         margin-top: 18.6px;
         bottom: 18.6px;
     }
-    
+
     .page3-icons {
         gap: 30.1px;
         margin-top: 46.6px;
         padding-left: 21.5px;
     }
-    
+
     .app-icon.large .icon-btn {
         width: 68.8px;
         height: 68.8px;
         border-radius: 21.5px;
     }
-    
+
     .app-icon.large .icon-btn svg {
         width: 30.1px;
         height: 30.1px;
     }
-    
+
     .app-icon.large span {
         font-size: 16.3px;
     }
-    
+
     .bottom-nav {
-        bottom: calc(5px + env(safe-area-inset-bottom));
-        left: 21.5px;
-        right: 21.5px;
-        height: 102.5px;
-        border-radius: 43px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 121px;
+        padding-top: 18.6px;
+        padding-left: 21.5px;
+        padding-right: 21.5px;
+        padding-bottom: 0;
+        border-radius: 0 0 40px 40px;
     }
-    
+
     @supports (padding-bottom: env(safe-area-inset-bottom)) {
         .bottom-nav {
-            height: calc(93px + env(safe-area-inset-bottom));
+            height: 121px;
         }
     }
-    
+
     .nav-item {
         gap: 4.7px;
     }
-    
+
     .nav-icon {
         width: 51.6px;
         height: 51.6px;
         border-radius: 15px;
     }
-    
+
     .nav-icon svg {
         width: 25.8px;
         height: 25.8px;
     }
-    
+
     .nav-item span {
         font-size: 12.9px;
     }

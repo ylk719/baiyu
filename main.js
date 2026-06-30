@@ -3,6 +3,7 @@
 
     const pagesWrapper = document.getElementById('pagesWrapper');
     const fileInput = document.getElementById('fileInput');
+    const pageDots = document.querySelectorAll('#pageDots .dot');
 
     let currentPage = 0;
     const totalPages = 3;
@@ -21,6 +22,18 @@
         if (index > totalPages - 1) index = totalPages - 1;
         currentPage = index;
         pagesWrapper.style.transform = 'translateX(-' + (currentPage * 33.333) + '%)';
+        updatePageDots();
+    }
+
+    function updatePageDots() {
+        if (!pageDots || pageDots.length === 0) return;
+        pageDots.forEach(function (dot, i) {
+            if (i === currentPage) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
     }
 
     function handleTouchStart(e) {
@@ -232,15 +245,30 @@
         });
     }
 
+    function preventDefaultGestures() {
+        document.addEventListener('gesturestart', function (e) {
+            e.preventDefault();
+        });
+        document.addEventListener('dblclick', function (e) {
+            e.preventDefault();
+        }, { passive: false });
+    }
+
     function init() {
         loadSavedImages();
         updateTime();
         setInterval(updateTime, 30000);
+        updatePageDots();
+        preventDefaultGestures();
 
         var pages = document.querySelectorAll('.page');
         pages.forEach(function(page) {
             page.scrollTop = 0;
         });
+
+        if (window.scrollTo) {
+            window.scrollTo(0, 1);
+        }
     }
 
     init();
