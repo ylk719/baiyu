@@ -172,13 +172,38 @@
 
     const changeBtn = document.querySelector('.change-btn');
     if (changeBtn) {
+        let lastClickTime = 0;
         changeBtn.addEventListener('click', function (e) {
             e.stopPropagation();
+            const now = Date.now();
+            if (now - lastClickTime < 300) {
+                resetAllImages();
+                return;
+            }
+            lastClickTime = now;
             const uploadId = changeBtn.getAttribute('data-upload-id');
             currentUploadTarget = uploadId;
             fileInput.value = '';
             fileInput.click();
         });
+    }
+
+    function resetAllImages() {
+        try {
+            const keysToRemove = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.indexOf('upload_') === 0) {
+                    keysToRemove.push(key);
+                }
+            }
+            keysToRemove.forEach(function (key) {
+                localStorage.removeItem(key);
+            });
+        } catch (err) {
+            console.warn('无法清除localStorage', err);
+        }
+        location.reload();
     }
 
     fileInput.addEventListener('change', function (e) {
@@ -254,7 +279,31 @@
         }, { passive: false });
     }
 
+    function checkUrlReset() {
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('reset') === '1') {
+                const keysToRemove = [];
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key && key.indexOf('upload_') === 0) {
+                        keysToRemove.push(key);
+                    }
+                }
+                keysToRemove.forEach(function (key) {
+                    localStorage.removeItem(key);
+                });
+                urlParams.delete('reset');
+                const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '');
+                window.history.replaceState({}, document.title, newUrl);
+            }
+        } catch (err) {
+            console.warn('URL重置失败', err);
+        }
+    }
+
     function init() {
+        checkUrlReset();
         loadSavedImages();
         updateTime();
         setInterval(updateTime, 30000);

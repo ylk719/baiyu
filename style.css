@@ -138,49 +138,60 @@ body {
     overflow: visible;
     position: relative;
     flex-shrink: 0;
+    margin: 0 3vw;
+    max-height: 30vh;
 }
 
 .card-image {
     width: 100%;
-    height: 18vh;
+    height: 14vh;
+    max-height: 14vh;
+    min-height: 14vh;
     position: relative;
     border-radius: 6vw 6vw 0 0;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 .card-image img {
     width: 100%;
     height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 100%;
+    min-height: 100%;
     object-fit: cover;
-    border-radius: 6vw 6vw 0 0;
+    display: block;
 }
 
 .change-btn {
-    margin: -5vh auto 2.5vh;
-    width: 22vw;
-    height: 22vw;
+    position: absolute;
+    top: calc(14vh - 5vw);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12vw;
+    height: 12vw;
     border-radius: 50%;
-    background: #f8f8f8;
-    border: 1.5vw solid #ffffff;
+    background: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3.5vw;
-    color: #aaa;
+    text-align: center;
+    font-size: 2.8vw;
+    color: #888;
     font-weight: 500;
-    box-shadow: 0 1.5vh 5vw rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1vh 3vw rgba(0, 0, 0, 0.12);
     cursor: pointer;
     transition: transform 0.2s;
-    position: relative;
-    z-index: 20;
+    z-index: 30;
 }
 
 .change-btn:active {
-    transform: scale(0.95);
+    transform: translateX(-50%) scale(0.95);
 }
 
 .card-content {
-    padding: 0 6vw 1.5vh;
+    padding: 4.5vh 6vw 3vh;
     text-align: center;
 }
 
@@ -688,39 +699,37 @@ body {
 
 .bottom-nav {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 13vh;
-    padding-bottom: env(safe-area-inset-bottom);
-    padding-left: calc(5vw + env(safe-area-inset-left));
-    padding-right: calc(5vw + env(safe-area-inset-right));
+    bottom: calc(2vh + env(safe-area-inset-bottom));
+    left: 5vw;
+    right: 5vw;
+    height: 12vh;
     background: #ffffff;
+    border-radius: 50vh;
     display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    padding-top: 2vh;
+    justify-content: center;
+    align-items: center;
     z-index: 50;
-    box-shadow: 0 -0.5vh 3vw rgba(0, 0, 0, 0.04);
+    box-shadow: 0 1vh 4vw rgba(0, 0, 0, 0.08);
+    padding: 0 3vw;
 }
 
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
+@supports (bottom: env(safe-area-inset-bottom)) {
     .bottom-nav {
-        height: calc(11vh + env(safe-area-inset-bottom));
-        padding-bottom: env(safe-area-inset-bottom);
+        bottom: calc(2vh + env(safe-area-inset-bottom));
     }
 }
 
 .nav-item {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.5vh;
+    gap: 0.8vh;
     cursor: pointer;
     color: #888;
     transition: color 0.2s;
-    flex: 1;
+    height: 100%;
 }
 
 .nav-item:active {
@@ -728,24 +737,24 @@ body {
 }
 
 .nav-icon {
-    width: 12vw;
-    height: 12vw;
+    width: 11vw;
+    height: 11vw;
     border-radius: 3.5vw;
-    background: #ffffff;
-    box-shadow: 0 0.6vh 2vw rgba(0, 0, 0, 0.04);
+    background: #fafafa;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .nav-icon svg {
-    width: 6vw;
-    height: 6vw;
+    width: 5.5vw;
+    height: 5.5vw;
 }
 
 .nav-item span {
-    font-size: 3vw;
+    font-size: 2.8vw;
     font-weight: 500;
+    text-align: center;
 }
 
 /* ========== 移动端全屏适配补充 ========== */
@@ -791,23 +800,40 @@ body {
 
     .top-card {
         border-radius: 25.8px;
+        margin: 0 12.9px;
+        max-height: 280px;
     }
 
     .card-image {
-        height: 168px;
+        height: 130px;
+        max-height: 130px;
+        min-height: 130px;
         border-radius: 25.8px 25.8px 0 0;
     }
 
+    .card-image img {
+        max-width: 100%;
+        max-height: 100%;
+        min-width: 100%;
+        min-height: 100%;
+    }
+
     .change-btn {
-        margin: -46.6px auto 23.3px;
-        width: 94.6px;
-        height: 94.6px;
-        border-width: 6.45px;
-        font-size: 15px;
+        position: absolute;
+        top: 98px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 52px;
+        height: 52px;
+        font-size: 12px;
+    }
+
+    .change-btn:active {
+        transform: translateX(-50%) scale(0.95);
     }
 
     .card-content {
-        padding: 0 25.8px 14px;
+        padding: 38px 25.8px 26px;
     }
 
     .card-title {
@@ -1070,41 +1096,53 @@ body {
         font-size: 16.3px;
     }
 
-    .bottom-nav {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 121px;
-        padding-top: 18.6px;
-        padding-left: 21.5px;
-        padding-right: 21.5px;
-        padding-bottom: 0;
-        border-radius: 0 0 40px 40px;
+    .page-dots {
+        bottom: 186px;
+        gap: 14px;
     }
 
-    @supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .page-dots .dot {
+        width: 9px;
+        height: 9px;
+    }
+
+    .page-dots .dot.active {
+        width: 28px;
+        border-radius: 4.5px;
+    }
+
+    .bottom-nav {
+        position: absolute;
+        bottom: 19px;
+        left: 21.5px;
+        right: 21.5px;
+        height: 112px;
+        border-radius: 200px;
+        padding: 0 25px;
+    }
+
+    @supports (bottom: env(safe-area-inset-bottom)) {
         .bottom-nav {
-            height: 121px;
+            bottom: calc(19px + env(safe-area-inset-bottom));
         }
     }
 
     .nav-item {
-        gap: 4.7px;
+        gap: 7.4px;
     }
 
     .nav-icon {
-        width: 51.6px;
-        height: 51.6px;
+        width: 47.3px;
+        height: 47.3px;
         border-radius: 15px;
     }
 
     .nav-icon svg {
-        width: 25.8px;
-        height: 25.8px;
+        width: 23.7px;
+        height: 23.7px;
     }
 
     .nav-item span {
-        font-size: 12.9px;
+        font-size: 12px;
     }
 }
