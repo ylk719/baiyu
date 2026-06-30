@@ -2,11 +2,21 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, minimum-scale=0.1, user-scalable=yes, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="手机桌面">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="color-scheme" content="light">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="full-screen" content="yes">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="browsermode" content="application">
     <title>手机桌面</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
     <div class="phone-container">
@@ -145,7 +155,6 @@
                         <div class="big-widget uploadable" data-upload-id="page2-iscreen">
                             <span class="upload-hint">点击上传</span>
                         </div>
-                        <div class="widget-label">iScreen</div>
                         <div class="icon-grid-2x2 small">
                             <div class="app-icon">
                                 <div class="icon-btn">
@@ -239,7 +248,6 @@
                         <div class="big-widget uploadable" data-upload-id="page2-widget">
                             <span class="upload-hint">点击上传</span>
                         </div>
-                        <div class="widget-label">Widget</div>
                     </div>
                 </div>
 
@@ -353,6 +361,36 @@
     <!-- 隐藏的文件输入 -->
     <input type="file" id="fileInput" accept="image/*" style="display: none;">
 
-    <script src="main.js"></script>
+    <script src="main.js?v=6"></script>
+    <script>
+        function fitToScreen() {
+            var phoneContainer = document.querySelector('.phone-container');
+            var page = document.querySelector('.page');
+            var vh = window.innerHeight;
+            var vw = window.innerWidth;
+            var designWidth = 430;
+            var contentHeight = page ? page.scrollHeight : 800;
+            var scaleY = vh / contentHeight;
+            var scaleX = vw / designWidth;
+            var scale = Math.min(scaleX, scaleY);
+            if (scale >= 1) {
+                phoneContainer.style.transform = 'scale(1)';
+                phoneContainer.style.transformOrigin = 'top center';
+                document.body.style.height = 'auto';
+            } else {
+                phoneContainer.style.transform = 'scale(' + scale + ')';
+                phoneContainer.style.transformOrigin = 'top center';
+                var newHeight = contentHeight * scale;
+                document.body.style.height = newHeight + 'px';
+            }
+        }
+        window.addEventListener('load', function() {
+            setTimeout(fitToScreen, 100);
+        });
+        window.addEventListener('resize', fitToScreen);
+        window.addEventListener('orientationchange', function() {
+            setTimeout(fitToScreen, 200);
+        });
+    </script>
 </body>
 </html>

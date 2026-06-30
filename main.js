@@ -250,6 +250,31 @@
         });
     }
 
+    function fitToScreen() {
+        var phoneContainer = document.querySelector('.phone-container');
+        var pagesWrapper = document.querySelector('.pages-wrapper');
+        var vh = window.innerHeight;
+        var vw = window.innerWidth;
+
+        var designWidth = 430;
+        var page = document.querySelector('.page');
+        var contentHeight = page ? page.scrollHeight : 800;
+
+        var scaleY = vh / contentHeight;
+        var scaleX = vw / designWidth;
+        var scale = Math.min(scaleX, scaleY);
+
+        if (scale >= 1) {
+            phoneContainer.style.transform = 'scale(1)';
+            phoneContainer.style.transformOrigin = 'top center';
+        } else {
+            phoneContainer.style.transform = 'scale(' + scale + ')';
+            phoneContainer.style.transformOrigin = 'top center';
+            var newHeight = contentHeight * scale;
+            document.body.style.height = newHeight + 'px';
+        }
+    }
+
     function init() {
         updateDots();
         loadSavedImages();
@@ -260,7 +285,14 @@
         pages.forEach(function(page) {
             page.scrollTop = 0;
         });
+
+        setTimeout(fitToScreen, 50);
+        window.addEventListener('resize', fitToScreen);
+        window.addEventListener('orientationchange', function() {
+            setTimeout(fitToScreen, 200);
+        });
     }
 
     init();
+    window.__mainJsLoaded = true;
 })();
