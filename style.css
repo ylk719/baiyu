@@ -11,9 +11,15 @@ html, body {
     height: 100vh;
     height: 100dvh;
     overflow: hidden;
+    overflow-y: hidden;
     font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Helvetica, Arial, sans-serif;
     background: #ffffff;
     color: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 @supports (height: 100dvh) {
@@ -31,13 +37,14 @@ body {
 .phone-container {
     position: relative;
     width: 100%;
-    max-width: 430px;
+    max-width: 100vw;
     margin: 0 auto;
     background: #ffffff;
     height: 100%;
     height: 100vh;
     height: 100dvh;
     overflow: hidden;
+    overflow-y: hidden;
 }
 
 @supports (height: 100dvh) {
@@ -59,11 +66,12 @@ body {
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    padding: 2.3vh 4.2vw 0;
-    padding-top: calc(2.3vh + env(safe-area-inset-top));
-    padding-bottom: calc(22vh + env(safe-area-inset-bottom));
+    padding: 2.5vh 5vw 0;
+    padding-top: calc(2.5vh + env(safe-area-inset-top));
+    padding-bottom: calc(18vh + env(safe-area-inset-bottom));
     position: relative;
     height: 100%;
+    overflow: hidden;
 }
 
 .page-bottom-spacer {
@@ -75,8 +83,8 @@ body {
 
 .top-card {
     background: #ffffff;
-    border-radius: 5.6vw;
-    box-shadow: 0 1.9vh 7.4vw rgba(0, 0, 0, 0.06);
+    border-radius: 6vw;
+    box-shadow: 0 2vh 8vw rgba(0, 0, 0, 0.06);
     overflow: visible;
     position: relative;
     flex-shrink: 0;
@@ -84,9 +92,9 @@ body {
 
 .card-image {
     width: 100%;
-    height: 15vh;
+    height: 18vh;
     position: relative;
-    border-radius: 5.6vw 5.6vw 0 0;
+    border-radius: 6vw 6vw 0 0;
     overflow: hidden;
 }
 
@@ -94,23 +102,23 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 6.5vw 6.5vw 0 0;
+    border-radius: 6vw 6vw 0 0;
 }
 
 .change-btn {
-    margin: -4.7vh auto 2.6vh;
-    width: 20.5vw;
-    height: 20.5vw;
+    margin: -5vh auto 2.5vh;
+    width: 22vw;
+    height: 22vw;
     border-radius: 50%;
     background: #f5f5f5;
-    border: 1.4vw solid #ffffff;
+    border: 1.5vw solid #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3.3vw;
+    font-size: 3.5vw;
     color: #aaa;
     font-weight: 500;
-    box-shadow: 0 1.9vh 5.6vw rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2vh 6vw rgba(0, 0, 0, 0.12);
     cursor: pointer;
     transition: transform 0.2s;
     position: relative;
@@ -122,86 +130,86 @@ body {
 }
 
 .card-content {
-    padding: 0 5.6vw 1.4vh;
+    padding: 0 6vw 1.5vh;
     text-align: center;
 }
 
 .card-title {
-    font-size: 3.5vw;
+    font-size: 3.8vw;
     color: #87ceeb;
-    margin-bottom: 0.7vh;
+    margin-bottom: 0.8vh;
     letter-spacing: 0.5vw;
 }
 
 .card-subtitle {
-    font-size: 3vw;
+    font-size: 3.2vw;
     color: #888;
-    margin-bottom: 0.7vh;
+    margin-bottom: 0.8vh;
     letter-spacing: 0.2vw;
     font-family: Georgia, serif;
 }
 
 .card-desc {
-    font-size: 3vw;
+    font-size: 3.2vw;
     color: #888;
     letter-spacing: 0.5vw;
 }
 
 .middle-section {
     display: flex;
-    gap: 4.7vw;
-    margin-top: 1.8vh;
+    gap: 5vw;
+    margin-top: 3.5vh;
     align-items: flex-start;
     flex: 1;
     min-height: 0;
-    padding: 0 0.9vw;
+    padding: 0 1vw;
 }
 
 .middle-section > .icon-grid-2x2 {
     align-content: start;
-    gap: 2.3vh;
-    padding-top: 0.5vh;
+    gap: 3vh;
+    padding-top: 1vh;
     flex: 1;
     justify-items: center;
 }
 
 .middle-section > .icon-grid-2x2 .icon-btn {
-    width: 13vw;
-    height: 13vw;
-    border-radius: 3.7vw;
+    width: 14vw;
+    height: 14vw;
+    border-radius: 4vw;
 }
 
 .middle-section > .icon-grid-2x2 .icon-btn svg {
-    width: 5.6vw;
-    height: 5.6vw;
+    width: 6vw;
+    height: 6vw;
 }
 
 .middle-section > .icon-grid-2x2 .app-icon {
-    gap: 0.9vh;
+    gap: 1vh;
 }
 
 .middle-section > .icon-grid-2x2 .app-icon span {
-    font-size: 3vw;
+    font-size: 3.2vw;
 }
 
 .polaroid-card {
     flex: 1;
     background: #ffffff;
-    border-radius: 1.4vw;
-    padding: 2.3vw 2.3vw 3.3vw;
-    box-shadow: 0 1.9vh 5.6vw rgba(0, 0, 0, 0.08);
+    border-radius: 1.5vw;
+    padding: 2.5vw 2.5vw 3.5vw;
+    box-shadow: 0 2vh 6vw rgba(0, 0, 0, 0.08);
     transform: rotate(-3deg);
     position: relative;
-    max-width: 42vw;
+    max-width: 45vw;
 }
 
 .tape {
     position: absolute;
-    top: -1.9vw;
+    top: -2vw;
     left: 50%;
     transform: translateX(-50%) rotate(2deg);
-    width: 16.7vw;
-    height: 4.7vw;
+    width: 18vw;
+    height: 5vw;
     background: rgba(230, 230, 230, 0.8);
     border-radius: 0.5vw;
 }
@@ -210,7 +218,7 @@ body {
     width: 100%;
     aspect-ratio: 1;
     background: #ebebeb;
-    border-radius: 0.9vw;
+    border-radius: 1vw;
     overflow: hidden;
     position: relative;
     display: flex;
@@ -227,7 +235,7 @@ body {
 
 .polaroid-image .upload-hint {
     color: #bbb;
-    font-size: 3.3vw;
+    font-size: 3.5vw;
 }
 
 .placeholder-cat {
@@ -245,17 +253,17 @@ body {
 
 .polaroid-text {
     text-align: center;
-    font-size: 2.8vw;
+    font-size: 3vw;
     color: #888;
-    margin-top: 1.4vh;
+    margin-top: 1.5vh;
     font-style: italic;
 }
 
 .polaroid-title {
     text-align: center;
-    font-size: 3.5vw;
+    font-size: 3.8vw;
     color: #444;
-    margin-top: 0.7vh;
+    margin-top: 0.8vh;
     font-family: Georgia, "Times New Roman", serif;
     font-weight: 500;
 }
@@ -263,27 +271,27 @@ body {
 .icon-grid-2x2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2.3vh;
+    gap: 3vh;
     flex-shrink: 0;
 }
 
 .icon-grid-2x2.small {
-    gap: 1.8vh;
+    gap: 2.5vh;
 }
 
 .app-icon {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.1vh;
+    gap: 1.2vh;
 }
 
 .icon-btn {
-    width: 12.6vw;
-    height: 12.6vw;
-    border-radius: 3.7vw;
+    width: 13.5vw;
+    height: 13.5vw;
+    border-radius: 4vw;
     background: #ffffff;
-    box-shadow: 0 0.9vh 3.7vw rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1vh 4vw rgba(0, 0, 0, 0.06);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -297,23 +305,23 @@ body {
 }
 
 .icon-btn svg {
-    width: 5.6vw;
-    height: 5.6vw;
+    width: 6vw;
+    height: 6vw;
 }
 
 .icon-grid-2x2.small .icon-btn {
-    width: 11.2vw;
-    height: 11.2vw;
-    border-radius: 3.3vw;
+    width: 12vw;
+    height: 12vw;
+    border-radius: 3.5vw;
 }
 
 .icon-grid-2x2.small .icon-btn svg {
-    width: 4.7vw;
-    height: 4.7vw;
+    width: 5vw;
+    height: 5vw;
 }
 
 .app-icon span {
-    font-size: 3.3vw;
+    font-size: 3.5vw;
     color: #666;
     font-weight: 500;
 }
@@ -322,24 +330,25 @@ body {
 
 .game-card {
     background: #f5f5f7;
-    border-radius: 8.4vw;
-    padding: 2.3vw 2.8vw 3.7vw;
-    box-shadow: 0 2.8vh 9.3vw rgba(0, 0, 0, 0.08);
+    border-radius: 9vw;
+    padding: 2.5vw 3vw 4vw;
+    box-shadow: 0 3vh 10vw rgba(0, 0, 0, 0.08);
     position: relative;
+    flex-shrink: 0;
 }
 
 .game-top-bar {
     width: 60%;
-    height: 0.6vh;
+    height: 0.7vh;
     background: rgba(0, 0, 0, 0.04);
-    border-radius: 0.7vw;
-    margin: 0 auto 1.1vh;
+    border-radius: 0.8vw;
+    margin: 0 auto 1.2vh;
 }
 
 .game-body {
     display: flex;
     align-items: center;
-    gap: 1.9vw;
+    gap: 2vw;
 }
 
 .game-left, .game-right {
@@ -347,108 +356,108 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.6vh;
+    gap: 1.8vh;
 }
 
 .d-pad {
-    width: 14vw;
-    height: 14vw;
+    width: 15vw;
+    height: 15vw;
     position: relative;
 }
 
 .dpad-up, .dpad-down, .dpad-left, .dpad-right, .dpad-center {
     position: absolute;
     background: #e8e8ea;
-    border-radius: 1.2vw;
-    box-shadow: 0 0.2vh 0.9vw rgba(0, 0, 0, 0.08);
+    border-radius: 1.3vw;
+    box-shadow: 0 0.3vh 1vw rgba(0, 0, 0, 0.08);
 }
 
 .dpad-up {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 4.7vw;
-    height: 4.7vw;
+    width: 5vw;
+    height: 5vw;
 }
 
 .dpad-down {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 4.7vw;
-    height: 4.7vw;
+    width: 5vw;
+    height: 5vw;
 }
 
 .dpad-left {
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 4.7vw;
-    height: 4.7vw;
+    width: 5vw;
+    height: 5vw;
 }
 
 .dpad-right {
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 4.7vw;
-    height: 4.7vw;
+    width: 5vw;
+    height: 5vw;
 }
 
 .dpad-center {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 4.7vw;
-    height: 4.7vw;
+    width: 5vw;
+    height: 5vw;
 }
 
 .dots-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.7vw;
-    padding: 1.2vw;
+    gap: 0.8vw;
+    padding: 1.3vw;
 }
 
 .dots-grid div {
-    width: 1.2vw;
-    height: 1.2vw;
+    width: 1.3vw;
+    height: 1.3vw;
     background: #c0c0c4;
     border-radius: 50%;
 }
 
 .joystick {
-    width: 8.8vw;
-    height: 8.8vw;
+    width: 9.5vw;
+    height: 9.5vw;
     background: #e8e8ea;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0.5vh 1.4vw rgba(0, 0, 0, 0.12), inset 0 0.1vh 0.5vw rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0.6vh 1.5vw rgba(0, 0, 0, 0.12), inset 0 0.1vh 0.6vw rgba(255, 255, 255, 0.8);
 }
 
 .joystick-inner {
-    width: 4.2vw;
-    height: 4.2vw;
+    width: 4.5vw;
+    height: 4.5vw;
     background: #ffb6c1;
     border-radius: 50%;
-    box-shadow: inset 0 0.5vh 0.9vw rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 0.6vh 1vw rgba(255, 255, 255, 0.5);
 }
 
 .game-screen {
     flex: 1;
     aspect-ratio: 16/10;
     background: #1a1a1e;
-    border-radius: 2.8vw;
-    border: 1.2vw solid #e0e0e3;
+    border-radius: 3vw;
+    border: 1.3vw solid #e0e0e3;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0.9vh 2.3vw rgba(0, 0, 0, 0.18);
+    box-shadow: 0 1vh 2.5vw rgba(0, 0, 0, 0.18);
 }
 
 .game-screen img {
@@ -459,7 +468,7 @@ body {
 
 .game-screen .upload-hint {
     color: #666;
-    font-size: 3vw;
+    font-size: 3.2vw;
     position: relative;
     z-index: 1;
 }
@@ -467,21 +476,21 @@ body {
 .action-buttons {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.4vw;
+    gap: 1.5vw;
 }
 
 .action-btn {
-    width: 4.7vw;
-    height: 4.7vw;
+    width: 5vw;
+    height: 5vw;
     background: #e8e8ea;
     border-radius: 50%;
-    box-shadow: 0 0.5vh 0.9vw rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0.6vh 1vw rgba(0, 0, 0, 0.08);
 }
 
 .page2-content {
     display: flex;
-    gap: 4.7vw;
-    margin-top: 3vh;
+    gap: 5vw;
+    margin-top: 3.5vh;
     flex: 1;
     min-height: 0;
 }
@@ -490,12 +499,12 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 1.4vh;
+    gap: 1.5vh;
     min-height: 0;
 }
 
 .page2-col-right {
-    gap: 1.6vh;
+    gap: 1.8vh;
     justify-content: space-between;
 }
 
@@ -503,12 +512,12 @@ body {
     width: 100%;
     aspect-ratio: 1;
     background: #f5f5f7;
-    border-radius: 5.6vw;
+    border-radius: 6vw;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 1.4vh 4.7vw rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1.5vh 5vw rgba(0, 0, 0, 0.05);
     overflow: hidden;
     position: relative;
 }
@@ -521,32 +530,33 @@ body {
 
 .upload-hint {
     color: #ccc;
-    font-size: 3.7vw;
+    font-size: 4vw;
     font-weight: 500;
 }
 
 .widget-label {
     text-align: center;
-    font-size: 5.1vw;
+    font-size: 5.5vw;
     color: #444;
     font-weight: 500;
-    margin-top: 0.9vh;
-    margin-bottom: 2.8vh;
+    margin-top: 1vh;
+    margin-bottom: 3vh;
 }
 
 /* ========== 第三页样式 ========== */
 
 .photo-stack {
     position: relative;
-    height: 30vh;
+    height: 40vh;
+    flex-shrink: 0;
 }
 
 .floating-photo {
     position: absolute;
     background: #ffffff;
-    padding: 2.3vw 2.3vw 6.5vw;
-    border-radius: 0.9vw;
-    box-shadow: 0 1.4vh 5.6vw rgba(0, 0, 0, 0.1);
+    padding: 2.5vw 2.5vw 7vw;
+    border-radius: 1vw;
+    box-shadow: 0 1.5vh 6vw rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
 
@@ -554,7 +564,7 @@ body {
     width: 100%;
     aspect-ratio: 1;
     background: #faf0f5;
-    border-radius: 0.5vw;
+    border-radius: 0.6vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -577,7 +587,7 @@ body {
 
 .photo-2 {
     width: 38%;
-    top: 1vh;
+    top: 1.5vh;
     right: 10%;
     transform: rotate(7deg);
     z-index: 2;
@@ -593,12 +603,12 @@ body {
 
 .photo-caption {
     text-align: center;
-    font-size: 3.3vw;
+    font-size: 3.5vw;
     color: #888;
-    margin-top: 1.9vh;
+    margin-top: 2vh;
     font-family: Georgia, serif;
     position: absolute;
-    bottom: 1.9vh;
+    bottom: 2vh;
     left: 0;
     right: 0;
 }
@@ -609,35 +619,35 @@ body {
 
 .page3-icons {
     display: flex;
-    gap: 6.5vw;
+    gap: 7vw;
     justify-content: flex-start;
-    margin-top: 3vh;
-    padding-left: 4.7vw;
+    margin-top: 5vh;
+    padding-left: 5vw;
 }
 
 .app-icon.large .icon-btn {
-    width: 14.9vw;
-    height: 14.9vw;
-    border-radius: 4.7vw;
+    width: 16vw;
+    height: 16vw;
+    border-radius: 5vw;
 }
 
 .app-icon.large .icon-btn svg {
-    width: 6.5vw;
-    height: 6.5vw;
+    width: 7vw;
+    height: 7vw;
 }
 
 .app-icon.large span {
-    font-size: 3.5vw;
+    font-size: 3.8vw;
 }
 
 /* ========== 底部导航栏 ========== */
 
 .bottom-nav {
     position: absolute;
-    bottom: calc(3vh + env(safe-area-inset-bottom));
-    left: 4.7vw;
-    right: 4.7vw;
-    height: 9.5vh;
+    bottom: calc(0.5vh + env(safe-area-inset-bottom));
+    left: 5vw;
+    right: 5vw;
+    height: 11vh;
     padding-bottom: env(safe-area-inset-bottom);
     background: #f5f5f7;
     backdrop-filter: blur(20px);
@@ -645,14 +655,14 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    box-shadow: 0 0.9vh 4.7vw rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1vh 5vw rgba(0, 0, 0, 0.06);
     z-index: 50;
-    border-radius: 9.3vw;
+    border-radius: 10vw;
 }
 
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
     .bottom-nav {
-        height: calc(9vh + env(safe-area-inset-bottom));
+        height: calc(10vh + env(safe-area-inset-bottom));
         padding-bottom: env(safe-area-inset-bottom);
     }
 }
@@ -661,10 +671,12 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.4vh;
+    justify-content: center;
+    gap: 0.5vh;
     cursor: pointer;
     color: #888;
     transition: color 0.2s;
+    flex: 1;
 }
 
 .nav-item:active {
@@ -672,23 +684,23 @@ body {
 }
 
 .nav-icon {
-    width: 11.2vw;
-    height: 11.2vw;
-    border-radius: 3.3vw;
+    width: 12vw;
+    height: 12vw;
+    border-radius: 3.5vw;
     background: #ffffff;
-    box-shadow: 0 0.7vh 2.3vw rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0.8vh 2.5vw rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .nav-icon svg {
-    width: 5.6vw;
-    height: 5.6vw;
+    width: 6vw;
+    height: 6vw;
 }
 
 .nav-item span {
-    font-size: 2.8vw;
+    font-size: 3vw;
     font-weight: 500;
 }
 
@@ -709,8 +721,8 @@ body {
 }
 
 .page {
-    padding-left: calc(4.2vw + env(safe-area-inset-left));
-    padding-right: calc(4.2vw + env(safe-area-inset-right));
+    padding-left: calc(5vw + env(safe-area-inset-left));
+    padding-right: calc(5vw + env(safe-area-inset-right));
 }
 
 .bottom-nav {
@@ -731,319 +743,336 @@ body {
 /* 横屏安全区适配 */
 @media (orientation: landscape) {
     .page {
-        padding-left: calc(7.4vw + env(safe-area-inset-left));
-        padding-right: calc(7.4vw + env(safe-area-inset-right));
+        padding-left: calc(8vw + env(safe-area-inset-left));
+        padding-right: calc(8vw + env(safe-area-inset-right));
     }
 }
 
-/* 大屏幕适配 */
-@media (min-width: 431px) {
+/* 大屏幕适配 - 保持手机比例，居中显示 */
+@media (min-width: 500px) {
     .phone-container {
         width: 430px;
+        height: 932px;
+        max-height: 100vh;
+        max-height: 100dvh;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+    }
+    
+    html, body {
+        position: relative;
+        background: #f0f0f0;
+    }
+    
+    .page {
+        padding: 23px 21.5px 0;
+        padding-top: calc(23px + env(safe-area-inset-top));
+        padding-bottom: calc(168px + env(safe-area-inset-bottom));
     }
     
     .top-card {
-        border-radius: 24px;
+        border-radius: 25.8px;
     }
     
     .card-image {
-        height: 140px;
-        border-radius: 24px 24px 0 0;
-    }
-    
-    .card-image img {
-        border-radius: 28px 28px 0 0;
+        height: 168px;
+        border-radius: 25.8px 25.8px 0 0;
     }
     
     .change-btn {
-        margin: -44px auto 24px;
-        width: 88px;
-        height: 88px;
-        border-width: 6px;
-        font-size: 14px;
+        margin: -46.6px auto 23.3px;
+        width: 94.6px;
+        height: 94.6px;
+        border-width: 6.45px;
+        font-size: 15px;
     }
     
     .card-content {
-        padding: 0 24px 12px;
+        padding: 0 25.8px 14px;
     }
     
     .card-title {
-        font-size: 15px;
-        margin-bottom: 6px;
-        letter-spacing: 2px;
+        font-size: 16.3px;
+        margin-bottom: 7.5px;
+        letter-spacing: 2.15px;
     }
     
     .card-subtitle {
-        font-size: 13px;
-        margin-bottom: 6px;
-        letter-spacing: 1px;
+        font-size: 13.8px;
+        margin-bottom: 7.5px;
+        letter-spacing: 0.86px;
     }
     
     .card-desc {
-        font-size: 13px;
-        letter-spacing: 2px;
+        font-size: 13.8px;
+        letter-spacing: 2.15px;
     }
     
     .middle-section {
-        gap: 20px;
-        margin-top: 16px;
-        padding: 0 4px;
+        gap: 21.5px;
+        margin-top: 32.6px;
+        padding: 0 4.3px;
     }
     
     .middle-section > .icon-grid-2x2 {
-        gap: 20px;
-        padding-top: 4px;
+        gap: 28px;
+        padding-top: 9.3px;
     }
     
     .middle-section > .icon-grid-2x2 .icon-btn {
-        width: 56px;
-        height: 56px;
-        border-radius: 16px;
+        width: 60.2px;
+        height: 60.2px;
+        border-radius: 17.2px;
     }
     
     .middle-section > .icon-grid-2x2 .icon-btn svg {
-        width: 24px;
-        height: 24px;
+        width: 25.8px;
+        height: 25.8px;
     }
     
     .middle-section > .icon-grid-2x2 .app-icon {
-        gap: 8px;
+        gap: 9.3px;
     }
     
     .middle-section > .icon-grid-2x2 .app-icon span {
-        font-size: 13px;
+        font-size: 13.8px;
     }
     
     .polaroid-card {
-        border-radius: 6px;
-        padding: 10px 10px 14px;
-        max-width: 180px;
+        border-radius: 6.45px;
+        padding: 10.8px 10.8px 15px;
+        max-width: 193.5px;
     }
     
     .tape {
-        top: -8px;
-        width: 72px;
-        height: 20px;
-        border-radius: 2px;
+        top: -8.6px;
+        width: 77.4px;
+        height: 21.5px;
+        border-radius: 2.15px;
     }
     
     .polaroid-text {
-        font-size: 12px;
-        margin-top: 6px;
+        font-size: 12.9px;
+        margin-top: 14px;
     }
     
     .polaroid-title {
-        font-size: 15px;
-        margin-top: 3px;
+        font-size: 16.3px;
+        margin-top: 7.4px;
     }
     
     .icon-grid-2x2 {
-        gap: 20px;
+        gap: 28px;
     }
     
     .icon-grid-2x2.small {
-        gap: 16px;
+        gap: 23.3px;
     }
     
     .app-icon {
-        gap: 10px;
+        gap: 11.2px;
     }
     
     .icon-btn {
-        width: 54px;
-        height: 54px;
-        border-radius: 16px;
+        width: 58px;
+        height: 58px;
+        border-radius: 17.2px;
     }
     
     .icon-btn svg {
-        width: 24px;
-        height: 24px;
+        width: 25.8px;
+        height: 25.8px;
     }
     
     .icon-grid-2x2.small .icon-btn {
-        width: 48px;
-        height: 48px;
-        border-radius: 14px;
+        width: 51.6px;
+        height: 51.6px;
+        border-radius: 15px;
     }
     
     .icon-grid-2x2.small .icon-btn svg {
-        width: 20px;
-        height: 20px;
+        width: 21.5px;
+        height: 21.5px;
     }
     
     .app-icon span {
-        font-size: 14px;
-    }
-    
-    .game-card {
-        border-radius: 36px;
-        padding: 10px 12px 16px;
-    }
-    
-    .game-top-bar {
-        height: 5px;
-        border-radius: 3px;
-        margin: 0 auto 10px;
-    }
-    
-    .game-body {
-        gap: 8px;
-    }
-    
-    .game-left, .game-right {
-        gap: 14px;
-    }
-    
-    .d-pad {
-        width: 60px;
-        height: 60px;
-    }
-    
-    .dpad-up, .dpad-down, .dpad-left, .dpad-right, .dpad-center {
-        width: 20px;
-        height: 20px;
-        border-radius: 5px;
-    }
-    
-    .dots-grid {
-        gap: 3px;
-        padding: 5px;
-    }
-    
-    .dots-grid div {
-        width: 5px;
-        height: 5px;
-    }
-    
-    .joystick {
-        width: 38px;
-        height: 38px;
-    }
-    
-    .joystick-inner {
-        width: 18px;
-        height: 18px;
-    }
-    
-    .game-screen {
-        border-radius: 12px;
-        border-width: 5px;
-    }
-    
-    .game-screen .upload-hint {
-        font-size: 13px;
-    }
-    
-    .action-buttons {
-        gap: 6px;
-    }
-    
-    .action-btn {
-        width: 20px;
-        height: 20px;
-    }
-    
-    .page2-content {
-        gap: 20px;
-        margin-top: 28px;
-    }
-    
-    .page2-col-left, .page2-col-right {
-        gap: 12px;
-    }
-    
-    .page2-col-right {
-        gap: 14px;
-    }
-    
-    .big-widget {
-        border-radius: 24px;
-    }
-    
-    .upload-hint {
-        font-size: 16px;
-    }
-    
-    .widget-label {
-        font-size: 22px;
-        margin-top: 4px;
-        margin-bottom: 12px;
-    }
-    
-    .photo-stack {
-        height: 280px;
-    }
-    
-    .floating-photo {
-        padding: 10px 10px 28px;
-        border-radius: 4px;
-    }
-    
-    .photo-inner {
-        border-radius: 2px;
-    }
-    
-    .photo-2 {
-        top: 8px;
-    }
-    
-    .photo-caption {
-        font-size: 14px;
-        margin-top: 8px;
-        bottom: 8px;
-    }
-    
-    .page3-icons {
-        gap: 28px;
-        margin-top: 28px;
-        padding-left: 20px;
-    }
-    
-    .app-icon.large .icon-btn {
-        width: 64px;
-        height: 64px;
-        border-radius: 20px;
-    }
-    
-    .app-icon.large .icon-btn svg {
-        width: 28px;
-        height: 28px;
-    }
-    
-    .app-icon.large span {
         font-size: 15px;
     }
     
+    .game-card {
+        border-radius: 38.7px;
+        padding: 10.8px 12.9px 17.2px;
+    }
+    
+    .game-top-bar {
+        height: 6.5px;
+        border-radius: 3.4px;
+        margin: 0 auto 11.2px;
+    }
+    
+    .game-body {
+        gap: 8.6px;
+    }
+    
+    .game-left, .game-right {
+        gap: 16.8px;
+    }
+    
+    .d-pad {
+        width: 64.5px;
+        height: 64.5px;
+    }
+    
+    .dpad-up, .dpad-down, .dpad-left, .dpad-right, .dpad-center {
+        width: 21.5px;
+        height: 21.5px;
+        border-radius: 5.6px;
+    }
+    
+    .dots-grid {
+        gap: 3.4px;
+        padding: 5.6px;
+    }
+    
+    .dots-grid div {
+        width: 5.6px;
+        height: 5.6px;
+    }
+    
+    .joystick {
+        width: 40.9px;
+        height: 40.9px;
+    }
+    
+    .joystick-inner {
+        width: 19.4px;
+        height: 19.4px;
+    }
+    
+    .game-screen {
+        border-radius: 12.9px;
+        border-width: 5.6px;
+    }
+    
+    .game-screen .upload-hint {
+        font-size: 13.8px;
+    }
+    
+    .action-buttons {
+        gap: 6.45px;
+    }
+    
+    .action-btn {
+        width: 21.5px;
+        height: 21.5px;
+    }
+    
+    .page2-content {
+        gap: 21.5px;
+        margin-top: 32.6px;
+    }
+    
+    .page2-col-left, .page2-col-right {
+        gap: 14px;
+    }
+    
+    .page2-col-right {
+        gap: 16.8px;
+    }
+    
+    .big-widget {
+        border-radius: 25.8px;
+    }
+    
+    .upload-hint {
+        font-size: 17.2px;
+    }
+    
+    .widget-label {
+        font-size: 23.7px;
+        margin-top: 9.3px;
+        margin-bottom: 27.9px;
+    }
+    
+    .photo-stack {
+        height: 373px;
+    }
+    
+    .floating-photo {
+        padding: 10.8px 10.8px 30.1px;
+        border-radius: 4.3px;
+    }
+    
+    .photo-inner {
+        border-radius: 2.6px;
+    }
+    
+    .photo-2 {
+        top: 14px;
+    }
+    
+    .photo-caption {
+        font-size: 15px;
+        margin-top: 18.6px;
+        bottom: 18.6px;
+    }
+    
+    .page3-icons {
+        gap: 30.1px;
+        margin-top: 46.6px;
+        padding-left: 21.5px;
+    }
+    
+    .app-icon.large .icon-btn {
+        width: 68.8px;
+        height: 68.8px;
+        border-radius: 21.5px;
+    }
+    
+    .app-icon.large .icon-btn svg {
+        width: 30.1px;
+        height: 30.1px;
+    }
+    
+    .app-icon.large span {
+        font-size: 16.3px;
+    }
+    
     .bottom-nav {
-        bottom: calc(16px + env(safe-area-inset-bottom));
-        left: 20px;
-        right: 20px;
-        height: 80px;
-        border-radius: 40px;
+        bottom: calc(5px + env(safe-area-inset-bottom));
+        left: 21.5px;
+        right: 21.5px;
+        height: 102.5px;
+        border-radius: 43px;
     }
     
     @supports (padding-bottom: env(safe-area-inset-bottom)) {
         .bottom-nav {
-            height: calc(76px + env(safe-area-inset-bottom));
+            height: calc(93px + env(safe-area-inset-bottom));
         }
     }
     
     .nav-item {
-        gap: 3px;
+        gap: 4.7px;
     }
     
     .nav-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 14px;
+        width: 51.6px;
+        height: 51.6px;
+        border-radius: 15px;
     }
     
     .nav-icon svg {
-        width: 24px;
-        height: 24px;
+        width: 25.8px;
+        height: 25.8px;
     }
     
     .nav-item span {
-        font-size: 12px;
+        font-size: 12.9px;
     }
 }
