@@ -2,374 +2,322 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="手机桌面">
-    <meta name="apple-touch-fullscreen" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#ffffff">
-    <meta name="color-scheme" content="light">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="x5-fullscreen" content="true">
-    <meta name="x5-orientation" content="portrait">
-    <meta name="x5-page-mode" content="app">
-    <meta name="full-screen" content="yes">
-    <meta name="screen-orientation" content="portrait">
-    <meta name="browsermode" content="application">
-    <meta name="nobile-web-app-capable" content="yes">
-    <meta name="application-name" content="手机桌面">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="msapplication-navbutton-color" content="#ffffff">
-    <meta name="msapplication-starturl" content="/">
-    <meta name="apple-touch-icon" content="">
-    <link rel="apple-touch-icon" href="">
-    <link rel="apple-touch-startup-image" href="">
-    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoi5omL5py65q2m6Z2iIiwic2hvcnRfbmFtZSI6IuaIteacuiIsInN0YXJ0X3VybCI6Ii8iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZmZmZmZmIiwidGhlbWVfY29sb3IiOiIjZmZmZmZmIiwib3JpZW50YXRpb24iOiJwb3J0cmFpdCIsImljb25zIjpbXX0=">
-    <title>手机桌面</title>
-    <link rel="stylesheet" href="style.css?v=22">
+    <title>手机界面</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="phone-container">
-        <div class="pages-wrapper" id="pagesWrapper">
-            <!-- 第一页 -->
-            <div class="page page-1">
-                <!-- 顶部卡片 -->
-                <div class="top-card">
-                    <div class="card-image">
-                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=vintage%20classic%20car%20sepia%20tone%20street%20photography&image_size=landscape_16_9" alt="" class="uploadable" data-upload-id="page1-top">
-                    </div>
-                    <div class="card-content">
-                        <div class="change-btn" data-upload-id="page1-top">换图</div>
-                        <div class="card-title">❄️❄️ - 初雪 -</div>
-                        <div class="card-subtitle">°♡. Meet you in white December ∂° + 、</div>
-                        <div class="card-desc">- 在白色12月 遇见你 -</div>
-                    </div>
-                </div>
+    <div class="censy-phone-wrapper" id="censyPhoneMain">
+    <input type="file" id="censyFileCover" class="censy-hidden-file" accept="image/*" style="display:none;">
+    <input type="file" id="censyFileAvatar" class="censy-hidden-file" accept="image/*" style="display:none;">
+    <input type="file" id="censyPhotoFile" class="censy-hidden-file" accept="image/*" style="display:none;">
+    <input type="file" id="censyPspUpload" class="censy-hidden-file" accept="image/*" style="display:none;">
+    <input type="file" id="censyIscreenUpload" class="censy-hidden-file" accept="image/*" style="display:none;">
+    <input type="file" id="censyIscreenUpload2" class="censy-hidden-file" accept="image/*" style="display:none;">
+    <input type="file" id="censyP3Up1" class="censy-hidden-file" accept="image/*" style="display:none;">
+    <input type="file" id="censyP3Up2" class="censy-hidden-file" accept="image/*" style="display:none;">
+    <input type="file" id="censyP3Up3" class="censy-hidden-file" accept="image/*" style="display:none;">
+    <input type="file" id="censyGlobalBgUpload" accept="image/*" style="display:none;">
+    <input type="file" id="censyGlobalIconUpload" accept="image/*" style="display:none;">
 
-                <!-- 中间内容 -->
-                <div class="middle-section">
-                    <div class="polaroid-card">
-                        <div class="tape"></div>
-                        <div class="polaroid-image uploadable" data-upload-id="page1-polaroid">
-                            <div class="placeholder-cat">
-                                <svg viewBox="0 0 200 200" fill="none" stroke="#bbb" stroke-width="1.5">
-                                    <polygon points="40,160 100,70 170,160" fill="#eaeaea" stroke="#ccc"/>
-                                    <rect x="55" y="35" width="90" height="50" rx="8" fill="#eaeaea" stroke="#ccc"/>
-                                    <circle cx="80" cy="55" r="6" fill="#ccc"/>
-                                    <circle cx="120" cy="55" r="6" fill="#ccc"/>
-                                    <path d="M90 72 L110 72" stroke="#ccc" stroke-width="2"/>
-                                    <rect x="135" y="70" width="35" height="70" rx="3" fill="none" stroke-dasharray="5,4" stroke="#ccc"/>
-                                    <circle cx="145" cy="85" r="15" fill="#eaeaea" stroke="#ccc"/>
-                                    <text x="145" y="90" text-anchor="middle" fill="#aaa" font-size="14">嗝</text>
-                                    <polygon points="60,135 70,115 80,135" fill="none" stroke="#ccc"/>
-                                    <text x="70" y="128" text-anchor="middle" fill="#aaa" font-size="16">!</text>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="polaroid-text">图片已被小猫吃掉</div>
-                        <div class="polaroid-title">Polaroid</div>
-                    </div>
-
-                    <!-- 椭圆容器包裹的四个按钮 -->
-                    <div class="icon-oval-container">
-                        <div class="icon-grid-2x2">
-                            <div class="app-icon">
-                                <div class="icon-btn">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-                                    </svg>
-                                </div>
-                                <span>微信</span>
-                            </div>
-                            <div class="app-icon">
-                                <div class="icon-btn">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                                        <circle cx="9" cy="7" r="4"/>
-                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                                    </svg>
-                                </div>
-                                <span>名册</span>
-                            </div>
-                            <div class="app-icon">
-                                <div class="icon-btn">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                                    </svg>
-                                </div>
-                                <span>世界书</span>
-                            </div>
-                            <div class="app-icon">
-                                <div class="icon-btn">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <rect x="3" y="5" width="18" height="14" rx="2"/>
-                                        <polyline points="3 7 12 13 21 7"/>
-                                    </svg>
-                                </div>
-                                <span>邀约</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="page-bottom-spacer"></div>
-            </div>
-
-            <!-- 第二页 -->
-            <div class="page page-2">
-                <!-- 顶部游戏机卡片 -->
-                <div class="game-card">
-                    <div class="game-top-bar"></div>
-                    <div class="game-body">
-                        <div class="game-left">
-                            <div class="d-pad">
-                                <div class="dpad-up"></div>
-                                <div class="dpad-left"></div>
-                                <div class="dpad-center"></div>
-                                <div class="dpad-right"></div>
-                                <div class="dpad-down"></div>
-                            </div>
-                            <div class="dots-grid">
-                                <div></div><div></div><div></div>
-                                <div></div><div></div><div></div>
-                                <div></div><div></div><div></div>
-                            </div>
-                            <div class="joystick joystick-left">
-                                <div class="joystick-inner"></div>
-                            </div>
-                        </div>
-                        <div class="game-screen uploadable" data-upload-id="page2-game">
-                            <span class="upload-hint">点击更换图片</span>
-                        </div>
-                        <div class="game-right">
-                            <div class="action-buttons">
-                                <div class="action-btn"></div>
-                                <div class="action-btn"></div>
-                                <div class="action-btn"></div>
-                                <div class="action-btn"></div>
-                            </div>
-                            <div class="joystick joystick-right">
-                                <div class="joystick-inner"></div>
-                            </div>
-                            <div class="dots-grid">
-                                <div></div><div></div><div></div>
-                                <div></div><div></div><div></div>
-                                <div></div><div></div><div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 中间内容区 -->
-                <div class="page2-content">
-                    <div class="page2-col-left">
-                        <div class="big-widget uploadable" data-upload-id="page2-iscreen">
-                            <span class="upload-hint">点击上传</span>
-                        </div>
-                        <div class="icon-grid-2x2 small">
-                            <div class="app-icon">
-                                <div class="icon-btn">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                                        <line x1="16" y1="2" x2="16" y2="6"/>
-                                        <line x1="8" y1="2" x2="8" y2="6"/>
-                                        <line x1="3" y1="10" x2="21" y2="10"/>
-                                    </svg>
-                                </div>
-                                <span>日程</span>
-                            </div>
-                            <div class="app-icon">
-                                <div class="icon-btn">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                                        <line x1="16" y1="2" x2="16" y2="6"/>
-                                        <line x1="8" y1="2" x2="8" y2="6"/>
-                                        <line x1="3" y1="10" x2="21" y2="10"/>
-                                        <text x="7" y="17" font-size="6" fill="currentColor" stroke="none">•</text>
-                                        <text x="10" y="17" font-size="6" fill="currentColor" stroke="none">•</text>
-                                        <text x="13" y="17" font-size="6" fill="currentColor" stroke="none">•</text>
-                                        <text x="16" y="17" font-size="6" fill="currentColor" stroke="none">•</text>
-                                    </svg>
-                                </div>
-                                <span>日历</span>
-                            </div>
-                            <div class="app-icon">
-                                <div class="icon-btn">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <rect x="6" y="10" width="12" height="10" rx="2"/>
-                                        <path d="M9 10V7a3 3 0 0 1 6 0v3"/>
-                                        <path d="M11 15h.01M13 15h.01"/>
-                                    </svg>
-                                </div>
-                                <span>游戏</span>
-                            </div>
-                            <div class="app-icon">
-                                <div class="icon-btn">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
-                                        <line x1="12" y1="18" x2="12.01" y2="18"/>
-                                    </svg>
-                                </div>
-                                <span>查手机</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="page2-col-right">
-                        <div class="icon-grid-2x2">
-                            <div class="app-icon">
-                                <div class="icon-btn">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-                                        <line x1="3" y1="6" x2="21" y2="6"/>
-                                        <path d="M16 10a4 4 0 0 1-8 0"/>
-                                        <path d="M9 10h.01M15 10h.01"/>
-                                    </svg>
-                                </div>
-                                <span>商城</span>
-                            </div>
-                            <div class="app-icon">
-                                <div class="icon-btn">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <circle cx="12" cy="12" r="10"/>
-                                        <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
-                                        <line x1="9" y1="9" x2="9.01" y2="9"/>
-                                        <line x1="15" y1="9" x2="15.01" y2="9"/>
-                                    </svg>
-                                </div>
-                                <span>美团</span>
-                            </div>
-                            <div class="app-icon">
-                                <div class="icon-btn">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                                    </svg>
-                                </div>
-                                <span>隐秘时刻</span>
-                            </div>
-                            <div class="app-icon">
-                                <div class="icon-btn">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                                    </svg>
-                                </div>
-                                <span>记忆库</span>
-                            </div>
-                        </div>
-                        <div class="big-widget uploadable" data-upload-id="page2-widget">
-                            <span class="upload-hint">点击上传</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="page-bottom-spacer"></div>
-            </div>
-
-            <!-- 第三页 -->
-            <div class="page page-3">
-                <!-- 顶部照片堆叠 -->
-                <div class="photo-stack">
-                    <div class="floating-photo photo-1">
-                        <div class="photo-inner uploadable" data-upload-id="page3-photo1">
-                            <span class="upload-hint">点击上传</span>
-                        </div>
-                        <div class="photo-caption pink">your puppy 😊</div>
-                    </div>
-                    <div class="floating-photo photo-2">
-                        <div class="photo-inner uploadable" data-upload-id="page3-photo2">
-                            <span class="upload-hint">点击上传</span>
-                        </div>
-                        <div class="photo-caption"></div>
-                    </div>
-                    <div class="floating-photo photo-3">
-                        <div class="photo-inner uploadable" data-upload-id="page3-photo3">
-                            <span class="upload-hint">点击上传</span>
-                        </div>
-                        <div class="photo-caption pink">🐰YEAH!🐾</div>
-                    </div>
-                </div>
-
-                <!-- 中间图标 -->
-                <div class="page3-icons">
-                    <div class="app-icon large">
-                        <div class="icon-btn large">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <circle cx="12" cy="12" r="10"/>
-                                <polyline points="12 6 12 12 16 14"/>
-                                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
-                            </svg>
-                        </div>
-                        <span>闹钟</span>
-                    </div>
-                    <div class="app-icon large">
-                        <div class="icon-btn large">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <polyline points="9 17 4 12 9 7"/>
-                                <path d="M20 5v14"/>
-                                <path d="M4 12h13"/>
-                            </svg>
-                        </div>
-                        <span>外出</span>
-                    </div>
-                </div>
-
-                <div class="page-bottom-spacer"></div>
-            </div>
+    <div class="censy-pages-container" id="censyPagesContainer">
+        <!-- 第1页 -->
+        <div class="censy-page">
+          <div class="censy-top-section">
+          <div class="censy-mini-card">
+          <div class="censy-card-cover" id="censyCoverUpload"></div>
+          <div class="censy-card-avatar" id="censyAvatarUpload">换图</div>
+          <div class="censy-card-texts">
+          <div contenteditable="true">???? - 初雪 -</div>
+          <div contenteditable="true">??. Meet you in white December ?? + ?</div>
+          <div contenteditable="true">- 在白色12月 遇见你 -</div>
+          </div>
+          </div>
+          </div>
+          <div class="censy-mid-section">
+          <div class="censy-polaroid-card">
+          <div class="censy-photo-area" id="censyPhotoBox">
+          <div class="censy-placeholder">
+          <svg width="200" height="180" viewBox="0 0 200 180">
+          <path d="M 30 140 L 70 50 L 130 50 L 160 70 L 160 140 L 30 140 Z" fill="#d8d8d8" stroke="#999" stroke-width="3"/>
+          <path d="M 30 140 L 60 110 L 90 140 Z" fill="#d8d8d8" stroke="#999" stroke-width="2"/>
+          <text x="60" y="130" font-size="18" fill="#999" text-anchor="middle">!</text>
+          <rect x="165" y="70" width="30" height="70" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="4 3"/>
+          <path d="M 70 50 L 70 20 L 90 20 L 100 30 L 110 20 L 130 20 L 130 50 Z" fill="#fff" stroke="#999" stroke-width="2"/>
+          <line x1="80" y1="30" x2="90" y2="35" stroke="#999" stroke-width="2"/>
+          <line x1="110" y1="30" x2="100" y2="35" stroke="#999" stroke-width="2"/>
+          <circle cx="100" cy="40" r="3" fill="#999"/>
+          <circle cx="150" cy="30" r="20" fill="none" stroke="#999" stroke-width="2"/>
+          <text x="150" y="38" font-size="16" fill="#999" text-anchor="middle">嗝</text>
+          <path d="M 130 30 L 140 35 L 130 40" stroke="#999" stroke-width="2" fill="none"/>
+          </svg>
+          </div>
+          <img id="censyPhotoImg" src="" alt="照片">
+          </div>
+          <div class="censy-polaroid-text-area">
+          <div class="censy-polaroid-desc" contenteditable="true">图片已被小猫吃掉</div>
+          <div class="censy-polaroid-label" contenteditable="true">Polaroid</div>
+          </div>
+          </div>
+          <div class="censy-apps-grid">
+          <div class="censy-app-item" id="censyWechatEntry">
+          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+          <div class="censy-app-name">微信</div>
+          </div>
+          <div class="censy-app-item">
+          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="censy-app-name">名册</div>
+          </div>
+          <div class="censy-app-item">
+          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="censy-app-name">世界书</div>
+          </div>
+          <div class="censy-app-item">
+          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+          <div class="censy-app-name">邀约</div>
+          </div>
+          </div>
+          </div>
         </div>
 
-        <!-- 分页圆点 -->
-        <div class="page-dots" id="pageDots">
-            <div class="dot active"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-        </div>
-
-        <!-- 底部导航栏 -->
-        <div class="bottom-nav">
-            <div class="nav-item">
-                <div class="nav-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M18 2L16 4M14 6l-2 2M10 10l-2 2M6 14L4 16"/>
-                        <circle cx="18" cy="6" r="2"/>
-                        <path d="M21 3L3 21"/>
-                    </svg>
-                </div>
-                <span>外观</span>
-            </div>
-            <div class="nav-item">
-                <div class="nav-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                    </svg>
-                </div>
-                <span>论坛</span>
-            </div>
-            <div class="nav-item">
-                <div class="nav-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                    </svg>
-                </div>
-                <span>情侣空间</span>
-            </div>
-            <div class="nav-item">
-                <div class="nav-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <circle cx="12" cy="12" r="3"/>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-                    </svg>
-                </div>
-                <span>设置</span>
-            </div>
-        </div>
+        <!-- 第2页 & 第3页 保持原样 -->
+        <div class="censy-page"><div class="censy-p2-wrapper"><div class="censy-psp-wrapper"><div class="censy-psp-scale-box"><div class="psp-machine"><div class="left-group"><div class="dpad-full"><span class="d-up"></span><span class="d-down"></span><span class="d-left"></span><span class="d-right"></span></div><div class="speaker-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="paw-joystick"></div></div><div class="center-screen" id="censyPspScreenWrap"><div class="screen-text">点击更换图片</div><img id="censyPspShowImg"></div><div class="right-group"><div class="action-buttons"><div class="action-btn"></div><div class="action-btn"></div><div class="action-btn"></div><div class="action-btn"></div></div><div class="paw-joystick"></div><div class="speaker-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div></div></div><div class="censy-p2-bottom-section"><div class="censy-p2-col"><div class="censy-iscreen-wrapper"><div class="censy-iscreen-frame-large" id="censyIscreenBox"><span class="censy-iscreen-placeholder">点击上传</span><img id="censyIscreenImg" src=""></div><div class="censy-iscreen-label" contenteditable="true">iScreen</div></div><div class="censy-apps-grid-small"><div class="censy-app-item app-small"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div class="censy-app-name">日程</div></div><div class="censy-app-item app-small"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg></div><div class="censy-app-name">日历</div></div><div class="censy-app-item app-small"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4"/><path d="M8 10v4"/><circle cx="15" cy="13" r="1"/><circle cx="18" cy="11" r="1"/></svg></div><div class="censy-app-name">游戏</div></div><div class="censy-app-item app-small"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/></svg></div><div class="censy-app-name">查手机</div></div></div></div><div class="censy-p2-col"><div class="censy-apps-grid"><div class="censy-app-item"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div><div class="censy-app-name">商城</div></div><div class="censy-app-item"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div><div class="censy-app-name">美团</div></div><div class="censy-app-item"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div><div class="censy-app-name">隐秘时刻</div></div><div class="censy-app-item"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div><div class="censy-app-name">记忆库</div></div></div><div class="censy-iscreen-wrapper"><div class="censy-iscreen-frame" id="censyIscreenBox2"><span class="censy-iscreen-placeholder">点击上传</span><img id="censyIscreenImg2" src=""></div><div class="censy-iscreen-label" contenteditable="true">Widget</div></div></div></div></div></div>
+        <div class="censy-page"><div class="censy-p3-wrapper"><div class="censy-p3-top-wrapper"><div class="censy-p3-scale-box"><div class="censy-p3-container"><div class="censy-p3-polaroid censy-p3-card1" id="censyP3Card1"><div class="censy-p3-photo"><span>点击上传</span><img id="censyP3Img1" src=""></div><div class="censy-p3-caption" contenteditable="true">your puppy ??</div></div><div class="censy-p3-polaroid censy-p3-card2" id="censyP3Card2"><div class="censy-p3-photo"><span>点击上传</span><img id="censyP3Img2" src=""></div><div class="censy-p3-caption" contenteditable="true">Every day !/</div></div><div class="censy-p3-polaroid censy-p3-card3" id="censyP3Card3"><div class="censy-p3-photo"><span>点击上传</span><img id="censyP3Img3" src=""></div><div class="censy-p3-caption" contenteditable="true">?? YEAH! ??</div></div></div></div></div><div class="censy-p3-bottom-apps"><div class="censy-app-item"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3 2 6"/><path d="m22 6-3-3"/><path d="M6.38 18.7 4 21"/><path d="M17.64 18.67 20 21"/></svg></div><div class="censy-app-name">闹钟</div></div><div class="censy-app-item"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14L21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></div><div class="censy-app-name">外出</div></div></div></div></div>
     </div>
 
-    <!-- 隐藏的文件输入 -->
-    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+    <div class="censy-fixed-bottom">
+        <div class="censy-page-indicators" id="censyPageDots"><span class="censy-dot active"></span><span class="censy-dot"></span><span class="censy-dot"></span></div>
+        <div class="censy-dock-container"><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24"><path d="M4 19l5.5-5.5"/><path d="M14.5 8.5L20 3"/><path d="M8 21l-5-5 9-9 5 5-9 9z"/><path d="M13 6l5 5"/></svg></div><div class="censy-dock-name">外观</div></div><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg></div><div class="censy-dock-name">论坛</div></div><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24"><path d="M12 21s-6.5-4.35-8.5-7.12C1.5 11.1 2.2 7.4 5.4 5.5c2.1-1.25 4.55-.73 6.1.94 1.55-1.67 4-2.19 6.1-.94 3.2 1.9 3.9 5.6 1.9 8.38C18.5 16.65 12 21 12 21z"/></svg></div><div class="censy-dock-name">情侣空间</div></div><div class="censy-dock-item" id="censySettingsDockBtn"><div class="censy-dock-icon"><svg viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></div><div class="censy-dock-name">设置</div></div></div>
+    </div>
+    
+    <div class="censy-settings-panel" id="censySettingsPanel"><div class="censy-settings-header"><span>?? 定制偏好设置</span><div class="censy-close-btn" id="censyCloseSettings">?</div></div><div class="censy-settings-body"><div class="censy-settings-block"><div class="censy-settings-title">全局呈现</div><div class="censy-bg-upload-btn" id="censyBgBtn">??? 更改聊天背景壁纸</div></div><div class="censy-settings-block"><details class="censy-settings-details"><summary class="censy-settings-summary"><div class="censy-settings-title" style="margin-bottom:0;">应用与功能区图标调整</div><span class="censy-details-arrow">▼</span></summary><div id="censyIconList" class="censy-details-content"></div></details></div></div></div>
 
-    <script src="main.js?v=8"></script>
+    <!-- === 新增：微信互动全屏容器 === -->
+    <div class="wc-app-container" id="wcAppMain">
+        <!-- 顶栏 -->
+        <div class="wc-header">
+          <div class="wc-back-btn" id="wcBackBtn"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div>
+          <div class="wc-title" id="wcTitle">微信(2)</div>
+          <div class="wc-header-right" id="wcHeaderRight">
+          <!-- 消息右上角笔 -->
+          <div class="wc-icon-btn" id="wcBtnPen" style="display:block;"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+          <!-- 朋友圈右上角心和+ -->
+          <div class="wc-icon-btn wc-heart-btn" id="wcBtnHeart" style="display:none;"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="wc-icon-btn" id="wcBtnPlus" style="display:none;"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          
+          <!-- 下拉菜单：消息 -->
+          <div class="wc-drop-menu" id="wcMenuChat">
+          <div class="wc-drop-item" id="wcMenuAddFriend">添加好友</div>
+          <div class="wc-drop-item" id="wcMenuCreateGroup">创建群聊</div>
+          </div>
+          <!-- 下拉菜单：朋友圈代发 -->
+          <div class="wc-drop-menu" id="wcMenuHeart">
+          <div class="wc-drop-item" id="wcMenuProxyPost">代替Char发圈</div>
+          <div class="wc-drop-item" id="wcMenuRandomPost">随机生成说说</div>
+          </div>
+        </div>
+
+        <!-- 视图区 -->
+        <div class="wc-body">
+          <!-- 消息 -->
+          <div class="wc-view active" id="wcViewChat">
+          <div class="wc-list-wrap" id="wcChatList"></div>
+          </div>
+          <!-- 通讯录 -->
+          <div class="wc-view" id="wcViewContact">
+          <div class="wc-list-wrap" id="wcContactList"></div>
+          </div>
+          <!-- 朋友圈 -->
+          <div class="wc-view" id="wcViewMoment">
+          <input type="file" id="wcMomentCoverFile" accept="image/*" style="display:none;">
+          <div class="wc-moment-cover" id="wcMomentCoverBox">
+          <div class="wc-moment-me">
+          <div class="wc-moment-myname">User</div>
+          <div class="wc-moment-myavatar"><div></div></div>
+          </div>
+          </div>
+          <div class="wc-moments-list" id="wcMomentsList"></div>
+          </div>
+          <!-- 我 -->
+          <div class="wc-view" id="wcViewMe">
+          <div class="wc-me-card" id="wcMeCard">
+          <div class="wc-me-avt" id="wcMeAvtDisplay" style="background-image:url(https://picsum.photos/100/100?2)"></div>
+          <div class="wc-me-info">
+          <div class="wc-me-name" id="wcMeNameDisplay">User</div>
+          <div class="wc-me-sub">微信号: wxid_12345</div>
+          </div>
+          <div class="wc-me-edit-btn" onclick="wcOpenModal('wcModalEditMe')">编辑</div>
+          </div>
+          <div class="wc-list-wrap">
+          <div class="wc-list-cell" onclick="wcOpenModal('wcModalMyMoments')">
+          <div class="wc-cell-info"><div class="wc-cell-title" style="font-size:15px;">朋友圈</div></div>
+          <div style="color:#ccc; font-size:16px;">></div>
+          </div>
+          </div>
+          </div>
+        </div>
+
+        <!-- 底部导航 -->
+        <div class="wc-tabbar">
+          <div class="wc-tab-item active" data-target="Chat">
+          <div class="wc-tab-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+          <div class="wc-tab-text">微信</div>
+          </div>
+          <div class="wc-tab-item" data-target="Contact">
+          <div class="wc-tab-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="wc-tab-text">通讯录</div>
+          </div>
+          <div class="wc-tab-item" data-target="Moment">
+          <div class="wc-tab-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg></div>
+          <div class="wc-tab-text">朋友圈</div>
+          </div>
+          <div class="wc-tab-item" data-target="Me">
+          <div class="wc-tab-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div class="wc-tab-text">我</div>
+          </div>
+        </div>
+
+        <!-- 弹窗：添加好友 (更精美) -->
+        <div class="wc-modal" id="wcModalAddFriend">
+          <div class="wc-modal-header">
+          <div class="wc-modal-close" onclick="wcCloseModal('wcModalAddFriend')">取消</div>
+          <div class="wc-modal-title">添加Char</div>
+          <div class="wc-modal-submit" id="wcSaveFriend">保存</div>
+          </div>
+          <div class="wc-modal-body wc-pretty-form">
+          <input type="file" id="wcAddAvtFile" accept="image/*" style="display:none;">
+          <div class="wc-avatar-upload wc-circle-avt" id="wcAddAvtBtn">传头像</div>
+          <div class="wc-form-group"><div class="wc-form-label">姓名</div><input type="text" class="wc-form-input" id="wcAddName" placeholder="填写真实姓名"></div>
+          <div class="wc-form-group"><div class="wc-form-label">昵称</div><input type="text" class="wc-form-input" id="wcAddNick" placeholder="微信备注/昵称"></div>
+          <div class="wc-form-group"><div class="wc-form-label">生日</div><input type="text" class="wc-form-input" id="wcAddBirth" placeholder="例如: 12月24日"></div>
+          <div class="wc-form-group"><div class="wc-form-label">身份</div><input type="text" class="wc-form-input" id="wcAddRole" placeholder="例如: 学生/老板"></div>
+          <div class="wc-form-group"><div class="wc-form-label">人设</div><input type="text" class="wc-form-input" id="wcAddPers" placeholder="简单人设关键词"></div>
+          <div class="wc-form-group"><div class="wc-form-label">背景</div><input type="text" class="wc-form-input" id="wcAddBg" placeholder="简单背景概述"></div>
+          </div>
+        </div>
+
+        <!-- 弹窗：编辑我 -->
+        <div class="wc-modal" id="wcModalEditMe">
+          <div class="wc-modal-header">
+          <div class="wc-modal-close" onclick="wcCloseModal('wcModalEditMe')">取消</div>
+          <div class="wc-modal-title">编辑个人资料</div>
+          <div class="wc-modal-submit" id="wcSaveMe">保存</div>
+          </div>
+          <div class="wc-modal-body wc-pretty-form">
+          <input type="file" id="wcMeAvtFile" accept="image/*" style="display:none;">
+          <div class="wc-avatar-upload wc-circle-avt" id="wcMeAvtBtn">传头像</div>
+          <div class="wc-form-group"><div class="wc-form-label">名字</div><input type="text" class="wc-form-input" id="wcMeNameIn" placeholder="你的名字"></div>
+          <div class="wc-form-group"><div class="wc-form-label">性别</div><input type="text" class="wc-form-input" id="wcMeGenderIn" placeholder="男/女"></div>
+          <div class="wc-form-group"><div class="wc-form-label">生日</div><input type="text" class="wc-form-input" id="wcMeBirthIn" placeholder="例如: 1月1日"></div>
+          <div class="wc-form-group"><div class="wc-form-label">星座</div><input type="text" class="wc-form-input" id="wcMeZodiacIn" placeholder="例如: 摩羯座"></div>
+          <div class="wc-form-group"><div class="wc-form-label">人设</div><input type="text" class="wc-form-input" id="wcMePersIn" placeholder="例如: 霸道总裁"></div>
+          <div class="wc-form-group"><div class="wc-form-label">背景</div><input type="text" class="wc-form-input" id="wcMeBgIn" placeholder="简单背景概述"></div>
+          </div>
+        </div>
+
+        <!-- 弹窗：创建群聊 -->
+        <div class="wc-modal" id="wcModalCreateGroup">
+          <div class="wc-modal-header">
+          <div class="wc-modal-close" onclick="wcCloseModal('wcModalCreateGroup')">取消</div>
+          <div class="wc-modal-title">发起群聊</div>
+          <div class="wc-modal-submit" id="wcSaveGroup">创建</div>
+          </div>
+          <div class="wc-modal-body">
+          <div class="wc-form-group" style="background:#fff;border-radius:10px;padding:12px;border:none;"><div class="wc-form-label">群名称</div><input type="text" class="wc-form-input" id="wcGroupName" placeholder="为群聊起个名字"></div>
+          <div class="wc-switch-wrap">
+          <span style="font-size:15px;color:#111;font-weight:500;">群聊包含我自己</span>
+          <div class="wc-switch active" id="wcGroupHasMe"></div>
+          </div>
+          <div style="font-size:13px;color:#999;margin-bottom:8px;">选择成员：</div>
+          <div class="wc-select-list" id="wcGroupSelectList"></div>
+          </div>
+        </div>
+
+        <!-- 弹窗：发朋友圈 -->
+        <div class="wc-modal" id="wcModalPostMoment">
+          <div class="wc-modal-header">
+          <div class="wc-modal-close" onclick="wcCloseModal('wcModalPostMoment')">取消</div>
+          <div class="wc-modal-title" id="wcPostTitle">发朋友圈</div>
+          <div class="wc-modal-submit" id="wcSavePost">发表</div>
+          </div>
+          <div class="wc-modal-body" style="background:#fff;">
+          <textarea class="wc-post-area" id="wcPostText" placeholder="这一刻的想法..."></textarea>
+          <input type="file" id="wcPostImgFile" accept="image/*" style="display:none;">
+          <div class="wc-post-img-btn" id="wcPostImgBtn">
+          <span>+</span><img id="wcPostPreview">
+          </div>
+          </div>
+        </div>
+
+        <!-- 弹窗：代发选人 -->
+        <div class="wc-modal" id="wcModalProxySelect">
+          <div class="wc-modal-header">
+          <div class="wc-modal-close" onclick="wcCloseModal('wcModalProxySelect')">取消</div>
+          <div class="wc-modal-title">选择代发对象</div>
+          <div class="wc-modal-submit" id="wcConfirmProxy" style="display:none;"></div>
+          </div>
+          <div class="wc-modal-body">
+          <div class="wc-select-list" id="wcProxySelectList"></div>
+          </div>
+        </div>
+        
+        <!-- 弹窗：聊天页面 -->
+        <div class="wc-modal" id="wcModalChatRoom">
+          <div class="wc-modal-header" style="background:#f5f5f5;">
+          <div class="wc-modal-close" onclick="wcCloseModal('wcModalChatRoom')"><svg viewBox="0 0 24 24" style="width:22px;stroke:#111;fill:none;"><polyline points="15 18 9 12 15 6"/></svg></div>
+          <div class="wc-modal-title" id="wcChatRoomTitle">聊天</div>
+          <div class="wc-icon-btn" onclick="wcOpenChatSettings()"><svg viewBox="0 0 24 24" style="width:22px;stroke:#111;fill:none;"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></div>
+          </div>
+          <div class="wc-chat-room">
+          <div class="wc-chat-body" id="wcChatRoomBody">
+          <div style="text-align:center;color:#999;font-size:12px;margin-top:20px;">已经可以开始聊天了</div>
+          </div>
+          <div class="wc-chat-footer">
+          <input type="text" class="wc-chat-input" placeholder="发消息...">
+          <div style="font-size:24px;color:#999;">+</div>
+          </div>
+          </div>
+        </div>
+        
+        <!-- 弹窗：聊天设置页 -->
+        <div class="wc-modal" id="wcModalChatSettings">
+          <div class="wc-modal-header">
+          <div class="wc-modal-close" onclick="wcCloseModal('wcModalChatSettings')"><svg viewBox="0 0 24 24" style="width:22px;stroke:#111;fill:none;"><polyline points="15 18 9 12 15 6"/></svg></div>
+          <div class="wc-modal-title">聊天信息</div>
+          <div class="wc-modal-submit" style="display:none;"></div>
+          </div>
+          <div class="wc-modal-body" style="background:#f7f7f7;">
+          <div style="background:#fff;border-radius:10px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:20px;">
+          <div class="wc-msg-avt" id="wcSetAvt" style="width:60px;height:60px;border-radius:12px;"></div>
+          <div style="font-size:18px;font-weight:600;" id="wcSetName"></div>
+          <input type="text" style="text-align:center;border:none;outline:none;background:#f0f0f0;padding:6px 12px;border-radius:14px;font-size:13px;" placeholder="设置备注...">
+          </div>
+          
+          <div class="wc-switch-wrap"><span style="font-size:15px;color:#111;">群聊触发私信模式</span><div class="wc-switch active" onclick="this.classList.toggle('active')"></div></div>
+          <div class="wc-switch-wrap"><span style="font-size:15px;color:#111;">线下约会</span><div class="wc-switch" onclick="this.classList.toggle('active')"></div></div>
+          <div class="wc-switch-wrap"><span style="font-size:15px;color:#111;">置顶模式</span><div class="wc-switch active" onclick="this.classList.toggle('active')"></div></div>
+          <div class="wc-switch-wrap"><span style="font-size:15px;color:#111;">现实感应时间模式</span><div class="wc-switch" onclick="this.classList.toggle('active')"></div></div>
+          <div class="wc-switch-wrap"><span style="font-size:15px;color:#111;">异地模式</span><div class="wc-switch" onclick="this.classList.toggle('active')"></div></div>
+          </div>
+        </div>
+        
+        <!-- 弹窗：我的朋友圈 -->
+        <div class="wc-modal" id="wcModalMyMoments">
+          <div class="wc-modal-header">
+          <div class="wc-modal-close" onclick="wcCloseModal('wcModalMyMoments')"><svg viewBox="0 0 24 24" style="width:22px;stroke:#111;fill:none;"><polyline points="15 18 9 12 15 6"/></svg></div>
+          <div class="wc-modal-title">我的朋友圈</div>
+          <div class="wc-modal-submit" onclick="wcClearMyMoments()" style="color:#fa5151;">全删</div>
+          </div>
+          <div class="wc-modal-body" style="background:#f7f7f7;" id="wcMyMomentsList">
+          </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
