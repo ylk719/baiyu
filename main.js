@@ -2,7 +2,6 @@
     'use strict';
 
     const pagesWrapper = document.getElementById('pagesWrapper');
-    const dots = document.querySelectorAll('.dot');
     const fileInput = document.getElementById('fileInput');
 
     let currentPage = 0;
@@ -22,24 +21,7 @@
         if (index > totalPages - 1) index = totalPages - 1;
         currentPage = index;
         pagesWrapper.style.transform = 'translateX(-' + (currentPage * 33.333) + '%)';
-        updateDots();
     }
-
-    function updateDots() {
-        dots.forEach(function (dot, i) {
-            if (i === currentPage) {
-                dot.classList.add('active');
-            } else {
-                dot.classList.remove('active');
-            }
-        });
-    }
-
-    dots.forEach(function (dot, i) {
-        dot.addEventListener('click', function () {
-            goToPage(i);
-        });
-    });
 
     function handleTouchStart(e) {
         if (e.touches.length !== 1) return;
@@ -250,23 +232,7 @@
         });
     }
 
-    function fitToScreen() {
-        var phoneContainer = document.querySelector('.phone-container');
-        var vh = window.innerHeight;
-        var vw = window.innerWidth;
-        var designWidth = 430;
-        
-        var scaleX = vw / designWidth;
-        var scale = Math.min(scaleX, 1);
-        
-        phoneContainer.style.transform = 'scale(' + scale + ')';
-        phoneContainer.style.transformOrigin = 'top center';
-        phoneContainer.style.height = vh + 'px';
-        document.body.style.height = vh + 'px';
-    }
-
     function init() {
-        updateDots();
         loadSavedImages();
         updateTime();
         setInterval(updateTime, 30000);
@@ -274,12 +240,6 @@
         var pages = document.querySelectorAll('.page');
         pages.forEach(function(page) {
             page.scrollTop = 0;
-        });
-
-        setTimeout(fitToScreen, 50);
-        window.addEventListener('resize', fitToScreen);
-        window.addEventListener('orientationchange', function() {
-            setTimeout(fitToScreen, 200);
         });
     }
 

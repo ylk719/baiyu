@@ -16,7 +16,7 @@
     <meta name="screen-orientation" content="portrait">
     <meta name="browsermode" content="application">
     <title>手机桌面</title>
-    <link rel="stylesheet" href="style.css?v=18">
+    <link rel="stylesheet" href="style.css?v=19">
 </head>
 <body>
     <div class="phone-container">
@@ -356,36 +356,6 @@
     <!-- 隐藏的文件输入 -->
     <input type="file" id="fileInput" accept="image/*" style="display: none;">
 
-    <script src="main.js?v=6"></script>
-    <script>
-        function fitToScreen() {
-            var phoneContainer = document.querySelector('.phone-container');
-            var page = document.querySelector('.page');
-            var vh = window.innerHeight;
-            var vw = window.innerWidth;
-            var designWidth = 430;
-            var contentHeight = page ? page.scrollHeight : 800;
-            var scaleY = vh / contentHeight;
-            var scaleX = vw / designWidth;
-            var scale = Math.min(scaleX, scaleY);
-            if (scale >= 1) {
-                phoneContainer.style.transform = 'scale(1)';
-                phoneContainer.style.transformOrigin = 'top center';
-                document.body.style.height = 'auto';
-            } else {
-                phoneContainer.style.transform = 'scale(' + scale + ')';
-                phoneContainer.style.transformOrigin = 'top center';
-                var newHeight = contentHeight * scale;
-                document.body.style.height = newHeight + 'px';
-            }
-        }
-        window.addEventListener('load', function() {
-            setTimeout(fitToScreen, 100);
-        });
-        window.addEventListener('resize', fitToScreen);
-        window.addEventListener('orientationchange', function() {
-            setTimeout(fitToScreen, 200);
-        });
-    </script>
+    <script src="main.js?v=7"></script>
 </body>
 </html>
