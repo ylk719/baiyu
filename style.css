@@ -17,6 +17,154 @@
 }
 .censy-page::-webkit-scrollbar { display: none; }
 .censy-top-section, .censy-psp-wrapper, .censy-p3-top-wrapper { padding-top: 15px; display: flex; justify-content: center; flex-shrink: 0; width: 100%; }
+.neo-profile-card {
+    width: 300px;
+    background: #ffffff;
+    border-radius: 28px;
+    box-shadow: 0 12px 40px rgba(60, 60, 70, 0.08), 0 2px 8px rgba(60, 60, 70, 0.04);
+    padding-bottom: 22px;
+    position: relative;
+    overflow: hidden;
+}
+.neo-card-cover {
+    width: 100%;
+    height: 150px;
+    position: relative;
+    cursor: pointer;
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
+    overflow: hidden;
+}
+.neo-cover-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: grayscale(0.1);
+}
+.neo-cover-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+    filter: grayscale(0.2);
+}
+.neo-avatar-wrap {
+    position: absolute;
+    left: 50%;
+    top: 150px;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    width: 96px;
+    height: 96px;
+}
+.neo-avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(60, 60, 70, 0.12);
+}
+.neo-avatar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+    pointer-events: none;
+}
+.neo-avatar-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.neo-avatar-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+    border-radius: 50%;
+}
+.neo-card-body {
+    margin-top: 54px;
+    text-align: center;
+    padding: 0 20px;
+}
+.neo-username {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a1a1e;
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+    cursor: text;
+    outline: none;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+}
+.neo-userid {
+    font-size: 12px;
+    color: #9a9aa0;
+    margin-bottom: 12px;
+    cursor: text;
+    outline: none;
+    letter-spacing: 0.3px;
+}
+.neo-signature {
+    font-size: 13.5px;
+    color: #5a5a60;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    cursor: text;
+    outline: none;
+    letter-spacing: 0.2px;
+    padding: 0 8px;
+}
+.neo-location-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+.neo-loc-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.neo-loc-icon:hover {
+    opacity: 0.7;
+}
+.neo-location-text {
+    font-size: 12px;
+    color: #9a9aa0;
+    cursor: text;
+    outline: none;
+    letter-spacing: 0.3px;
+}
+.neo-footer-label {
+    font-size: 13px;
+    color: #1a1a1e;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    cursor: text;
+    outline: none;
+    padding-top: 4px;
+    border-top: 1px solid #f0f0f2;
+    margin: 0 -20px;
+    padding-bottom: 0;
+}
 .censy-mini-card {
     width: 280px; background: rgba(255,255,255,0.85); backdrop-filter: blur(10px);
     border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); padding-bottom: 24px; position: relative;

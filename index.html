@@ -22,19 +22,146 @@
     <input type="file" id="censyP3Up3" class="censy-hidden-file" accept="image/*" style="display:none;">
     <input type="file" id="censyGlobalBgUpload" accept="image/*" style="display:none;">
     <input type="file" id="censyGlobalIconUpload" accept="image/*" style="display:none;">
+    <input type="file" id="neoCoverFile" accept="image/*" style="display:none;">
+    <input type="file" id="neoAvatarFile" accept="image/*" style="display:none;">
+    <input type="file" id="neoLocIconFile" accept="image/*" style="display:none;">
 
     <div class="censy-pages-container" id="censyPagesContainer">
         <!-- 第1页 -->
         <div class="censy-page">
           <div class="censy-top-section">
-          <div class="censy-mini-card">
-          <div class="censy-card-cover" id="censyCoverUpload"></div>
-          <div class="censy-card-avatar" id="censyAvatarUpload">换图</div>
-          <div class="censy-card-texts">
-          <div contenteditable="true">???? - 初雪 -</div>
-          <div contenteditable="true">??. Meet you in white December ?? + ?</div>
-          <div contenteditable="true">- 在白色12月 遇见你 -</div>
-          </div>
+          <div class="neo-profile-card">
+            <div class="neo-card-cover" id="neoCoverUpload">
+              <svg class="neo-cover-svg" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                  <linearGradient id="fogBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#f0f0f2"/>
+                    <stop offset="50%" stop-color="#e5e5e8"/>
+                    <stop offset="100%" stop-color="#d8d8dc"/>
+                  </linearGradient>
+                  <filter id="blurSoft" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="2.5"/>
+                  </filter>
+                  <filter id="blurLight" x="-10%" y="-10%" width="120%" height="120%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="1"/>
+                  </filter>
+                  <linearGradient id="branchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#3a3a3f" stop-opacity="0.85"/>
+                    <stop offset="100%" stop-color="#5a5a60" stop-opacity="0.6"/>
+                  </linearGradient>
+                </defs>
+                <rect width="400" height="220" fill="url(#fogBg)"/>
+                <g filter="url(#blurSoft)" opacity="0.4">
+                  <path d="M0,220 Q20,180 10,150 Q5,120 25,95 Q45,70 70,55 Q100,38 140,30 Q180,22 220,28 Q260,34 290,50 Q310,62 325,80" fill="none" stroke="#7a7a80" stroke-width="8" stroke-linecap="round"/>
+                </g>
+                <g filter="url(#blurLight)" opacity="0.75">
+                  <path d="M-5,220 Q15,175 8,142 Q2,110 30,82 Q55,55 88,40 Q125,25 170,18 Q215,12 255,20 Q290,28 315,48 Q335,65 345,88" fill="none" stroke="url(#branchGrad)" stroke-width="5" stroke-linecap="round"/>
+                </g>
+                <g opacity="0.55" filter="url(#blurLight)">
+                  <path d="M40,120 Q60,115 75,100 Q88,88 100,95 Q110,100 105,115" fill="none" stroke="#5a5a60" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M80,90 Q100,82 115,70 Q128,60 140,65 Q150,70 145,85" fill="none" stroke="#5a5a60" stroke-width="1.2" stroke-linecap="round"/>
+                  <path d="M130,60 Q155,50 175,42 Q195,35 210,38 Q220,42 215,55" fill="none" stroke="#5a5a60" stroke-width="1" stroke-linecap="round"/>
+                  <path d="M180,45 Q200,38 220,35 Q240,32 255,36 Q265,40 260,52" fill="none" stroke="#5a5a60" stroke-width="0.8" stroke-linecap="round"/>
+                  <path d="M60,140 Q78,135 92,125 Q102,118 110,125 Q115,132 110,145" fill="none" stroke="#6a6a70" stroke-width="1.2" stroke-linecap="round"/>
+                  <path d="M100,100 Q120,92 138,82 Q152,74 165,80 Q172,85 168,98" fill="none" stroke="#6a6a70" stroke-width="1" stroke-linecap="round"/>
+                  <path d="M150,68 Q172,58 195,52 Q215,46 232,52 Q240,56 235,70" fill="none" stroke="#6a6a70" stroke-width="0.7" stroke-linecap="round"/>
+                  <path d="M30,160 Q48,155 62,145 Q72,138 80,145 Q85,152 80,165" fill="none" stroke="#7a7a80" stroke-width="1" stroke-linecap="round"/>
+                  <path d="M15,180 Q30,175 42,168 Q50,163 55,172 Q58,180 52,190" fill="none" stroke="#7a7a80" stroke-width="0.8" stroke-linecap="round"/>
+                  <path d="M200,50 Q218,44 238,40 Q255,37 270,42 Q278,46 273,58" fill="none" stroke="#7a7a80" stroke-width="0.6" stroke-linecap="round"/>
+                </g>
+                <g opacity="0.35" filter="url(#blurSoft)">
+                  <path d="M-10,200 Q50,190 90,175 Q130,160 170,150 Q210,140 250,145 Q290,150 320,165" fill="none" stroke="#aaaab0" stroke-width="30"/>
+                </g>
+                <g class="neo-russian-text" fill="#6a6a70" opacity="0.5">
+                  <text x="290" y="70" font-family="Georgia, serif" font-style="italic" font-size="13" font-weight="300" text-anchor="end">я не знаю будет ли</text>
+                  <text x="290" y="98" font-family="Georgia, serif" font-style="italic" font-size="17" font-weight="300" text-anchor="end">хуже</text>
+                </g>
+                <rect width="400" height="220" fill="url(#fogBg)" opacity="0.15"/>
+              </svg>
+              <img id="neoCoverImg" class="neo-cover-img" src="" alt="cover">
+            </div>
+            <div class="neo-avatar-wrap">
+              <div class="neo-avatar" id="neoAvatarUpload">
+                <svg class="neo-avatar-svg" viewBox="0 0 160 160">
+                  <defs>
+                    <radialGradient id="avatarBg" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stop-color="#ffffff"/>
+                      <stop offset="100%" stop-color="#f0f0f2"/>
+                    </radialGradient>
+                    <filter id="softFeather">
+                      <feGaussianBlur in="SourceAlpha" stdDeviation="1.5"/>
+                      <feOffset dx="0" dy="0" result="offsetblur"/>
+                      <feComponentTransfer>
+                        <feFuncA type="linear" slope="0.9"/>
+                      </feComponentTransfer>
+                      <feMerge>
+                        <feMergeNode/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  <circle cx="80" cy="80" r="78" fill="url(#avatarBg)"/>
+                  <g filter="url(#softFeather)">
+                    <ellipse cx="80" cy="65" rx="30" ry="12" fill="#2a2a2e"/>
+                    <path d="M55,65 Q50,95 58,110 Q62,118 70,120 L90,120 Q98,118 102,110 Q110,95 105,65 Q100,45 80,42 Q60,45 55,65Z" fill="#2a2a2e"/>
+                    <path d="M58,55 Q62,48 70,46 Q75,45 80,48" fill="none" stroke="#1a1a1e" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M50,68 Q48,75 52,80 Q56,85 62,82" fill="#2a2a2e"/>
+                    <path d="M110,68 Q112,75 108,80 Q104,85 98,82" fill="#2a2a2e"/>
+                    <ellipse cx="80" cy="52" rx="28" ry="22" fill="#2a2a2e"/>
+                    <path d="M55,50 Q50,35 60,28 Q70,22 80,20 Q90,22 100,28 Q110,35 105,50" fill="#2a2a2e"/>
+                    <path d="M72,25 Q75,15 80,12 Q85,15 88,25" fill="#2a2a2e"/>
+                    <rect x="90" y="30" width="12" height="6" rx="1" fill="#fff" transform="rotate(15 96 33)"/>
+                    <line x1="96" y1="30" x2="96" y2="36" stroke="#e0e0e0" stroke-width="1" transform="rotate(15 96 33)"/>
+                  </g>
+                  <g filter="url(#softFeather)">
+                    <ellipse cx="80" cy="78" rx="24" ry="26" fill="#f8f8fa"/>
+                    <ellipse cx="70" cy="85" rx="5" ry="3" fill="#f0d8dc" opacity="0.6"/>
+                    <ellipse cx="90" cy="85" rx="5" ry="3" fill="#f0d8dc" opacity="0.6"/>
+                    <ellipse cx="71" cy="76" rx="4" ry="5" fill="#2a2a2e"/>
+                    <ellipse cx="89" cy="76" rx="4" ry="5" fill="#2a2a2e"/>
+                    <circle cx="72" cy="75" r="1.5" fill="#fff"/>
+                    <circle cx="90" cy="75" r="1.5" fill="#fff"/>
+                    <path d="M77,88 Q80,91 83,88" fill="none" stroke="#5a5a60" stroke-width="1.2" stroke-linecap="round"/>
+                    <path d="M68,80 Q68,78 70,78" fill="none" stroke="#4a4a4e" stroke-width="1" stroke-linecap="round"/>
+                    <path d="M92,80 Q92,78 90,78" fill="none" stroke="#4a4a4e" stroke-width="1" stroke-linecap="round"/>
+                  </g>
+                  <g filter="url(#softFeather)" transform="translate(30, 105)">
+                    <path d="M12,20 Q8,18 5,15 Q2,12 4,8 Q7,3 13,2 Q18,1 22,4 Q26,8 25,14 Q24,18 20,20 Q16,22 12,20Z" fill="#f8f8fa" stroke="#d0d0d4" stroke-width="1"/>
+                    <ellipse cx="9" cy="13" rx="2" ry="2.5" fill="#3a3a3e"/>
+                    <path d="M14,16 Q16,17 18,16" fill="none" stroke="#c0c0c4" stroke-width="0.8" stroke-linecap="round"/>
+                    <path d="M6,5 Q4,0 8,-2 Q10,-1 10,3" fill="#f8f8fa" stroke="#d0d0d4" stroke-width="0.8"/>
+                    <path d="M18,4 Q20,-1 17,-3 Q15,-2 14,2" fill="#f8f8fa" stroke="#d0d0d4" stroke-width="0.8"/>
+                  </g>
+                  <g filter="url(#softFeather)" opacity="0.5">
+                    <ellipse cx="25" cy="130" rx="12" ry="6" fill="#e8e8ec"/>
+                    <path d="M18,128 Q25,124 32,128" fill="none" stroke="#d0d0d4" stroke-width="1"/>
+                    <ellipse cx="135" cy="50" rx="8" ry="4" fill="#e8e8ec"/>
+                    <path d="M130,48 Q135,45 140,48" fill="none" stroke="#d0d0d4" stroke-width="0.8"/>
+                  </g>
+                  <g filter="url(#softFeather)" transform="translate(55, 102)">
+                    <path d="M8,25 Q5,20 8,15 Q12,12 18,15 Q22,18 20,25 Q18,30 13,32 Q8,30 8,25Z" fill="#f8f8fa" stroke="#d0d0d4" stroke-width="0.8" opacity="0.8"/>
+                    <path d="M8,25 Q5,20 8,15 Q12,12 18,15" fill="#2a2a2e" opacity="0.15"/>
+                    <path d="M15,22 Q18,20 22,22" fill="none" stroke="#4a4a4e" stroke-width="0.8" stroke-linecap="round"/>
+                  </g>
+                </svg>
+                <img id="neoAvatarImg" class="neo-avatar-img" src="" alt="avatar">
+              </div>
+            </div>
+            <div class="neo-card-body">
+              <div class="neo-username" data-editable="true" id="neoUsername">Lies7core</div>
+              <div class="neo-userid" data-editable="true" id="neoUserid">@NianGao_</div>
+              <div class="neo-signature" data-editable="true" id="neoSignature">"让我们都变成幸福大王&gt;~ω~&lt;!!♡☽⊃"</div>
+              <div class="neo-location-row">
+                <span class="neo-loc-icon" id="neoLocIcon">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#999" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                </span>
+                <span class="neo-location-text" data-editable="true" id="neoLocation">China</span>
+              </div>
+              <div class="neo-footer-label" data-editable="true" id="neoFooterLabel">Colorful Widget</div>
+            </div>
           </div>
           </div>
           <div class="censy-mid-section">

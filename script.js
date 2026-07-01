@@ -81,6 +81,182 @@
         if(txt) txt.style.display = 'none';
     });
 
+    // === 新顶部卡片交互 ===
+    // 封面图上传
+    const neoCoverUpload = document.getElementById('neoCoverUpload');
+    const neoCoverFile = document.getElementById('neoCoverFile');
+    const neoCoverImg = document.getElementById('neoCoverImg');
+    if (neoCoverUpload && neoCoverFile) {
+        neoCoverUpload.addEventListener('click', () => neoCoverFile.click());
+        neoCoverFile.addEventListener('change', (e) => {
+            let f = e.target.files[0];
+            if (!f) return;
+            let reader = new FileReader();
+            reader.onload = ev => {
+                if (neoCoverImg) {
+                    neoCoverImg.src = ev.target.result;
+                    neoCoverImg.style.display = 'block';
+                }
+            };
+            reader.readAsDataURL(f);
+        });
+    }
+
+    // 头像上传
+    const neoAvatarUpload = document.getElementById('neoAvatarUpload');
+    const neoAvatarFile = document.getElementById('neoAvatarFile');
+    const neoAvatarImg = document.getElementById('neoAvatarImg');
+    if (neoAvatarUpload && neoAvatarFile) {
+        neoAvatarUpload.addEventListener('click', () => neoAvatarFile.click());
+        neoAvatarFile.addEventListener('change', (e) => {
+            let f = e.target.files[0];
+            if (!f) return;
+            let reader = new FileReader();
+            reader.onload = ev => {
+                if (neoAvatarImg) {
+                    neoAvatarImg.src = ev.target.result;
+                    neoAvatarImg.style.display = 'block';
+                }
+            };
+            reader.readAsDataURL(f);
+        });
+    }
+
+    // 定位图标上传
+    const neoLocIcon = document.getElementById('neoLocIcon');
+    const neoLocIconFile = document.getElementById('neoLocIconFile');
+    if (neoLocIcon && neoLocIconFile) {
+        neoLocIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            neoLocIconFile.click();
+        });
+        neoLocIconFile.addEventListener('change', (e) => {
+            let f = e.target.files[0];
+            if (!f) return;
+            let reader = new FileReader();
+            reader.onload = ev => {
+                neoLocIcon.innerHTML = `<img src="${ev.target.result}" style="width:14px;height:14px;object-fit:cover;border-radius:50%;">`;
+            };
+            reader.readAsDataURL(f);
+        });
+    }
+
+    // 双击编辑文字功能
+    function setupDoubleClickEdit(elementId) {
+        const el = document.getElementById(elementId);
+        if (!el) return;
+        el.addEventListener('dblclick', function(e) {
+            e.stopPropagation();
+            const originalText = this.innerText;
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = originalText;
+            input.style.cssText = `
+                width: 100%;
+                border: 1px solid #d0d0d4;
+                outline: none;
+                padding: 6px 10px;
+                font-size: inherit;
+                font-weight: inherit;
+                color: inherit;
+                text-align: center;
+                background: #fafafa;
+                border-radius: 8px;
+                font-family: inherit;
+                letter-spacing: inherit;
+                box-sizing: border-box;
+            `;
+            this.innerHTML = '';
+            this.appendChild(input);
+            input.focus();
+            input.select();
+
+            const finishEdit = () => {
+                const newText = input.value.trim() || originalText;
+                this.innerText = newText;
+            };
+
+            input.addEventListener('blur', finishEdit);
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    input.blur();
+                }
+                if (e.key === 'Escape') {
+                    input.value = originalText;
+                    input.blur();
+                }
+            });
+            input.addEventListener('click', (e) => e.stopPropagation());
+        });
+    }
+
+    setupDoubleClickEdit('neoUsername');
+    setupDoubleClickEdit('neoUserid');
+    setupDoubleClickEdit('neoSignature');
+    setupDoubleClickEdit('neoLocation');
+    setupDoubleClickEdit('neoFooterLabel');
+
+    // 背景俄语文字双击编辑
+    const neoRussianText = document.querySelector('.neo-russian-text');
+    if (neoRussianText) {
+        neoRussianText.style.cursor = 'text';
+        neoRussianText.addEventListener('dblclick', function(e) {
+            e.stopPropagation();
+            const textEls = this.querySelectorAll('text');
+            const originalTexts = Array.from(textEls).map(t => t.textContent);
+            const originalY = Array.from(textEls).map(t => t.getAttribute('y'));
+            const originalX = Array.from(textEls).map(t => t.getAttribute('x'));
+
+            const foreignObject = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject');
+            foreignObject.setAttribute('x', '120');
+            foreignObject.setAttribute('y', '48');
+            foreignObject.setAttribute('width', '170');
+            foreignObject.setAttribute('height', '65');
+
+            const div = document.createElement('div');
+            div.style.cssText = 'display:flex;flex-direction:column;gap:4px;align-items:flex-end;';
+
+            const input1 = document.createElement('input');
+            input1.type = 'text';
+            input1.value = originalTexts[0];
+            input1.style.cssText = 'width:100%;border:1px solid #aaa;background:rgba(255,255,255,0.9);padding:2px 4px;font-family:Georgia,serif;font-style:italic;font-size:13px;color:#555;outline:none;text-align:right;';
+
+            const input2 = document.createElement('input');
+            input2.type = 'text';
+            input2.value = originalTexts[1];
+            input2.style.cssText = 'width:100%;border:1px solid #aaa;background:rgba(255,255,255,0.9);padding:2px 4px;font-family:Georgia,serif;font-style:italic;font-size:16px;color:#555;outline:none;text-align:right;';
+
+            div.appendChild(input1);
+            div.appendChild(input2);
+            foreignObject.appendChild(div);
+
+            textEls.forEach(t => t.style.display = 'none');
+            this.appendChild(foreignObject);
+            input1.focus();
+            input1.select();
+
+            const finishEdit = () => {
+                textEls[0].textContent = input1.value || originalTexts[0];
+                textEls[1].textContent = input2.value || originalTexts[1];
+                textEls.forEach(t => t.style.display = 'block');
+                foreignObject.remove();
+            };
+
+            input2.addEventListener('blur', finishEdit);
+            input2.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') input2.blur();
+                if (e.key === 'Escape') {
+                    input1.value = originalTexts[0];
+                    input2.value = originalTexts[1];
+                    input2.blur();
+                }
+            });
+            input1.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') input2.focus();
+            });
+        });
+    }
+
     const pagesContainer = document.getElementById('censyPagesContainer');
     const dots = document.querySelectorAll('#censyPageDots .censy-dot');
     if (pagesContainer && dots.length > 0) {
