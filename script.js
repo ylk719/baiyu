@@ -257,6 +257,177 @@
         });
     }
 
+    // === PVC证件卡交互 ===
+    const pvcAvatarBox = document.getElementById('pvcAvatarBox');
+    const pvcAvatarFile = document.getElementById('pvcAvatarFile');
+    const pvcAvatarImg = document.getElementById('pvcAvatarImg');
+    if (pvcAvatarBox && pvcAvatarFile) {
+        pvcAvatarBox.addEventListener('click', () => pvcAvatarFile.click());
+        pvcAvatarFile.addEventListener('change', (e) => {
+            let f = e.target.files[0];
+            if (!f) return;
+            let reader = new FileReader();
+            reader.onload = ev => {
+                if (pvcAvatarImg) {
+                    pvcAvatarImg.src = ev.target.result;
+                    pvcAvatarImg.style.display = 'block';
+                }
+            };
+            reader.readAsDataURL(f);
+        });
+    }
+
+    // PVC卡片文字双击编辑
+    function setupPvcDoubleClickEdit(elementId) {
+        const el = document.getElementById(elementId);
+        if (!el) return;
+        el.addEventListener('dblclick', function(e) {
+            e.stopPropagation();
+            const originalText = this.innerText;
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = originalText;
+            input.style.cssText = `
+                width: 100%;
+                border: 1px solid #d0d0d4;
+                outline: none;
+                padding: 2px 4px;
+                font-size: 9px;
+                color: #a0a0a8;
+                background: #fafafa;
+                border-radius: 4px;
+                font-family: inherit;
+                letter-spacing: inherit;
+                box-sizing: border-box;
+            `;
+            this.innerHTML = '';
+            this.appendChild(input);
+            input.focus();
+            input.select();
+
+            const finishEdit = () => {
+                const newText = input.value.trim() || originalText;
+                this.innerText = newText;
+            };
+
+            input.addEventListener('blur', finishEdit);
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') input.blur();
+                if (e.key === 'Escape') {
+                    input.value = originalText;
+                    input.blur();
+                }
+            });
+            input.addEventListener('click', (e) => e.stopPropagation());
+        });
+    }
+
+    setupPvcDoubleClickEdit('pvcText1');
+    setupPvcDoubleClickEdit('pvcText2');
+    setupPvcDoubleClickEdit('pvcText3');
+
+    // === 雪花主题卡片交互 ===
+    // 头像上传
+    const snowAvatar = document.getElementById('snowAvatar');
+    const snowAvatarFile = document.getElementById('snowAvatarFile');
+    const snowAvatarImg = document.getElementById('snowAvatarImg');
+    if (snowAvatar && snowAvatarFile) {
+        snowAvatar.addEventListener('click', () => snowAvatarFile.click());
+        snowAvatarFile.addEventListener('change', (e) => {
+            let f = e.target.files[0];
+            if (!f) return;
+            let reader = new FileReader();
+            reader.onload = ev => {
+                if (snowAvatarImg) {
+                    snowAvatarImg.src = ev.target.result;
+                    snowAvatarImg.style.display = 'block';
+                }
+            };
+            reader.readAsDataURL(f);
+        });
+    }
+
+    // 四个按钮图标上传
+    function setupSnowIconUpload(iconId, fileId, imgId) {
+        const iconEl = document.getElementById(iconId);
+        const fileEl = document.getElementById(fileId);
+        const imgEl = document.getElementById(imgId);
+        if (!iconEl || !fileEl) return;
+        iconEl.addEventListener('click', (e) => {
+            e.stopPropagation();
+            fileEl.click();
+        });
+        fileEl.addEventListener('change', (e) => {
+            let f = e.target.files[0];
+            if (!f) return;
+            let reader = new FileReader();
+            reader.onload = ev => {
+                if (imgEl) {
+                    imgEl.src = ev.target.result;
+                    imgEl.style.display = 'block';
+                }
+            };
+            reader.readAsDataURL(f);
+        });
+    }
+
+    setupSnowIconUpload('snowIcon1', 'snowIconFile1', 'snowIconImg1');
+    setupSnowIconUpload('snowIcon2', 'snowIconFile2', 'snowIconImg2');
+    setupSnowIconUpload('snowIcon3', 'snowIconFile3', 'snowIconImg3');
+    setupSnowIconUpload('snowIcon4', 'snowIconFile4', 'snowIconImg4');
+
+    // 双击编辑文字
+    function setupSnowDoubleClickEdit(elementId, fontSize, color) {
+        const el = document.getElementById(elementId);
+        if (!el) return;
+        el.addEventListener('dblclick', function(e) {
+            e.stopPropagation();
+            const originalText = this.innerText;
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = originalText;
+            input.style.cssText = `
+                width: 100%;
+                border: 1px solid #d0d0d4;
+                outline: none;
+                padding: 4px 8px;
+                font-size: ${fontSize || '16px'};
+                color: ${color || '#5a5a60'};
+                background: rgba(255,255,255,0.9);
+                border-radius: 8px;
+                font-family: inherit;
+                letter-spacing: inherit;
+                box-sizing: border-box;
+            `;
+            this.innerHTML = '';
+            this.appendChild(input);
+            input.focus();
+            input.select();
+
+            const finishEdit = () => {
+                const newText = input.value.trim() || originalText;
+                this.innerText = newText;
+            };
+
+            input.addEventListener('blur', finishEdit);
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') input.blur();
+                if (e.key === 'Escape') {
+                    input.value = originalText;
+                    input.blur();
+                }
+            });
+            input.addEventListener('click', (e) => e.stopPropagation());
+        });
+    }
+
+    setupSnowDoubleClickEdit('snowText1', '16px', '#5a5a60');
+    setupSnowDoubleClickEdit('snowText2', '16px', '#5a5a60');
+    setupSnowDoubleClickEdit('snowText3', '16px', '#5a5a60');
+    setupSnowDoubleClickEdit('snowText4', '16px', '#5a5a60');
+    setupSnowDoubleClickEdit('snowDivider', '14px', '#b0b0b8');
+    setupSnowDoubleClickEdit('snowBottomText', '18px', '#2a2a30');
+
     const pagesContainer = document.getElementById('censyPagesContainer');
     const dots = document.querySelectorAll('#censyPageDots .censy-dot');
     if (pagesContainer && dots.length > 0) {
