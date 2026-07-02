@@ -866,6 +866,8 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
 }
 .shop-app-container.shop-show { transform: translateX(0); }
 
@@ -873,6 +875,7 @@
     flex: 1;
     position: relative;
     overflow: hidden;
+    overscroll-behavior: none;
 }
 
 .shop-view {
@@ -886,6 +889,8 @@
     scrollbar-width: none;
     padding-bottom: 80px;
     box-sizing: border-box;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
 }
 .shop-view.active { opacity: 1; pointer-events: auto; }
 .shop-view::-webkit-scrollbar { display: none; }
@@ -895,7 +900,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 12px 16px 14px;
+    padding: calc(env(safe-area-inset-top) + 12px) 16px 14px;
     position: sticky;
     top: 0;
     z-index: 5;
@@ -1143,19 +1148,18 @@
 }
 .shop-product-card {
     position: relative;
-    background: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.8);
     backdrop-filter: blur(20px);
     border-radius: 18px;
     overflow: hidden;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1.5px solid rgba(230,222,210,0.9);
-    box-shadow: 0 4px 16px rgba(200,190,175,0.1);
+    border: 1px solid rgba(255,255,255,0.95);
+    box-shadow: 0 4px 18px rgba(200,190,180,0.08);
 }
 .shop-product-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 28px rgba(200,190,175,0.18);
-    border-color: rgba(220,210,195,0.95);
+    box-shadow: 0 10px 28px rgba(200,190,180,0.14);
 }
 .shop-product-card:active {
     transform: translateY(-1px) scale(0.99);
@@ -1537,30 +1541,15 @@
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 55%;
-    background: 
+    background:
         radial-gradient(ellipse at 20% 30%, rgba(216,192,232,0.5) 0%, transparent 60%),
         radial-gradient(ellipse at 80% 10%, rgba(240,208,224,0.4) 0%, transparent 55%),
         linear-gradient(180deg, rgba(232,216,245,0.6), rgba(245,240,248,0));
     background-size: cover;
     background-position: center;
-}
-.shop-profile-bg-edit {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    width: 36px;
-    height: 36px;
-    background: rgba(0,0,0,0.35);
-    backdrop-filter: blur(10px);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
-    z-index: 10;
-    transition: transform 0.2s;
+    z-index: 1;
 }
-.shop-profile-bg-edit:active { transform: scale(0.92); }
 .shop-profile-avatar {
     position: relative;
     width: 72px; height: 72px;
@@ -1590,18 +1579,6 @@
     object-fit: cover;
     display: none;
 }
-.shop-avatar-edit {
-    position: absolute;
-    bottom: 0; right: 0;
-    width: 24px; height: 24px;
-    background: rgba(90,70,120,0.85);
-    backdrop-filter: blur(4px);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid rgba(255,255,255,0.9);
-}
 .shop-profile-name {
     position: relative;
     text-align: center;
@@ -1609,20 +1586,27 @@
     font-weight: 700;
     color: #3a2e4a;
     margin-bottom: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
+    cursor: text;
+    outline: none;
     z-index: 2;
+    padding: 2px 8px;
+    border-radius: 8px;
+    transition: background 0.2s;
 }
+.shop-profile-name:focus { background: rgba(255,255,255,0.6); }
 .shop-profile-desc {
     position: relative;
     text-align: center;
     font-size: 13px;
     color: #9a8ab0;
     z-index: 2;
+    cursor: text;
+    outline: none;
+    padding: 2px 8px;
+    border-radius: 8px;
+    transition: background 0.2s;
 }
+.shop-profile-desc:focus { background: rgba(255,255,255,0.6); }
 
 .shop-order-section {
     margin: 0 16px 16px;
@@ -1744,7 +1728,7 @@
     gap: 2px;
     cursor: pointer;
     padding: 8px 16px;
-    color: #b8a898;
+    color: #8a7d6d;
     position: relative;
     transition: color 0.25s, transform 0.2s;
 }
@@ -2973,20 +2957,28 @@
 }
 .shop-coupon-card {
     position: relative;
-    display: flex;
     background: linear-gradient(135deg, rgba(248,220,232,0.9), rgba(240,200,224,0.9));
     border-radius: 16px;
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.8);
     box-shadow: 0 4px 16px rgba(240,200,224,0.3);
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.25s;
+    margin-bottom: 12px;
 }
 .shop-coupon-card:active { transform: scale(0.98); }
 .shop-coupon-card.disabled {
     opacity: 0.6;
     background: linear-gradient(135deg, rgba(240,240,248,0.9), rgba(232,232,240,0.9));
     box-shadow: none;
+}
+.shop-coupon-card.expanded {
+    box-shadow: 0 8px 28px rgba(240,200,224,0.4);
+}
+.shop-coupon-main {
+    display: flex;
+    align-items: center;
+    position: relative;
 }
 .shop-coupon-left {
     width: 90px;
@@ -2996,6 +2988,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    flex-shrink: 0;
 }
 .shop-coupon-amount {
     font-size: 28px;
@@ -3016,6 +3009,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-width: 0;
 }
 .shop-coupon-name {
     font-size: 15px;
@@ -3027,10 +3021,56 @@
     font-size: 12px;
     color: #a888a8;
     margin-bottom: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .shop-coupon-expiry {
     font-size: 11px;
     color: #c0a0b0;
+}
+.shop-coupon-expand-icon {
+    flex-shrink: 0;
+    padding: 0 12px;
+    transition: transform 0.3s;
+}
+.shop-coupon-card.expanded .shop-coupon-expand-icon {
+    transform: rotate(180deg);
+}
+.shop-coupon-detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(8px);
+}
+.shop-coupon-card.expanded .shop-coupon-detail {
+    max-height: 300px;
+}
+.shop-coupon-detail-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 8px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+    font-size: 12px;
+}
+.shop-coupon-detail-row:last-of-type { border-bottom: none; }
+.shop-coupon-detail-label {
+    flex-shrink: 0;
+    color: #b090a8;
+    width: 60px;
+}
+.shop-coupon-detail-val {
+    flex: 1;
+    color: #6a4a6a;
+    line-height: 1.5;
+}
+.shop-coupon-detail-tip {
+    text-align: center;
+    font-size: 11px;
+    color: #c0a0b0;
+    padding: 8px 0 10px;
 }
 .shop-coupon-empty {
     display: none;

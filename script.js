@@ -1424,12 +1424,6 @@ function shopRenderProducts() {
             card.innerHTML = `
                 <div class="shop-prod-img-wrap" onclick="shopOpenProductDetail('${p.id}')">
                     <div class="shop-prod-img" style="background-image:url('${shopState.customProductImgs[p.id]}')"></div>
-                    <div class="shop-prod-img-edit-btn" onclick="event.stopPropagation(); shopTriggerCardImgUpload('${p.id}')" title="更换图片">
-                        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                    </div>
-                    <div class="shop-prod-fav-btn ${isFav ? 'favorited' : ''}" onclick="event.stopPropagation(); shopToggleFavorite('${p.id}', this)">
-                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                    </div>
                 </div>
                 <div class="shop-prod-info" onclick="shopOpenProductDetail('${p.id}')">
                     <div class="shop-prod-name">${p.name}</div>
@@ -1444,12 +1438,6 @@ function shopRenderProducts() {
                     <div class="shop-prod-desc-title">${p.name}</div>
                     <div class="shop-prod-desc-text">${descDetail}</div>
                     <div class="shop-prod-desc-tag">${shopCatLabels[cat] || '精选好物'}</div>
-                    <div class="shop-prod-img-edit-btn" onclick="event.stopPropagation(); shopTriggerCardImgUpload('${p.id}')" title="更换图片">
-                        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                    </div>
-                    <div class="shop-prod-fav-btn ${isFav ? 'favorited' : ''}" onclick="event.stopPropagation(); shopToggleFavorite('${p.id}', this)">
-                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                    </div>
                 </div>
                 <div class="shop-prod-info" onclick="shopOpenProductDetail('${p.id}')">
                     <div class="shop-prod-name">${p.name}</div>
@@ -2735,17 +2723,14 @@ function shopSaveProfile() {
 
     if (newName) {
         shopState.userProfile.name = newName;
-        document.getElementById('shopProfileName').firstChild.textContent = newName + ' ';
+        document.getElementById('shopProfileName').textContent = newName;
     }
     if (newDesc) {
         shopState.userProfile.desc = newDesc;
-        const descEl = document.getElementById('shopProfileDesc');
-        const svgEl = descEl.querySelector('svg');
-        descEl.innerHTML = '';
-        descEl.appendChild(document.createTextNode(newDesc + ' '));
-        if (svgEl) descEl.appendChild(svgEl);
+        document.getElementById('shopProfileDesc').textContent = newDesc;
     }
     shopUpdateProfileAvatar();
+    shopSaveUserProfile();
     shopCloseModal('shopModalEditProfile');
     shopShowToast('资料修改成功');
 }
@@ -2771,6 +2756,59 @@ function shopUpdateProfileAvatar() {
     }
 }
 
+// =============== 个人资料 inline 编辑 & 持久化 ===============
+const SHOP_USER_PROFILE_KEY = 'shop_user_profile_v1';
+
+function shopSaveUserProfile() {
+    try {
+        localStorage.setItem(SHOP_USER_PROFILE_KEY, JSON.stringify(shopState.userProfile));
+    } catch (e) {}
+}
+
+function shopLoadUserProfile() {
+    try {
+        const saved = localStorage.getItem(SHOP_USER_PROFILE_KEY);
+        if (saved) {
+            const data = JSON.parse(saved);
+            if (data.name) shopState.userProfile.name = data.name;
+            if (data.desc) shopState.userProfile.desc = data.desc;
+            if (data.avatarImg) shopState.userProfile.avatarImg = data.avatarImg;
+            if (data.avatarColor) shopState.userProfile.avatarColor = data.avatarColor;
+        }
+    } catch (e) {}
+
+    const nameEl = document.getElementById('shopProfileName');
+    const descEl = document.getElementById('shopProfileDesc');
+    if (nameEl && shopState.userProfile.name) nameEl.textContent = shopState.userProfile.name;
+    if (descEl && shopState.userProfile.desc) descEl.textContent = shopState.userProfile.desc;
+    shopUpdateProfileAvatar();
+}
+
+function shopBindInlineEdit() {
+    const nameEl = document.getElementById('shopProfileName');
+    const descEl = document.getElementById('shopProfileDesc');
+
+    if (nameEl) {
+        nameEl.addEventListener('blur', () => {
+            const val = nameEl.textContent.trim();
+            if (val) {
+                shopState.userProfile.name = val;
+                shopSaveUserProfile();
+            } else {
+                nameEl.textContent = shopState.userProfile.name;
+            }
+        });
+    }
+
+    if (descEl) {
+        descEl.addEventListener('blur', () => {
+            const val = descEl.textContent.trim();
+            shopState.userProfile.desc = val;
+            shopSaveUserProfile();
+        });
+    }
+}
+
 function shopTriggerAvatarUpload() {
     document.getElementById('shopAvatarFile').click();
 }
@@ -2783,9 +2821,14 @@ function shopBindAvatarUpload() {
         const reader = new FileReader();
         reader.onload = (ev) => {
             shopState.userProfile.avatarImg = ev.target.result;
+            shopUpdateProfileAvatar();
+            shopSaveUserProfile();
             const editImg = document.getElementById('shopEditAvatarImg');
-            editImg.src = ev.target.result;
-            editImg.style.display = 'block';
+            if (editImg) {
+                editImg.src = ev.target.result;
+                editImg.style.display = 'block';
+            }
+            shopShowToast('头像更换成功');
         };
         reader.readAsDataURL(file);
         fileInput.value = '';
@@ -2985,27 +3028,45 @@ function shopRenderCoupons() {
         if (shopExtendedState.selectedCouponId === coupon.id) {
             card.classList.add('active');
         }
-        
+
         const today = new Date().toISOString().split('T')[0];
         if (coupon.expiry < today) {
             card.classList.add('disabled');
         }
 
+        const typeLabels = {
+            newuser: '新人专享', normal: '通用券', vip: '会员尊享',
+            flash: '限时抢购', category: '品类专享', car: '购车专享', house: '购房专享'
+        };
+        const typeLabel = typeLabels[coupon.type] || '优惠券';
+
         card.onclick = () => {
             if (card.classList.contains('disabled')) return;
-            shopExtendedState.selectedCouponId = shopExtendedState.selectedCouponId === coupon.id ? null : coupon.id;
-            shopRenderCoupons();
+            card.classList.toggle('expanded');
         };
 
         card.innerHTML = `
-            <div class="shop-coupon-left">
-                <div class="shop-coupon-amount">${coupon.amount}</div>
-                <div class="shop-coupon-condition">满${coupon.minAmount}可用</div>
+            <div class="shop-coupon-main">
+                <div class="shop-coupon-left">
+                    <div class="shop-coupon-amount">${coupon.amount}</div>
+                    <div class="shop-coupon-condition">满${coupon.minAmount}可用</div>
+                </div>
+                <div class="shop-coupon-right">
+                    <div class="shop-coupon-name">${coupon.name}</div>
+                    <div class="shop-coupon-desc">${coupon.desc}</div>
+                    <div class="shop-coupon-expiry">有效期至 ${coupon.expiry}</div>
+                </div>
+                <div class="shop-coupon-expand-icon">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
             </div>
-            <div class="shop-coupon-right">
-                <div class="shop-coupon-name">${coupon.name}</div>
-                <div class="shop-coupon-desc">${coupon.desc}</div>
-                <div class="shop-coupon-expiry">有效期至 ${coupon.expiry}</div>
+            <div class="shop-coupon-detail">
+                <div class="shop-coupon-detail-row"><span class="shop-coupon-detail-label">券类型</span><span class="shop-coupon-detail-val">${typeLabel}</span></div>
+                <div class="shop-coupon-detail-row"><span class="shop-coupon-detail-label">面额</span><span class="shop-coupon-detail-val">¥${coupon.amount}</span></div>
+                <div class="shop-coupon-detail-row"><span class="shop-coupon-detail-label">使用门槛</span><span class="shop-coupon-detail-val">满¥${coupon.minAmount}可用</span></div>
+                <div class="shop-coupon-detail-row"><span class="shop-coupon-detail-label">有效期</span><span class="shop-coupon-detail-val">至 ${coupon.expiry}</span></div>
+                <div class="shop-coupon-detail-row"><span class="shop-coupon-detail-label">说明</span><span class="shop-coupon-detail-val">${coupon.desc}</span></div>
+                <div class="shop-coupon-detail-tip">点击券面可收起</div>
             </div>
         `;
         listEl.appendChild(card);
@@ -3473,7 +3534,7 @@ function shopApplyColorScheme(scheme) {
 
     const tabItems = root.querySelectorAll('.shop-tab-item:not(.active)');
     tabItems.forEach(el => {
-        el.style.color = shopLightenColor(scheme.primary, 30);
+        el.style.color = scheme.textSub;
     });
 
     const pageTitles = root.querySelectorAll('.shop-page-title, .shop-product-name');
@@ -3976,6 +4037,7 @@ function shopInit() {
     shopBindBannerBgUpload();
     shopLoadProfileBg();
     shopBindProfileBgUpload();
+    shopLoadUserProfile();
     shopRenderProducts();
     shopBindCategoryClicks();
     shopBindTabClicks();
@@ -3984,6 +4046,7 @@ function shopInit() {
     shopBindCommentStars();
     shopBindRoleAvatarUpload();
     shopBindBannerClickUpload();
+    shopBindInlineEdit();
     shopInitExtended();
     shopEnsureDefaultAddress();
     shopUpdateOrderBadges();
