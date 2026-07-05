@@ -494,6 +494,1321 @@
     }
 })();
 
+/* ============================================
+   Meituan Food Delivery App
+   ============================================ */
+
+// 美团APP数据 - Ins风格高级版
+const mtData = {
+    categories: [
+        { id: 'all', name: '全部', icon: '🍽️', color: '#FF6B6B' },
+        { id: 'rice', name: '米饭', icon: '🍚', color: '#E8A87C' },
+        { id: 'noodle', name: '面食', icon: '🍜', color: '#C38D9E' },
+        { id: 'snack', name: '小吃', icon: '🍢', color: '#E27D60' },
+        { id: 'drink', name: '饮品', icon: '🥤', color: '#85DCBA' },
+        { id: 'dessert', name: '甜品', icon: '🍰', color: '#F8B195' },
+        { id: 'fastfood', name: '快餐', icon: '🍔', color: '#F67280' },
+        { id: 'hotpot', name: '火锅', icon: '🍲', color: '#C06C84' },
+        { id: 'bbq', name: '烧烤', icon: '🍖', color: '#6C5B7B' },
+        { id: 'seafood', name: '海鲜', icon: '🦐', color: '#355C7D' }
+    ],
+    stores: [
+        { id: 1, name: '慢食光 · 精致简餐', category: 'rice', rating: 4.9, orders: 2856, deliveryTime: 28, deliveryFee: 4, minOrder: 25, banner: 'linear-gradient(135deg, #FFF5EB 0%, #FFE4CC 100%)', tag: '品牌认证', desc: '甄选优质食材，慢工出细活', distance: '1.2km' },
+        { id: 10, name: '饭香门第', category: 'rice', rating: 4.6, orders: 2345, deliveryTime: 30, deliveryFee: 4, minOrder: 22, banner: 'linear-gradient(135deg, #F1F8E9 0%, #DCEDC8 100%)', tag: '经济实惠', desc: '家常味道，温暖你的胃', distance: '1.0km' },
+        { id: 13, name: '米之味 · 煲仔饭', category: 'rice', rating: 4.7, orders: 1876, deliveryTime: 35, deliveryFee: 5, minOrder: 28, banner: 'linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%)', tag: '锅巴香脆', desc: '广式煲仔饭，锅巴金黄香脆', distance: '1.6km' },
+        { id: 14, name: '盖饭之王', category: 'rice', rating: 4.5, orders: 3241, deliveryTime: 25, deliveryFee: 3, minOrder: 18, banner: 'linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%)', tag: '分量足', desc: '量大实惠，管饱又好吃', distance: '0.7km' },
+        { id: 15, name: '咖喱博士', category: 'rice', rating: 4.8, orders: 1567, deliveryTime: 32, deliveryFee: 5, minOrder: 30, banner: 'linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%)', tag: '日式咖喱', desc: '日式咖喱，浓郁香醇', distance: '2.0km' },
+        { id: 16, name: '隆江猪脚饭', category: 'rice', rating: 4.6, orders: 2890, deliveryTime: 22, deliveryFee: 3, minOrder: 20, banner: 'linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%)', tag: '肥瘦相间', desc: '正宗隆江猪脚饭，软烂入味', distance: '0.9km' },
+        { id: 17, name: '三文鱼丼饭屋', category: 'rice', rating: 4.9, orders: 987, deliveryTime: 38, deliveryFee: 6, minOrder: 45, banner: 'linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)', tag: '新鲜刺身', desc: '新鲜三文鱼，日式丼饭', distance: '2.8km' },
+        { id: 2, name: '面道 · 手作拉面', category: 'noodle', rating: 4.8, orders: 1923, deliveryTime: 32, deliveryFee: 5, minOrder: 20, banner: 'linear-gradient(135deg, #F5F0EB 0%, #E8DFD5 100%)', tag: '人气爆款', desc: '传承三代的手工面条技艺', distance: '0.8km' },
+        { id: 11, name: '一碗阳春', category: 'noodle', rating: 4.5, orders: 1456, deliveryTime: 28, deliveryFee: 4, minOrder: 18, banner: 'linear-gradient(135deg, #E0F7FA 0%, #B2EBF2 100%)', tag: '清淡爽口', desc: '一碗好面，简单纯粹', distance: '1.4km' },
+        { id: 18, name: '兰州牛肉面', category: 'noodle', rating: 4.7, orders: 2345, deliveryTime: 25, deliveryFee: 4, minOrder: 22, banner: 'linear-gradient(135deg, #FCE4EC 0%, #F8BBD9 100%)', tag: '一清二白', desc: '正宗兰州拉面，汤鲜面筋', distance: '1.1km' },
+        { id: 19, name: '重庆小面', category: 'noodle', rating: 4.6, orders: 1876, deliveryTime: 28, deliveryFee: 4, minOrder: 18, banner: 'linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%)', tag: '麻辣鲜香', desc: '地道重庆味，麻辣过瘾', distance: '1.3km' },
+        { id: 20, name: '老北京炸酱面', category: 'noodle', rating: 4.5, orders: 1234, deliveryTime: 30, deliveryFee: 5, minOrder: 25, banner: 'linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%)', tag: '地道老北京', desc: '酱香浓郁，面条劲道', distance: '1.7km' },
+        { id: 21, name: '螺蛳粉研究所', category: 'noodle', rating: 4.8, orders: 3456, deliveryTime: 22, deliveryFee: 3, minOrder: 20, banner: 'linear-gradient(135deg, #F1F8E9 0%, #DCEDC8 100%)', tag: '臭香四溢', desc: '正宗柳州螺蛳粉，酸笋够味', distance: '0.6km' },
+        { id: 22, name: '武汉热干面', category: 'noodle', rating: 4.4, orders: 1567, deliveryTime: 20, deliveryFee: 3, minOrder: 15, banner: 'linear-gradient(135deg, #FFE0B2 0%, #FFCC80 100%)', tag: '芝麻酱香', desc: '武汉风味，芝麻酱浓郁', distance: '1.5km' },
+        { id: 3, name: '巷子里的味道', category: 'snack', rating: 4.7, orders: 3241, deliveryTime: 22, deliveryFee: 3, minOrder: 15, banner: 'linear-gradient(135deg, #FFE8E8 0%, #FFD4D4 100%)', tag: '新店特惠', desc: '藏在巷子里的老味道', distance: '1.5km' },
+        { id: 12, name: '炸物研究所', category: 'snack', rating: 4.8, orders: 2678, deliveryTime: 20, deliveryFee: 3, minOrder: 16, banner: 'linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%)', tag: '酥脆可口', desc: '金黄酥脆，一口满足', distance: '0.9km' },
+        { id: 23, name: '关东煮小屋', category: 'snack', rating: 4.6, orders: 1890, deliveryTime: 18, deliveryFee: 2, minOrder: 12, banner: 'linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)', tag: '暖身暖胃', desc: '日式关东煮，汤鲜味美', distance: '0.5km' },
+        { id: 24, name: '煎饼果子来一套', category: 'snack', rating: 4.7, orders: 2567, deliveryTime: 15, deliveryFee: 2, minOrder: 10, banner: 'linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%)', tag: '天津风味', desc: '正宗天津煎饼果子，薄脆香酥', distance: '0.4km' },
+        { id: 25, name: '钵钵鸡', category: 'snack', rating: 4.5, orders: 1456, deliveryTime: 25, deliveryFee: 4, minOrder: 20, banner: 'linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%)', tag: '藤椒麻辣', desc: '四川钵钵鸡，麻辣鲜香', distance: '1.2km' },
+        { id: 26, name: '章鱼小丸子专门店', category: 'snack', rating: 4.8, orders: 2134, deliveryTime: 22, deliveryFee: 3, minOrder: 15, banner: 'linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%)', tag: '章鱼足大', desc: '日式章鱼小丸子，木鱼花海苔', distance: '1.0km' },
+        { id: 27, name: '臭豆腐大王', category: 'snack', rating: 4.3, orders: 1789, deliveryTime: 20, deliveryFee: 3, minOrder: 12, banner: 'linear-gradient(135deg, #F5F5F5 0%, #EEEEEE 100%)', tag: '闻臭吃香', desc: '长沙臭豆腐，外酥里嫩', distance: '0.8km' },
+        { id: 4, name: '茶研社', category: 'drink', rating: 4.9, orders: 4562, deliveryTime: 18, deliveryFee: 2, minOrder: 12, banner: 'linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%)', tag: '网红打卡', desc: '原叶鲜萃，天然好味道', distance: '0.6km' },
+        { id: 28, name: '喜茶同款', category: 'drink', rating: 4.8, orders: 3892, deliveryTime: 20, deliveryFee: 3, minOrder: 15, banner: 'linear-gradient(135deg, #FCE4EC 0%, #F8BBD9 100%)', tag: '芝士奶盖', desc: '浓郁芝士奶盖，茶香四溢', distance: '0.7km' },
+        { id: 29, name: '蜜雪冰城', category: 'drink', rating: 4.6, orders: 5678, deliveryTime: 15, deliveryFee: 1, minOrder: 8, banner: 'linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%)', tag: '性价比高', desc: '你爱我我爱你，蜜雪冰城甜蜜蜜', distance: '0.3km' },
+        { id: 30, name: '瑞幸咖啡', category: 'drink', rating: 4.7, orders: 4321, deliveryTime: 22, deliveryFee: 3, minOrder: 18, banner: 'linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)', tag: '年轻首选', desc: 'luckin coffee，专业咖啡新鲜式', distance: '0.9km' },
+        { id: 31, name: '古茗茶饮', category: 'drink', rating: 4.8, orders: 3456, deliveryTime: 18, deliveryFee: 2, minOrder: 12, banner: 'linear-gradient(135deg, #F1F8E9 0%, #DCEDC8 100%)', tag: '鲜果茶', desc: '每天一杯，喝不腻的好茶', distance: '0.5km' },
+        { id: 32, name: '沪上阿姨', category: 'drink', rating: 4.6, orders: 2890, deliveryTime: 20, deliveryFee: 2, minOrder: 10, banner: 'linear-gradient(135deg, #FFF0F5 0%, #FFE4EC 100%)', tag: '血糯米', desc: '现煮五谷茶，好喝又健康', distance: '1.1km' },
+        { id: 33, name: 'COCO都可', category: 'drink', rating: 4.5, orders: 3123, deliveryTime: 16, deliveryFee: 2, minOrder: 12, banner: 'linear-gradient(135deg, #FFE0B2 0%, #FFCC80 100%)', tag: '经典奶茶', desc: '经典好味道，珍珠奶茶', distance: '0.8km' },
+        { id: 5, name: '蜜时 · 法式甜点', category: 'dessert', rating: 4.8, orders: 1678, deliveryTime: 35, deliveryFee: 6, minOrder: 30, banner: 'linear-gradient(135deg, #FFF0F5 0%, #FFE4EC 100%)', tag: '甄选好店', desc: '来自巴黎的甜蜜滋味', distance: '2.1km' },
+        { id: 34, name: '好利来', category: 'dessert', rating: 4.9, orders: 2345, deliveryTime: 28, deliveryFee: 5, minOrder: 35, banner: 'linear-gradient(135deg, #FFE0B2 0%, #FFCC80 100%)', tag: '品牌连锁', desc: '甜品界的爱马仕，半熟芝士', distance: '1.5km' },
+        { id: 35, name: '鲍师傅糕点', category: 'dessert', rating: 4.7, orders: 1890, deliveryTime: 30, deliveryFee: 5, minOrder: 28, banner: 'linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%)', tag: '肉松小贝', desc: '肉松小贝，一口爆浆', distance: '1.8km' },
+        { id: 36, name: '满记甜品', category: 'dessert', rating: 4.6, orders: 1456, deliveryTime: 32, deliveryFee: 6, minOrder: 32, banner: 'linear-gradient(135deg, #FCE4EC 0%, #F8BBD9 100%)', tag: '港式甜品', desc: '香港经典甜品，杨枝甘露', distance: '2.0km' },
+        { id: 37, name: '元祖蛋糕', category: 'dessert', rating: 4.8, orders: 987, deliveryTime: 40, deliveryFee: 8, minOrder: 50, banner: 'linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)', tag: '精致蛋糕', desc: '精致生日蛋糕，送礼首选', distance: '2.5km' },
+        { id: 38, name: '甜丫丫西点', category: 'dessert', rating: 4.5, orders: 1678, deliveryTime: 25, deliveryFee: 4, minOrder: 20, banner: 'linear-gradient(135deg, #FFF0F5 0%, #FFE4EC 100%)', tag: '平价西点', desc: '好吃不贵的西点面包', distance: '1.2km' },
+        { id: 39, name: '鲜芋仙', category: 'dessert', rating: 4.7, orders: 1234, deliveryTime: 28, deliveryFee: 5, minOrder: 25, banner: 'linear-gradient(135deg, #F1F8E9 0%, #DCEDC8 100%)', tag: '芋圆Q弹', desc: '台式芋圆甜品，Q弹爽口', distance: '1.6km' },
+        { id: 6, name: 'BURGER LAB', category: 'fastfood', rating: 4.6, orders: 2134, deliveryTime: 25, deliveryFee: 5, minOrder: 28, banner: 'linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%)', tag: '人气新品', desc: '手工现做美式汉堡', distance: '1.8km' },
+        { id: 40, name: '麦当劳', category: 'fastfood', rating: 4.8, orders: 6789, deliveryTime: 20, deliveryFee: 4, minOrder: 20, banner: 'linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%)', tag: '全球连锁', desc: 'I\'m lovin\' it', distance: '0.8km' },
+        { id: 41, name: '肯德基', category: 'fastfood', rating: 4.7, orders: 5678, deliveryTime: 22, deliveryFee: 4, minOrder: 22, banner: 'linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%)', tag: '原味鸡', desc: '有了肯德基，生活好滋味', distance: '1.0km' },
+        { id: 42, name: '德克士', category: 'fastfood', rating: 4.5, orders: 3456, deliveryTime: 25, deliveryFee: 4, minOrder: 20, banner: 'linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%)', tag: '脆皮炸鸡', desc: '脆皮炸鸡，咔滋咔滋', distance: '1.3km' },
+        { id: 43, name: '华莱士', category: 'fastfood', rating: 4.4, orders: 4567, deliveryTime: 18, deliveryFee: 2, minOrder: 15, banner: 'linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%)', tag: '性价比高', desc: '国货汉堡品牌，实惠好吃', distance: '0.6km' },
+        { id: 44, name: '塔斯汀 · 中国汉堡', category: 'fastfood', rating: 4.6, orders: 2890, deliveryTime: 22, deliveryFee: 3, minOrder: 18, banner: 'linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%)', tag: '中国汉堡', desc: '中国汉堡，手擀现烤', distance: '0.9km' },
+        { id: 45, name: '赛百味', category: 'fastfood', rating: 4.5, orders: 1678, deliveryTime: 20, deliveryFee: 5, minOrder: 25, banner: 'linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%)', tag: '健康轻食', desc: '新鲜蔬菜三明治，健康选择', distance: '1.5km' },
+        { id: 7, name: '麻辣空间', category: 'hotpot', rating: 4.9, orders: 3892, deliveryTime: 45, deliveryFee: 8, minOrder: 68, banner: 'linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%)', tag: '品牌连锁', desc: '正宗川味，麻辣鲜香', distance: '2.5km' },
+        { id: 46, name: '海底捞火锅', category: 'hotpot', rating: 4.9, orders: 5678, deliveryTime: 50, deliveryFee: 10, minOrder: 88, banner: 'linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%)', tag: '服务好', desc: '服务至上，快乐火锅', distance: '3.0km' },
+        { id: 47, name: '呷哺呷哺', category: 'hotpot', rating: 4.7, orders: 3456, deliveryTime: 40, deliveryFee: 7, minOrder: 58, banner: 'linear-gradient(135deg, #FFF0F5 0%, #FFE4EC 100%)', tag: '一人一锅', desc: '一人一锅，干净卫生', distance: '2.0km' },
+        { id: 48, name: '小龙坎老火锅', category: 'hotpot', rating: 4.8, orders: 4123, deliveryTime: 48, deliveryFee: 9, minOrder: 78, banner: 'linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%)', tag: '正宗川味', desc: '地道老火锅，麻辣鲜香', distance: '2.8km' },
+        { id: 49, name: '大斌家串串火锅', category: 'hotpot', rating: 4.6, orders: 2890, deliveryTime: 35, deliveryFee: 6, minOrder: 48, banner: 'linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%)', tag: '串串火锅', desc: '串串香火锅，想吃什么拿什么', distance: '1.8km' },
+        { id: 50, name: '潮汕牛肉火锅', category: 'hotpot', rating: 4.7, orders: 2345, deliveryTime: 42, deliveryFee: 8, minOrder: 68, banner: 'linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)', tag: '新鲜牛肉', desc: '潮汕风味，现切鲜牛肉', distance: '2.3km' },
+        { id: 51, name: '椰子鸡火锅', category: 'hotpot', rating: 4.8, orders: 1876, deliveryTime: 45, deliveryFee: 8, minOrder: 78, banner: 'linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%)', tag: '清淡养生', desc: '海南椰子鸡，清甜鲜美', distance: '2.6km' },
+        { id: 8, name: '烟火烤物', category: 'bbq', rating: 4.7, orders: 1567, deliveryTime: 38, deliveryFee: 6, minOrder: 35, banner: 'linear-gradient(135deg, #FCE4EC 0%, #F8BBD9 100%)', tag: '深夜食堂', desc: '炭火慢烤，人间烟火', distance: '1.9km' },
+        { id: 52, name: '木屋烧烤', category: 'bbq', rating: 4.8, orders: 3456, deliveryTime: 35, deliveryFee: 6, minOrder: 40, banner: 'linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%)', tag: '连锁品牌', desc: '把烧烤做到极致', distance: '1.5km' },
+        { id: 53, name: '烤匠麻辣烤鱼', category: 'bbq', rating: 4.7, orders: 2890, deliveryTime: 40, deliveryFee: 7, minOrder: 58, banner: 'linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%)', tag: '烤鱼专家', desc: '专注烤鱼，麻辣鲜香', distance: '2.0km' },
+        { id: 54, name: '探鱼', category: 'bbq', rating: 4.6, orders: 2345, deliveryTime: 42, deliveryFee: 7, minOrder: 68, banner: 'linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%)', tag: '文艺烤鱼', desc: '最文艺的烤鱼店', distance: '2.2km' },
+        { id: 55, name: '很久以前羊肉串', category: 'bbq', rating: 4.9, orders: 3123, deliveryTime: 38, deliveryFee: 8, minOrder: 58, banner: 'linear-gradient(135deg, #FCE4EC 0%, #F8BBD9 100%)', tag: '草原羊肉', desc: '来自大草原的羊肉串', distance: '2.4km' },
+        { id: 56, name: '丰茂烤串', category: 'bbq', rating: 4.7, orders: 2567, deliveryTime: 35, deliveryFee: 6, minOrder: 45, banner: 'linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%)', tag: '现穿现烤', desc: '现穿的烤串才够味', distance: '1.7km' },
+        { id: 57, name: '何师烧烤', category: 'bbq', rating: 4.5, orders: 1890, deliveryTime: 32, deliveryFee: 5, minOrder: 38, banner: 'linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%)', tag: '川味烧烤', desc: '四川风味，麻辣烧烤', distance: '1.4km' },
+        { id: 9, name: '鲜入为主', category: 'seafood', rating: 4.8, orders: 987, deliveryTime: 50, deliveryFee: 12, minOrder: 88, banner: 'linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)', tag: '鲜活直达', desc: '每日新鲜直供海鲜', distance: '3.2km' },
+        { id: 58, name: '盒马鲜生', category: 'seafood', rating: 4.9, orders: 4567, deliveryTime: 30, deliveryFee: 6, minOrder: 39, banner: 'linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)', tag: '新鲜直达', desc: '鲜美生活，盒马鲜生', distance: '1.2km' },
+        { id: 59, name: '七欣天品蟹轩', category: 'seafood', rating: 4.7, orders: 2345, deliveryTime: 45, deliveryFee: 10, minOrder: 78, banner: 'linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%)', tag: '蟹肉煲', desc: '迷宗蟹，好吃到舔手指', distance: '2.5km' },
+        { id: 60, name: '蟹都汇', category: 'seafood', rating: 4.6, orders: 1567, deliveryTime: 50, deliveryFee: 12, minOrder: 98, banner: 'linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%)', tag: '大闸蟹', desc: '阳澄湖大闸蟹，膏满黄肥', distance: '3.0km' },
+        { id: 61, name: '海鲜遇上面', category: 'seafood', rating: 4.5, orders: 1890, deliveryTime: 35, deliveryFee: 5, minOrder: 28, banner: 'linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%)', tag: '海鲜焖面', desc: '海鲜焖面，鲜香浓郁', distance: '1.8km' },
+        { id: 62, name: '船歌鱼水饺', category: 'seafood', rating: 4.8, orders: 2134, deliveryTime: 38, deliveryFee: 7, minOrder: 48, banner: 'linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%)', tag: '鲅鱼水饺', desc: '青岛风味，鲅鱼水饺', distance: '2.0km' },
+        { id: 63, name: '小龙虾研究院', category: 'seafood', rating: 4.7, orders: 3456, deliveryTime: 40, deliveryFee: 8, minOrder: 68, banner: 'linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%)', tag: '麻辣小龙虾', desc: '小龙虾配啤酒，夏天的味道', distance: '1.5km' }
+    ],
+    menus: {
+        1: {
+            categories: [
+                { id: 'signature', name: '招牌推荐' },
+                { id: 'rice', name: '主食套餐' },
+                { id: 'side', name: '小吃配菜' }
+            ],
+            items: [
+                { id: 101, name: '慢炖红烧肉套餐', price: 38, image: '🍖', desc: '精选五花肉慢炖2小时，入口即化', sales: 856, tag: '招牌', category: 'signature' },
+                { id: 102, name: '宫保鸡丁饭', price: 28, image: '🍗', desc: '经典川菜，花生酥脆，鸡肉嫩滑', sales: 623, tag: '热销', category: 'signature' },
+                { id: 103, name: '鱼香肉丝饭', price: 26, image: '🍚', desc: '酸甜微辣，下饭神器', sales: 512, category: 'rice' },
+                { id: 104, name: '麻婆豆腐饭', price: 22, image: '🍲', desc: '麻辣鲜香，豆腐嫩滑', sales: 445, category: 'rice' },
+                { id: 105, name: '糖醋里脊饭', price: 32, image: '🍖', desc: '外酥里嫩，酸甜适口', sales: 398, tag: '新品', category: 'rice' },
+                { id: 106, name: '时蔬沙拉', price: 18, image: '🥗', desc: '新鲜时令蔬菜，低脂健康', sales: 234, category: 'side' },
+                { id: 107, name: '凉拌黄瓜', price: 12, image: '🥒', desc: '清脆爽口，解腻开胃', sales: 189, category: 'side' },
+                { id: 108, name: '紫菜蛋花汤', price: 8, image: '🍲', desc: '清淡鲜美，营养暖胃', sales: 267, category: 'side' }
+            ]
+        },
+        2: [
+            { id: 201, name: '招牌豚骨拉面', price: 32, image: '🍜', desc: '12小时熬制浓汤，手工拉面', sales: 1024, tag: '招牌' },
+            { id: 202, name: '秘制炸酱面', price: 25, image: '🍝', desc: '老北京风味，酱香浓郁', sales: 678, tag: '热销' },
+            { id: 203, name: '山西刀削面', price: 26, image: '🍜', desc: '劲道爽滑，番茄汤底', sales: 534 },
+            { id: 204, name: '四川担担面', price: 24, image: '🍜', desc: '麻辣鲜香，花生碎提香', sales: 456 },
+            { id: 205, name: '阳春面', price: 16, image: '🍜', desc: '清汤挂面，简单纯粹', sales: 289 }
+        ],
+        3: [
+            { id: 301, name: '秘制炸鸡块', price: 22, image: '🍗', desc: '外酥里嫩，秘制酱料', sales: 1567, tag: '招牌' },
+            { id: 302, name: '黄金薯条', price: 15, image: '🍟', desc: '比利时进口，金黄酥脆', sales: 1234 },
+            { id: 303, name: '烤串拼盘', price: 35, image: '🍢', desc: '5种烤串组合，一次满足', sales: 876, tag: '热销' },
+            { id: 304, name: '章鱼小丸子', price: 25, image: '🍡', desc: '日式经典，木鱼花海苔', sales: 654 },
+            { id: 305, name: '港式鸡蛋仔', price: 18, image: '🧇', desc: '外脆内软，奶香浓郁', sales: 543, tag: '新品' }
+        ],
+        4: [
+            { id: 401, name: '琥珀珍珠奶茶', price: 22, image: '🧋', desc: '手煮珍珠，锡兰红茶底', sales: 2341, tag: '招牌' },
+            { id: 402, name: '杨枝甘露', price: 28, image: '🥭', desc: '新鲜芒果，西柚西米', sales: 1876, tag: '热销' },
+            { id: 403, name: '手打柠檬茶', price: 18, image: '🍋', desc: '香水柠檬，现打现做', sales: 1543 },
+            { id: 404, name: '燕麦拿铁', price: 26, image: '☕', desc: '精品咖啡豆，燕麦奶', sales: 987 },
+            { id: 405, name: '莓莓果茶', price: 24, image: '🍓', desc: '草莓蓝莓，满满果肉', sales: 876, tag: '新品' }
+        ],
+        5: [
+            { id: 501, name: '经典提拉米苏', price: 38, image: '🍰', desc: '意式经典，马斯卡彭芝士', sales: 456, tag: '招牌' },
+            { id: 502, name: '双层芝士蛋糕', price: 35, image: '🧀', desc: '北海道风味，绵密细腻', sales: 389, tag: '热销' },
+            { id: 503, name: '法式马卡龙', price: 42, image: '🍪', desc: '六颗装，六种口味', sales: 234 },
+            { id: 504, name: '闪电泡芙', price: 22, image: '🥐', desc: '香草卡仕达内馅', sales: 312 },
+            { id: 505, name: '意式冰淇淋', price: 28, image: '🍦', desc: '三球装，口味任选', sales: 287, tag: '新品' }
+        ],
+        6: [
+            { id: 601, name: '经典牛肉堡', price: 32, image: '🍔', desc: '澳洲牛肉饼，车达芝士', sales: 876, tag: '招牌' },
+            { id: 602, name: '香辣鸡腿堡', price: 28, image: '🍔', desc: '香辣酥脆，过瘾满足', sales: 765, tag: '热销' },
+            { id: 603, name: '黄金薯条（大）', price: 18, image: '🍟', desc: '酥脆可口，配番茄酱', sales: 654 },
+            { id: 604, name: '冰爽可乐', price: 10, image: '🥤', desc: '冰镇可口可乐', sales: 543 },
+            { id: 605, name: '麦香鸡块', price: 22, image: '🍗', desc: '5块装，外酥里嫩', sales: 432 }
+        ],
+        7: [
+            { id: 701, name: '经典麻辣锅底', price: 78, image: '🍲', desc: '牛油锅底，麻辣鲜香', sales: 1567, tag: '招牌' },
+            { id: 702, name: '番茄牛腩锅底', price: 68, image: '🍅', desc: '番茄熬制，酸甜开胃', sales: 1234, tag: '热销' },
+            { id: 703, name: '精品肥牛卷', price: 48, image: '🥩', desc: '澳洲肥牛，薄切大片', sales: 987 },
+            { id: 704, name: '手打虾滑', price: 38, image: '🦐', desc: '青虾手打，Q弹爽滑', sales: 876 },
+            { id: 705, name: '蔬菜拼盘', price: 32, image: '🥬', desc: '六种时令蔬菜', sales: 543 }
+        ],
+        8: [
+            { id: 801, name: '新疆羊肉串', price: 12, image: '🍖', desc: '新疆羊肉，孜然飘香', sales: 2341, tag: '招牌' },
+            { id: 802, name: '秘制烤鸡翅', price: 16, image: '🍗', desc: '蜜汁腌制，外焦里嫩', sales: 1876, tag: '热销' },
+            { id: 803, name: '蒜蓉烤茄子', price: 18, image: '🍆', desc: '蒜末小米辣，鲜香入味', sales: 987 },
+            { id: 804, name: '炭烤玉米', price: 12, image: '🌽', desc: '甜糯玉米，刷秘制酱', sales: 765 },
+            { id: 805, name: '烤韭菜', price: 10, image: '🥬', desc: '鲜嫩韭菜，烧烤必备', sales: 654 }
+        ],
+        9: [
+            { id: 901, name: '清蒸鲈鱼', price: 88, image: '🐟', desc: '鲜活鲈鱼，鲜嫩无比', sales: 456, tag: '招牌' },
+            { id: 902, name: '蒜蓉粉丝扇贝', price: 68, image: '🐚', desc: '扇贝6只，蒜香浓郁', sales: 389, tag: '热销' },
+            { id: 903, name: '椒盐皮皮虾', price: 98, image: '🦐', desc: '鲜活皮皮虾，酥脆鲜香', sales: 234 },
+            { id: 904, name: '清炒时令蔬', price: 32, image: '🥬', desc: '当日时蔬，清淡健康', sales: 187 },
+            { id: 905, name: '海鲜粥', price: 58, image: '🍲', desc: '虾仁瑶柱，鲜美暖胃', sales: 276, tag: '新品' }
+        ],
+        10: [
+            { id: 1001, name: '台式卤肉饭', price: 26, image: '🍖', desc: '台湾风味，肥而不腻', sales: 876, tag: '招牌' },
+            { id: 1002, name: '日式咖喱鸡饭', price: 28, image: '🍛', desc: '咖喱浓郁，鸡肉嫩滑', sales: 765, tag: '热销' },
+            { id: 1003, name: '黑椒牛柳饭', price: 32, image: '🥩', desc: '黑椒香浓，牛柳嫩滑', sales: 654 },
+            { id: 1004, name: '红烧排骨饭', price: 30, image: '🍖', desc: '排骨酥烂，入味三分', sales: 543 },
+            { id: 1005, name: '照烧鸡腿饭', price: 25, image: '🍗', desc: '日式照烧，甜咸适口', sales: 432 }
+        ],
+        11: [
+            { id: 1101, name: '阳春面', price: 15, image: '🍜', desc: '清汤挂面，简单纯粹', sales: 567, tag: '招牌' },
+            { id: 1102, name: '葱油拌面', price: 18, image: '🍝', desc: '香葱炸油，香气四溢', sales: 456, tag: '热销' },
+            { id: 1103, name: '雪菜肉丝面', price: 22, image: '🍜', desc: '雪菜提鲜，肉丝滑嫩', sales: 345 },
+            { id: 1104, name: '番茄鸡蛋面', price: 20, image: '🍅', desc: '家常味道，酸甜可口', sales: 389 }
+        ],
+        12: [
+            { id: 1201, name: '招牌炸鸡', price: 28, image: '🍗', desc: '韩式甜辣，外酥里嫩', sales: 1234, tag: '招牌' },
+            { id: 1202, name: '芝士薯条', price: 20, image: '🍟', desc: '金黄薯条，芝士拉丝', sales: 987, tag: '热销' },
+            { id: 1203, name: '洋葱圈', price: 16, image: '🧅', desc: '金黄酥脆，洋葱清甜', sales: 567 },
+            { id: 1204, name: '鸡米花', price: 18, image: '🍿', desc: '小巧可爱，一口一个', sales: 654 }
+        ]
+    },
+    reviews: {
+        1: [
+            { user: '林小满', avatar: '🌸', rating: 5, content: '红烧肉真的绝了！肥而不腻，入口即化，配上米饭超级下饭。配送也很快，拿到手还是热乎的。', time: '2小时前', likes: 128, images: 3, tags: ['味道赞', '包装好', '配送快'] },
+            { user: '陈吃吃', avatar: '🍑', rating: 5, content: '宫保鸡丁是我吃过最正宗的！花生特别脆，鸡肉嫩滑，辣度刚刚好。已经是回头客了～', time: '1天前', likes: 89, images: 2, tags: ['回头客', '味道赞'] },
+            { user: '美食日记', avatar: '✨', rating: 4, content: '整体不错，鱼香肉丝很下饭。就是分量可以再多点就完美了，会再来的！', time: '3天前', likes: 45, images: 0, tags: ['分量足'] },
+            { user: '小饭桶', avatar: '🍚', rating: 5, content: '糖醋里脊外酥里嫩，酸甜比例刚刚好，小朋友特别爱吃。包装也很用心，没有撒漏。', time: '5天前', likes: 67, images: 4, tags: ['包装好', '孩子爱吃'] }
+        ],
+        2: [
+            { user: '面条爱好者', avatar: '🍜', rating: 5, content: '豚骨拉面太绝了！汤底浓郁，面条劲道，溏心蛋也很完美。一口下去幸福感爆棚～', time: '1小时前', likes: 156, images: 3, tags: ['汤底浓', '面条劲道', '回头客'] },
+            { user: '食客小李', avatar: '🌙', rating: 4, content: '炸酱面味道不错，就是稍微有点咸，可能是我口味比较淡吧。整体还是推荐的！', time: '2天前', likes: 34, images: 1, tags: ['味道不错'] },
+            { user: '碳水教父', avatar: '💪', rating: 5, content: '刀削面太好吃了！每一根都很有嚼劲，番茄汤底酸酸甜甜的，夏天吃也很开胃。', time: '4天前', likes: 78, images: 2, tags: ['面条劲道', '开胃'] }
+        ],
+        3: [
+            { user: '炸鸡达人', avatar: '🍗', rating: 5, content: '这家炸鸡真的绝了！外皮酥脆到掉渣，里面的肉却很嫩很多汁。秘制酱料也超好吃！', time: '3小时前', likes: 234, images: 4, tags: ['外皮酥脆', '肉质嫩', '回头客'] },
+            { user: '宵夜党', avatar: '🌃', rating: 5, content: '深夜来一份烤串拼盘太幸福了！每种串都很好吃，最爱的是烤鸡翅，外焦里嫩。', time: '1天前', likes: 145, images: 3, tags: ['深夜食堂', '种类多'] },
+            { user: '甜口少女', avatar: '🎀', rating: 4, content: '鸡蛋仔好好吃！外脆内软，奶香很浓。就是有点小贵，偶尔吃吃还是可以的。', time: '2天前', likes: 56, images: 2, tags: ['口感好', '奶香浓'] }
+        ],
+        4: [
+            { user: '奶茶续命', avatar: '🧋', rating: 5, content: '珍珠奶茶YYDS！珍珠Q弹有嚼劲，茶底也很清香，不是那种齁甜的感觉。无限回购！', time: '30分钟前', likes: 312, images: 2, tags: ['珍珠Q弹', '茶底香', '无限回购'] },
+            { user: '芒果控', avatar: '🥭', rating: 5, content: '杨枝甘露太好喝了！芒果肉超多，西柚的微苦刚好中和甜味，非常清爽。', time: '5小时前', likes: 198, images: 3, tags: ['料足', '清爽'] },
+            { user: '柠檬精', avatar: '🍋', rating: 4, content: '手打柠檬茶很解腻，香水柠檬味道很浓。就是冰块有点多，化了之后会淡。', time: '1天前', likes: 67, images: 1, tags: ['解腻', '味道浓'] },
+            { user: '咖啡日常', avatar: '☕', rating: 5, content: '燕麦拿铁很丝滑，咖啡豆的香气很足。减脂期的福音，好喝不胖！', time: '2天前', likes: 89, images: 0, tags: ['口感丝滑', '减脂友好'] }
+        ],
+        5: [
+            { user: '甜品控', avatar: '🍰', rating: 5, content: '提拉米苏太正宗了！马斯卡彭的口感绵密，咖啡酒的味道刚刚好，完全不腻。', time: '4小时前', likes: 167, images: 4, tags: ['口感绵密', '正宗', '回购'] },
+            { user: '芝士就是力量', avatar: '🧀', rating: 5, content: '双层芝士蛋糕绝了！入口即化，芝士味很浓但不会腻。配杯红茶刚刚好～', time: '1天前', likes: 123, images: 2, tags: ['芝士香浓', '不腻'] },
+            { user: '法式浪漫', avatar: '🌹', rating: 4, content: '马卡龙颜值很高，颜色很漂亮。甜度可以接受，配咖啡会更好。送礼也很合适！', time: '3天前', likes: 78, images: 3, tags: ['颜值高', '适合送礼'] }
+        ],
+        6: [
+            { user: '汉堡发烧友', avatar: '🍔', rating: 5, content: '牛肉堡太扎实了！肉饼很厚，能吃出是好牛肉。面包胚也很松软，超级满足！', time: '2小时前', likes: 145, images: 3, tags: ['肉饼厚实', '面包松软', '分量足'] },
+            { user: '快餐爱好者', avatar: '🍟', rating: 4, content: '鸡腿堡很酥脆，辣度刚刚好。薯条也很好吃，就是配送时间长了点会变软。', time: '1天前', likes: 56, images: 1, tags: ['酥脆', '性价比高'] }
+        ],
+        7: [
+            { user: '火锅侠', avatar: '🌶️', rating: 5, content: '麻辣锅底太正宗了！麻辣鲜香，越煮越有味。肥牛卷品质也很好，推荐！', time: '3小时前', likes: 234, images: 4, tags: ['锅底正宗', '食材新鲜', '回头客'] },
+            { user: '番茄党', avatar: '🍅', rating: 5, content: '番茄牛腩锅底超赞！牛腩炖得很烂，汤都可以直接喝。虾滑也很Q弹～', time: '1天前', likes: 178, images: 3, tags: ['汤好喝', '虾滑Q弹'] },
+            { user: '养生达人', avatar: '🥬', rating: 4, content: '蔬菜拼盘很新鲜，种类也多。一个人点个锅底加蔬菜就够了，健康又好吃。', time: '2天前', likes: 45, images: 2, tags: ['食材新鲜', '健康'] }
+        ],
+        8: [
+            { user: '撸串小王子', avatar: '🍖', rating: 5, content: '羊肉串太香了！孜然和辣椒面配得刚刚好，肉质也很嫩。宵夜必备！', time: '1小时前', likes: 267, images: 3, tags: ['味道正宗', '肉质嫩', '宵夜首选'] },
+            { user: '深夜食客', avatar: '🌙', rating: 5, content: '烤鸡翅绝了！蜜汁腌制的很入味，外面焦焦的里面嫩嫩的。一个人能吃10串！', time: '6小时前', likes: 156, images: 2, tags: ['外焦里嫩', '入味'] },
+            { user: '素食主义', avatar: '🥬', rating: 4, content: '烤茄子超好吃！蒜蓉给的很足，茄子也很嫩。烤韭菜也不错，推荐！', time: '1天前', likes: 67, images: 1, tags: ['蒜蓉足', '茄子嫩'] }
+        ],
+        9: [
+            { user: '海鲜控', avatar: '🦐', rating: 5, content: '鲈鱼很新鲜！清蒸的做法最能体现鱼的鲜味，肉质很嫩。请客也很有面子～', time: '5小时前', likes: 123, images: 4, tags: ['新鲜', '肉质嫩', '上档次'] },
+            { user: '扇贝爱好者', avatar: '🐚', rating: 5, content: '蒜蓉粉丝扇贝太好吃了！扇贝很大只，粉丝也吸满了汤汁。就是价格有点小贵。', time: '2天前', likes: 89, images: 3, tags: ['个头大', '味道好'] },
+            { user: '养生girl', avatar: '🍲', rating: 4, content: '海鲜粥很鲜美，料也挺足的。冬天喝一碗暖暖的，舒服！', time: '3天前', likes: 56, images: 1, tags: ['鲜美', '暖胃'] }
+        ],
+        10: [
+            { user: '卤肉饭狂魔', avatar: '🍖', rating: 5, content: '卤肉饭太正宗了！肥而不腻，酱汁拌米饭超级下饭。每次都能吃精光～', time: '2小时前', likes: 145, images: 2, tags: ['正宗', '下饭', '回头客'] },
+            { user: '咖喱控', avatar: '🍛', rating: 4, content: '咖喱鸡饭味道不错，咖喱很浓郁，鸡肉也挺多的。要是有土豆胡萝卜就更好了。', time: '1天前', likes: 67, images: 1, tags: ['咖喱浓', '分量足'] }
+        ],
+        11: [
+            { user: '清淡饮食', avatar: '🍜', rating: 5, content: '阳春面很清爽，汤头鲜美。不舒服的时候来一碗，胃里暖暖的很舒服。', time: '4小时前', likes: 78, images: 1, tags: ['清淡', '汤鲜'] },
+            { user: '葱油面爱好者', avatar: '🧅', rating: 5, content: '葱油拌面太香了！葱油炸得刚刚好，拌开来满屋都是香味。简单但美味！', time: '1天前', likes: 92, images: 2, tags: ['葱香浓郁', '简单美味'] }
+        ],
+        12: [
+            { user: '炸鸡少女', avatar: '🍗', rating: 5, content: '韩式炸鸡太绝了！甜辣酱的味道刚刚好，外皮酥脆里面多汁。追剧必备！', time: '3小时前', likes: 189, images: 3, tags: ['外皮酥脆', '酱汁好吃', '追剧必备'] },
+            { user: '芝士控', avatar: '🧀', rating: 5, content: '芝士薯条太好吃了！芝士拉丝很长，薯条也很脆。就是吃多了会有点腻～', time: '1天前', likes: 112, images: 2, tags: ['芝士拉丝', '酥脆'] }
+        ]
+    }
+};
+
+// 美团APP状态
+const mtState = {
+    currentView: 'Home',
+    currentCategory: 'all',
+    currentStore: null,
+    cart: [],
+    addresses: [],
+    coupons: [],
+    orders: [],
+    selectedAddress: null,
+    selectedCoupon: null,
+    deliveryTime: '尽快送达',
+    paymentMode: 'self',
+    otherPayMode: 'friend',
+    recipientInfo: { name: '', phone: '', address: '' }
+};
+
+// 打开美团APP
+function mtOpenApp() {
+    const app = document.getElementById('mtAppMain');
+    if (app) {
+        app.classList.add('mt-show');
+        mtInitApp();
+    }
+}
+
+// 关闭美团APP
+function mtCloseApp() {
+    const app = document.getElementById('mtAppMain');
+    if (app) {
+        app.classList.remove('mt-show');
+    }
+}
+
+// 初始化美团APP
+function mtInitApp() {
+    mtLoadData();
+    mtRenderCategories();
+    mtRenderStores();
+    mtInitTabbar();
+    mtInitBanner();
+}
+
+// 加载数据
+function mtLoadData() {
+    const saved = localStorage.getItem('mtData');
+    if (saved) {
+        const data = JSON.parse(saved);
+        mtState.addresses = data.addresses || [];
+        mtState.coupons = data.coupons || [];
+        mtState.orders = data.orders || [];
+        mtState.cart = data.cart || [];
+    }
+    
+    if (mtState.addresses.length === 0) {
+        mtState.addresses = [
+            { id: 1, name: '张先生', phone: '138****8888', address: '北京市朝阳区建国路88号SOHO现代城A座1205室', isDefault: true },
+            { id: 2, name: '李女士', phone: '139****6666', address: '北京市海淀区中关村大街1号海龙大厦5层508室', isDefault: false }
+        ];
+        mtState.selectedAddress = mtState.addresses[0];
+    }
+    
+    if (!mtState.selectedAddress && mtState.addresses.length > 0) {
+        mtState.selectedAddress = mtState.addresses.find(a => a.isDefault) || mtState.addresses[0];
+    }
+}
+
+// 保存数据
+function mtSaveData() {
+    localStorage.setItem('mtData', JSON.stringify({
+        addresses: mtState.addresses,
+        coupons: mtState.coupons,
+        orders: mtState.orders,
+        cart: mtState.cart
+    }));
+}
+
+// 渲染分类
+function mtRenderCategories() {
+    const grid = document.getElementById('mtCategoryGrid');
+    if (!grid) return;
+    
+    const displayCats = mtData.categories.filter(c => c.id !== 'all');
+    grid.innerHTML = displayCats.map(cat => `
+        <div class="mt-category-item" onclick="mtOpenCategory('${cat.id}')">
+            <div class="mt-category-icon" style="background: ${cat.color}15;">
+                <span style="color: ${cat.color};">${cat.icon}</span>
+            </div>
+            <div class="mt-category-name">${cat.name}</div>
+        </div>
+    `).join('');
+}
+
+// 渲染店铺列表
+function mtRenderStores() {
+    const list = document.getElementById('mtStoreList');
+    const catList = document.getElementById('mtCategoryStoreList');
+    
+    const stores = mtState.currentCategory === 'all' 
+        ? mtData.stores 
+        : mtData.stores.filter(s => s.category === mtState.currentCategory);
+    
+    const html = stores.map(store => `
+        <div class="mt-store-item" onclick="mtOpenStore(${store.id})">
+            <div class="mt-store-banner" style="background: ${store.banner};">
+                <div class="mt-store-tag">${store.tag}</div>
+            </div>
+            <div class="mt-store-info-wrap">
+                <div class="mt-store-name-row">
+                    <span class="mt-store-name">${store.name}</span>
+                    <div class="mt-store-rating">
+                        <span class="mt-rating-star">★</span>
+                        <span class="mt-rating-score">${store.rating}</span>
+                    </div>
+                </div>
+                <div class="mt-store-desc">${store.desc}</div>
+                <div class="mt-store-meta">
+                    <span>月售${store.orders}+</span>
+                    <span class="mt-dot">·</span>
+                    <span>${store.distance}</span>
+                    <span class="mt-dot">·</span>
+                    <span>${store.deliveryTime}分钟</span>
+                </div>
+                <div class="mt-store-footer-row">
+                    <span class="mt-fee-tag">起送¥${store.minOrder}</span>
+                    <span class="mt-fee-tag">配送费¥${store.deliveryFee}</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+    
+    if (list) list.innerHTML = html;
+    if (catList) catList.innerHTML = html;
+}
+
+// 打开分类
+function mtOpenCategory(categoryId) {
+    mtState.currentCategory = categoryId;
+    const category = mtData.categories.find(c => c.id === categoryId);
+    
+    if (categoryId === 'all') {
+        mtSwitchView('Home');
+    } else {
+        document.getElementById('mtCategoryTitle').textContent = category.name;
+        mtRenderStores();
+        mtSwitchView('Category');
+    }
+}
+
+// 打开店铺
+function mtOpenStore(storeId) {
+    const store = mtData.stores.find(s => s.id === storeId);
+    if (!store) return;
+    
+    mtState.currentStore = store;
+    
+    document.getElementById('mtStoreName').textContent = store.name;
+    document.getElementById('mtStoreRating').textContent = store.rating;
+    document.getElementById('mtStoreOrders').textContent = `月售${store.orders}+`;
+    document.getElementById('mtStoreDelivery').textContent = `配送约${store.deliveryTime}分钟`;
+    
+    const storeHeader = document.getElementById('mtStoreHeader');
+    if (storeHeader) {
+        storeHeader.style.background = store.banner;
+    }
+    
+    const storeBanner = document.getElementById('mtStoreBanner');
+    if (storeBanner) {
+        storeBanner.style.background = store.banner;
+    }
+    
+    mtState.cart = mtState.cart.filter(item => item.storeId === store.id);
+    mtSaveData();
+    
+    mtRenderMenu();
+    mtRenderReviews();
+    mtRenderStoreInfo();
+    mtUpdateCartBar();
+    mtInitStoreTabs();
+    
+    mtSwitchView('Store');
+}
+
+// 初始化店铺Tab切换
+function mtInitStoreTabs() {
+    const tabs = document.querySelectorAll('.mt-store-tab');
+    const sections = {
+        menu: document.getElementById('mtMenuSection'),
+        reviews: document.getElementById('mtReviewsSection'),
+        info: document.getElementById('mtInfoSection')
+    };
+    
+    tabs.forEach(tab => {
+        tab.onclick = () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            Object.values(sections).forEach(s => s.classList.remove('active'));
+            sections[tab.dataset.tab].classList.add('active');
+        };
+    });
+}
+
+// 渲染菜单
+function mtRenderMenu() {
+    const catList = document.getElementById('mtMenuCategories');
+    const itemList = document.getElementById('mtMenuItems');
+    if (!catList || !itemList || !mtState.currentStore) return;
+    
+    const menuData = mtData.menus[mtState.currentStore.id];
+    if (!menuData) return;
+    
+    let categories, items;
+    if (Array.isArray(menuData)) {
+        categories = [{ id: 'all', name: '全部' }];
+        items = menuData.map(item => ({ ...item, category: 'all' }));
+    } else {
+        categories = menuData.categories || [];
+        items = menuData.items || [];
+    }
+    
+    if (!mtState.currentMenuCategory && categories.length > 0) {
+        mtState.currentMenuCategory = categories[0].id;
+    }
+    
+    catList.innerHTML = categories.map(cat => `
+        <div class="mt-menu-cat-item ${cat.id === mtState.currentMenuCategory ? 'active' : ''}" 
+             onclick="mtSelectMenuCategory('${cat.id}')"
+             data-cat="${cat.id}">
+            <span>${cat.name}</span>
+        </div>
+    `).join('');
+    
+    const filteredItems = mtState.currentMenuCategory === 'all' 
+        ? items 
+        : items.filter(item => item.category === mtState.currentMenuCategory);
+    
+    itemList.innerHTML = categories.map(cat => {
+        const catItems = cat.id === 'all' ? items : items.filter(item => item.category === cat.id);
+        if (catItems.length === 0) return '';
+        
+        return `
+            <div class="mt-menu-cat-section" id="mtMenuCat_${cat.id}">
+                <div class="mt-menu-cat-title">
+                    <span class="mt-cat-line"></span>
+                    <span class="mt-cat-name">${cat.name}</span>
+                    <span class="mt-cat-line"></span>
+                </div>
+                ${catItems.map(item => {
+                    const cartItem = mtState.cart.find(c => c.id === item.id);
+                    const count = cartItem ? cartItem.count : 0;
+                    
+                    return `
+                        <div class="mt-menu-item">
+                            <div class="mt-menu-img">
+                                <div class="mt-menu-img-inner">${item.image}</div>
+                                ${item.tag ? `<span class="mt-menu-tag ${item.tag === '招牌' ? 'signature' : item.tag === '热销' ? 'hot' : 'new'}">${item.tag}</span>` : ''}
+                            </div>
+                            <div class="mt-menu-info">
+                                <div class="mt-menu-name">${item.name}</div>
+                                <div class="mt-menu-desc">${item.desc}</div>
+                                <div class="mt-menu-sales">月售${item.sales || 0}</div>
+                                <div class="mt-menu-bottom">
+                                    <div class="mt-menu-price">
+                                        <span class="mt-price-symbol">¥</span>
+                                        <span class="mt-price-num">${item.price}</span>
+                                    </div>
+                                    <div class="mt-menu-actions">
+                                        ${count > 0 ? `
+                                            <button class="mt-act-btn minus" onclick="mtRemoveFromCart(${item.id})">
+                                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                            </button>
+                                            <span class="mt-count">${count}</span>
+                                        ` : ''}
+                                        <button class="mt-act-btn plus" onclick="mtAddToCart(${item.id})">
+                                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        `;
+    }).join('');
+}
+
+function mtSelectMenuCategory(catId) {
+    mtState.currentMenuCategory = catId;
+    mtRenderMenu();
+    
+    const section = document.getElementById(`mtMenuCat_${catId}`);
+    const itemList = document.getElementById('mtMenuItems');
+    if (section && itemList) {
+        itemList.scrollTo({
+            top: section.offsetTop - 10,
+            behavior: 'smooth'
+        });
+    }
+}
+
+// 渲染评价
+function mtRenderReviews() {
+    const list = document.getElementById('mtReviewsList');
+    if (!list || !mtState.currentStore) return;
+    
+    const reviews = mtData.reviews[mtState.currentStore.id] || [];
+    const store = mtState.currentStore;
+    
+    const avgRating = reviews.length 
+        ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
+        : store.rating;
+    
+    const tagCounts = {};
+    reviews.forEach(r => {
+        (r.tags || []).forEach(t => {
+            tagCounts[t] = (tagCounts[t] || 0) + 1;
+        });
+    });
+    
+    const tagsHtml = Object.entries(tagCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8)
+        .map(([tag, count]) => `<span class="mt-review-tag">${tag} (${count})</span>`)
+        .join('');
+    
+    list.innerHTML = `
+        <div class="mt-reviews-summary">
+            <div class="mt-rating-big">
+                <span class="mt-rating-score-big">${avgRating}</span>
+                <div class="mt-rating-stars">${'★'.repeat(Math.round(avgRating))}${'☆'.repeat(5 - Math.round(avgRating))}</div>
+                <div class="mt-rating-total">共 ${reviews.length} 条评价</div>
+            </div>
+            <div class="mt-reviews-tags">
+                ${tagsHtml}
+            </div>
+        </div>
+        ${reviews.map(review => `
+            <div class="mt-review-item">
+                <div class="mt-review-header">
+                    <div class="mt-review-avatar">${review.avatar || '👤'}</div>
+                    <div class="mt-review-user-info">
+                        <div class="mt-review-username">${review.user}</div>
+                        <div class="mt-review-meta">
+                            <span class="mt-review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>
+                            <span class="mt-review-time">${review.time}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-review-content">${review.content}</div>
+                ${review.images && review.images > 0 ? `
+                    <div class="mt-review-images">
+                        ${Array(review.images).fill(0).map((_, i) => `
+                            <div class="mt-review-img">
+                                <div class="mt-review-img-placeholder">📷</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+                ${review.tags && review.tags.length > 0 ? `
+                    <div class="mt-review-tags">
+                        ${review.tags.map(t => `<span class="mt-review-mini-tag">${t}</span>`).join('')}
+                    </div>
+                ` : ''}
+                <div class="mt-review-footer">
+                    <div class="mt-review-like" onclick="mtLikeReview(${review.user})">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        <span>${review.likes || 0}</span>
+                    </div>
+                </div>
+            </div>
+        `).join('')}
+    `;
+}
+
+// 点赞评价
+function mtLikeReview(userName) {
+    // 简单的视觉反馈
+    event.currentTarget.classList.toggle('liked');
+}
+
+// 渲染商家信息
+function mtRenderStoreInfo() {
+    const content = document.getElementById('mtInfoContent');
+    if (!content || !mtState.currentStore) return;
+    
+    const store = mtState.currentStore;
+    
+    content.innerHTML = `
+        <div class="mt-store-info-card">
+            <div class="mt-info-row">
+                <div class="mt-info-label">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#999" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <span>配送地址</span>
+                </div>
+                <div class="mt-info-value">距您${store.distance}</div>
+            </div>
+            <div class="mt-info-row">
+                <div class="mt-info-label">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#999" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <span>配送时间</span>
+                </div>
+                <div class="mt-info-value">约${store.deliveryTime}分钟</div>
+            </div>
+            <div class="mt-info-row">
+                <div class="mt-info-label">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#999" stroke-width="1.5"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <span>配送费</span>
+                </div>
+                <div class="mt-info-value">¥${store.deliveryFee}</div>
+            </div>
+            <div class="mt-info-row">
+                <div class="mt-info-label">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#999" stroke-width="1.5"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/></svg>
+                    <span>起送价</span>
+                </div>
+                <div class="mt-info-value">¥${store.minOrder}</div>
+            </div>
+        </div>
+        
+        <div class="mt-store-desc-card">
+            <div class="mt-desc-title">商家介绍</div>
+            <div class="mt-desc-text">${store.desc}。我们坚持选用优质食材，用心制作每一份美食，只为给您带来最好的用餐体验。</div>
+        </div>
+        
+        <div class="mt-store-notice">
+            <div class="mt-notice-title">温馨提示</div>
+            <div class="mt-notice-item">• 高峰期配送可能延迟，请耐心等待</div>
+            <div class="mt-notice-item">• 如有任何问题，请联系商家客服</div>
+            <div class="mt-notice-item">• 感谢您的支持与信任</div>
+        </div>
+    `;
+}
+
+// 添加到购物车
+function mtGetMenuItems(storeId) {
+    const menuData = mtData.menus[storeId];
+    if (!menuData) return [];
+    if (Array.isArray(menuData)) return menuData;
+    return menuData.items || [];
+}
+
+function mtAddToCart(itemId) {
+    if (!mtState.currentStore) return;
+    
+    const menu = mtGetMenuItems(mtState.currentStore.id);
+    const item = menu.find(m => m.id === itemId);
+    if (!item) return;
+    
+    const cartItem = mtState.cart.find(c => c.id === itemId);
+    if (cartItem) {
+        cartItem.count++;
+    } else {
+        mtState.cart.push({ ...item, count: 1, storeId: mtState.currentStore.id });
+    }
+    
+    mtSaveData();
+    mtRenderMenu();
+    mtUpdateCartBar();
+    mtUpdateTabBadge();
+}
+
+// 从购物车移除
+function mtRemoveFromCart(itemId) {
+    const cartItem = mtState.cart.find(c => c.id === itemId);
+    if (!cartItem) return;
+    
+    if (cartItem.count > 1) {
+        cartItem.count--;
+    } else {
+        mtState.cart = mtState.cart.filter(c => c.id !== itemId);
+    }
+    
+    mtSaveData();
+    mtRenderMenu();
+    mtUpdateCartBar();
+    mtUpdateTabBadge();
+}
+
+// 更新购物车栏
+function mtUpdateCartBar() {
+    const total = mtState.cart.reduce((sum, item) => sum + item.price * item.count, 0);
+    const count = mtState.cart.reduce((sum, item) => sum + item.count, 0);
+    
+    document.getElementById('mtCartTotal').textContent = `¥${total.toFixed(2)}`;
+    document.getElementById('mtCartBadge').textContent = count;
+}
+
+// 更新标签徽章
+function mtUpdateTabBadge() {
+    const count = mtState.cart.reduce((sum, item) => sum + item.count, 0);
+    document.getElementById('mtTabBadge').textContent = count;
+}
+
+// 切换视图
+function mtSwitchView(viewName) {
+    mtState.currentView = viewName;
+    
+    if (viewName === 'Home') {
+        mtState.currentCategory = 'all';
+        mtRenderStores();
+    }
+    
+    document.querySelectorAll('.mt-view').forEach(view => {
+        view.classList.remove('active');
+    });
+    
+    const targetView = document.getElementById(`mtView${viewName}`);
+    if (targetView) {
+        targetView.classList.add('active');
+    }
+    
+    const tabbar = document.querySelector('.mt-tabbar');
+    const viewsWithTabbar = ['Home', 'Cart', 'Profile', 'Category'];
+    if (tabbar) {
+        if (viewsWithTabbar.includes(viewName)) {
+            tabbar.style.display = 'flex';
+            tabbar.style.visibility = 'visible';
+            tabbar.classList.remove('mt-tabbar-hidden');
+        } else {
+            tabbar.style.display = 'none';
+            tabbar.style.visibility = 'hidden';
+            tabbar.classList.add('mt-tabbar-hidden');
+        }
+    }
+    
+    const body = document.querySelector('.mt-body');
+    if (body) {
+        if (viewsWithTabbar.includes(viewName)) {
+            body.style.height = 'calc(100% - 44px - 60px)';
+        } else {
+            body.style.height = 'calc(100% - 44px)';
+        }
+    }
+    
+    document.querySelectorAll('.mt-tab-item').forEach(tab => {
+        tab.classList.remove('active');
+        if (tab.dataset.target === viewName) {
+            tab.classList.add('active');
+        }
+    });
+}
+
+// 初始化tabbar
+function mtInitTabbar() {
+    document.querySelectorAll('.mt-tab-item').forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.dataset.target;
+            if (target === 'Home') {
+                mtSwitchView('Home');
+            } else if (target === 'Cart') {
+                mtRenderCart();
+                mtSwitchView('Cart');
+            } else if (target === 'Profile') {
+                mtSwitchView('Profile');
+            }
+        });
+    });
+}
+
+// 初始化轮播图
+function mtInitBanner() {
+    let currentBanner = 0;
+    const banners = document.querySelectorAll('.mt-banner-item');
+    const dots = document.querySelectorAll('.mt-dot');
+    
+    setInterval(() => {
+        banners[currentBanner].classList.remove('active');
+        dots[currentBanner].classList.remove('active');
+        currentBanner = (currentBanner + 1) % banners.length;
+        banners[currentBanner].classList.add('active');
+        dots[currentBanner].classList.add('active');
+    }, 3000);
+}
+
+// 渲染购物车
+function mtRenderCart() {
+    const list = document.getElementById('mtCartList');
+    const empty = document.getElementById('mtCartEmpty');
+    
+    if (mtState.cart.length === 0) {
+        list.style.display = 'none';
+        empty.style.display = 'flex';
+        return;
+    }
+    
+    list.style.display = 'flex';
+    empty.style.display = 'none';
+    
+    list.innerHTML = mtState.cart.map(item => `
+        <div class="mt-cart-item">
+            <div class="mt-cart-item-img">
+                <div class="mt-cart-img-inner">${item.image}</div>
+            </div>
+            <div class="mt-cart-item-info">
+                <div class="mt-cart-item-name">${item.name}</div>
+                <div class="mt-cart-item-desc">${item.desc || ''}</div>
+                <div class="mt-cart-item-bottom">
+                    <div class="mt-cart-item-price">
+                        <span class="mt-price-symbol">¥</span>
+                        <span class="mt-price-num">${item.price}</span>
+                    </div>
+                    <div class="mt-menu-actions">
+                        <button class="mt-act-btn minus" onclick="mtRemoveFromCart(${item.id})">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </button>
+                        <span class="mt-count">${item.count}</span>
+                        <button class="mt-act-btn plus" onclick="mtAddToCart(${item.id})">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// 打开结算页面
+function mtOpenCheckout() {
+    if (mtState.cart.length === 0) {
+        mtShowToast('购物车是空的');
+        return;
+    }
+    
+    mtRenderCheckout();
+    mtSwitchView('Checkout');
+}
+
+// 渲染结算页面
+function mtRenderCheckout() {
+    // 渲染商品清单
+    const items = document.getElementById('mtCheckoutItems');
+    items.innerHTML = mtState.cart.map(item => `
+        <div class="mt-checkout-item">
+            <span class="mt-checkout-item-name">${item.name} x${item.count}</span>
+            <span class="mt-checkout-item-price">¥${(item.price * item.count).toFixed(2)}</span>
+        </div>
+    `).join('');
+    
+    // 计算价格
+    const subtotal = mtState.cart.reduce((sum, item) => sum + item.price * item.count, 0);
+    const deliveryFee = 5;
+    const discount = mtState.selectedCoupon ? mtState.selectedCoupon.discount : 0;
+    const total = subtotal + deliveryFee - discount;
+    
+    document.getElementById('mtCheckoutSubtotal').textContent = `¥${subtotal.toFixed(2)}`;
+    document.getElementById('mtCheckoutTotal').textContent = `¥${total.toFixed(2)}`;
+    
+    if (discount > 0) {
+        document.getElementById('mtCheckoutDiscountRow').style.display = 'flex';
+        document.getElementById('mtCheckoutDiscount').textContent = `-¥${discount.toFixed(2)}`;
+    } else {
+        document.getElementById('mtCheckoutDiscountRow').style.display = 'none';
+    }
+    
+    // 渲染地址
+    if (mtState.selectedAddress) {
+        document.getElementById('mtCheckoutAddress').innerHTML = `
+            <div class="mt-address-name">${mtState.selectedAddress.name} <span class="mt-address-phone">${mtState.selectedAddress.phone}</span></div>
+            <div class="mt-address-detail">${mtState.selectedAddress.address}</div>
+        `;
+    }
+    
+    // 渲染优惠券
+    if (mtState.selectedCoupon) {
+        document.getElementById('mtCheckoutCoupon').textContent = mtState.selectedCoupon.name;
+    }
+}
+
+// 选择地址
+function mtSelectAddress() {
+    mtRenderAddressList();
+    mtOpenModal('mtModalAddress');
+}
+
+// 渲染地址列表
+function mtRenderAddressList() {
+    const list = document.getElementById('mtAddressList');
+    
+    if (mtState.addresses.length === 0) {
+        list.innerHTML = '<div class="mt-empty-text">暂无地址</div>';
+        return;
+    }
+    
+    list.innerHTML = mtState.addresses.map((addr, idx) => `
+        <div class="mt-address-item" onclick="mtChooseAddress(${idx})">
+            <div class="mt-address-info">
+                <div class="mt-address-name">${addr.name}</div>
+                <div class="mt-address-detail">${addr.detail}</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// 选择地址
+function mtChooseAddress(idx) {
+    mtState.selectedAddress = mtState.addresses[idx];
+    mtCloseModal('mtModalAddress');
+    mtRenderCheckout();
+}
+
+// 新增地址
+function mtAddNewAddress() {
+    mtOpenModal('mtModalAddressEdit');
+}
+
+// 保存地址
+function mtSaveAddress() {
+    const name = document.getElementById('mtAddressName').value;
+    const phone = document.getElementById('mtAddressPhone').value;
+    const detail = document.getElementById('mtAddressDetail').value;
+    const isDefault = document.getElementById('mtAddressDefault').checked;
+    
+    if (!name || !phone || !detail) {
+        mtShowToast('请填写完整信息');
+        return;
+    }
+    
+    const address = { name, phone, detail, isDefault };
+    mtState.addresses.push(address);
+    
+    if (isDefault) {
+        mtState.addresses.forEach(addr => {
+            if (addr !== address) addr.isDefault = false;
+        });
+    }
+    
+    mtSaveData();
+    mtCloseModal('mtModalAddressEdit');
+    mtShowToast('地址添加成功');
+    
+    // 清空表单
+    document.getElementById('mtAddressName').value = '';
+    document.getElementById('mtAddressPhone').value = '';
+    document.getElementById('mtAddressDetail').value = '';
+    document.getElementById('mtAddressDefault').checked = false;
+}
+
+// 选择配送时间
+function mtSelectDeliveryTime() {
+    mtOpenModal('mtModalDeliveryTime');
+    
+    document.querySelectorAll('.mt-delivery-time-item').forEach(item => {
+        item.addEventListener('click', function() {
+            document.querySelectorAll('.mt-delivery-time-item').forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+            mtState.deliveryTime = this.dataset.time;
+            document.getElementById('mtCheckoutTime').textContent = mtState.deliveryTime;
+            mtCloseModal('mtModalDeliveryTime');
+        });
+    });
+}
+
+// 选择优惠券
+function mtSelectCoupon() {
+    mtRenderCouponList();
+    mtOpenModal('mtModalCoupon');
+}
+
+// 渲染优惠券列表
+function mtRenderCouponList() {
+    const list = document.getElementById('mtCouponList');
+    const empty = document.getElementById('mtCouponEmpty');
+    
+    if (mtState.coupons.length === 0) {
+        list.style.display = 'none';
+        empty.style.display = 'block';
+        return;
+    }
+    
+    list.style.display = 'block';
+    empty.style.display = 'none';
+    
+    list.innerHTML = mtState.coupons.map((coupon, idx) => `
+        <div class="mt-coupon-item" onclick="mtChooseCoupon(${idx})">
+            <div class="mt-coupon-amount">¥${coupon.discount}</div>
+            <div class="mt-coupon-info">
+                <div class="mt-coupon-name">${coupon.name}</div>
+                <div class="mt-coupon-condition">满${coupon.condition}可用</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// 选择优惠券
+function mtChooseCoupon(idx) {
+    mtState.selectedCoupon = mtState.coupons[idx];
+    mtCloseModal('mtModalCoupon');
+    mtRenderCheckout();
+}
+
+// 更新支付模式
+function mtUpdatePaymentMode() {
+    const mode = document.querySelector('input[name="mtPayment"]:checked').value;
+    mtState.paymentMode = mode;
+    
+    if (mode === 'other') {
+        document.getElementById('mtOtherPayOptions').style.display = 'block';
+    } else {
+        document.getElementById('mtOtherPayOptions').style.display = 'none';
+        document.getElementById('mtRecipientInfo').style.display = 'none';
+    }
+}
+
+// 更新代付模式
+function mtUpdateOtherPayMode() {
+    const mode = document.querySelector('input[name="mtOtherPay"]:checked').value;
+    mtState.otherPayMode = mode;
+    document.getElementById('mtRecipientInfo').style.display = 'block';
+}
+
+// 确认订单
+function mtConfirmOrder() {
+    if (!mtState.selectedAddress) {
+        mtShowToast('请选择配送地址');
+        return;
+    }
+    
+    if (mtState.paymentMode === 'other') {
+        const name = document.getElementById('mtRecipientName').value;
+        const phone = document.getElementById('mtRecipientPhone').value;
+        const address = document.getElementById('mtRecipientAddress').value;
+        
+        if (!name || !phone || !address) {
+            mtShowToast('请填写收餐人信息');
+            return;
+        }
+        
+        mtState.recipientInfo = { name, phone, address };
+    }
+    
+    // 显示密码输入框
+    const total = document.getElementById('mtCheckoutTotal').textContent;
+    document.getElementById('mtPasswordAmount').textContent = total;
+    mtOpenModal('mtModalPassword');
+}
+
+// 确认支付
+function mtConfirmPayment() {
+    const password = document.getElementById('mtPasswordInput').value;
+    
+    if (password.length !== 6) {
+        mtShowToast('请输入6位密码');
+        return;
+    }
+    
+    // 创建订单
+    const order = {
+        id: Date.now(),
+        items: [...mtState.cart],
+        address: mtState.selectedAddress,
+        total: document.getElementById('mtCheckoutTotal').textContent,
+        time: new Date().toLocaleString(),
+        status: '已支付',
+        paymentMode: mtState.paymentMode,
+        recipientInfo: mtState.recipientInfo
+    };
+    
+    mtState.orders.push(order);
+    mtState.cart = [];
+    mtState.selectedCoupon = null;
+    
+    mtSaveData();
+    mtCloseModal('mtModalPassword');
+    mtShowToast('支付成功');
+    
+    // 清空密码
+    document.getElementById('mtPasswordInput').value = '';
+    
+    // 返回首页
+    setTimeout(() => {
+        mtSwitchView('Home');
+    }, 1500);
+}
+
+// 打开订单列表
+function mtOpenOrders() {
+    mtRenderOrderList();
+    mtOpenModal('mtModalOrders');
+}
+
+// 渲染订单列表
+function mtRenderOrderList() {
+    const list = document.getElementById('mtOrderList');
+    const empty = document.getElementById('mtOrderEmpty');
+    
+    if (mtState.orders.length === 0) {
+        list.style.display = 'none';
+        empty.style.display = 'block';
+        return;
+    }
+    
+    list.style.display = 'block';
+    empty.style.display = 'none';
+    
+    list.innerHTML = mtState.orders.map(order => `
+        <div class="mt-order-item">
+            <div class="mt-order-header">
+                <span class="mt-order-id">订单号：${order.id}</span>
+                <span class="mt-order-status">${order.status}</span>
+            </div>
+            <div class="mt-order-items">
+                ${order.items.map(item => `
+                    <div class="mt-order-item-row">
+                        <span>${item.name} x${item.count}</span>
+                        <span>¥${(item.price * item.count).toFixed(2)}</span>
+                    </div>
+                `).join('')}
+            </div>
+            <div class="mt-order-footer">
+                <span class="mt-order-time">${order.time}</span>
+                <span class="mt-order-total">合计：${order.total}</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+// 打开地址管理
+function mtOpenAddresses() {
+    mtRenderAddressManageList();
+    mtOpenModal('mtModalAddressManage');
+}
+
+// 渲染地址管理列表
+function mtRenderAddressManageList() {
+    const list = document.getElementById('mtAddressManageList');
+    
+    if (mtState.addresses.length === 0) {
+        list.innerHTML = '<div class="mt-empty-text">暂无地址</div>';
+        return;
+    }
+    
+    list.innerHTML = mtState.addresses.map((addr, idx) => `
+        <div class="mt-address-manage-item">
+            <div class="mt-address-info">
+                <div class="mt-address-name">${addr.name} ${addr.isDefault ? '<span class="mt-default-tag">默认</span>' : ''}</div>
+                <div class="mt-address-detail">${addr.detail}</div>
+                <div class="mt-address-phone">${addr.phone}</div>
+            </div>
+            <button class="mt-address-delete" onclick="mtDeleteAddress(${idx})">删除</button>
+        </div>
+    `).join('');
+}
+
+// 删除地址
+function mtDeleteAddress(idx) {
+    mtState.addresses.splice(idx, 1);
+    mtSaveData();
+    mtRenderAddressManageList();
+    mtShowToast('地址已删除');
+}
+
+// 打开优惠券管理
+function mtOpenCoupons() {
+    mtRenderCouponManageList();
+    mtOpenModal('mtModalCouponManage');
+}
+
+// 渲染优惠券管理列表
+function mtRenderCouponManageList() {
+    const list = document.getElementById('mtCouponManageList');
+    const empty = document.getElementById('mtCouponManageEmpty');
+    
+    if (mtState.coupons.length === 0) {
+        list.style.display = 'none';
+        empty.style.display = 'block';
+        return;
+    }
+    
+    list.style.display = 'block';
+    empty.style.display = 'none';
+    
+    list.innerHTML = mtState.coupons.map(coupon => `
+        <div class="mt-coupon-manage-item">
+            <div class="mt-coupon-amount">¥${coupon.discount}</div>
+            <div class="mt-coupon-info">
+                <div class="mt-coupon-name">${coupon.name}</div>
+                <div class="mt-coupon-condition">满${coupon.condition}可用</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// 打开设置
+function mtOpenSettings() {
+    mtOpenModal('mtModalSettings');
+}
+
+// 清除缓存
+function mtClearCache() {
+    localStorage.removeItem('mtData');
+    mtState.addresses = [];
+    mtState.coupons = [];
+    mtState.orders = [];
+    mtState.cart = [];
+    mtShowToast('缓存已清除');
+    mtCloseModal('mtModalSettings');
+}
+
+// 打开消息
+function mtOpenMessages() {
+    mtShowToast('消息功能开发中');
+}
+
+// 返回上一页
+function mtBackToHome() {
+    mtSwitchView('Home');
+}
+
+function mtBackFromStore() {
+    if (mtState.currentCategory === 'all') {
+        mtSwitchView('Home');
+    } else {
+        mtSwitchView('Category');
+    }
+}
+
+function mtBackFromCart() {
+    mtSwitchView('Home');
+}
+
+function mtBackFromCheckout() {
+    mtSwitchView('Cart');
+}
+
+// 切换购物车
+function mtToggleCart() {
+    mtRenderCart();
+    mtSwitchView('Cart');
+}
+
+// 打开模态框
+function mtOpenModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('mt-show');
+    }
+}
+
+// 关闭模态框
+function mtCloseModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('mt-show');
+    }
+}
+
+// 显示Toast
+function mtShowToast(message) {
+    const toast = document.getElementById('mtToast');
+    if (!toast) return;
+    
+    toast.textContent = message;
+    toast.classList.add('mt-show');
+    
+    setTimeout(() => {
+        toast.classList.remove('mt-show');
+    }, 2000);
+}
+
+// 店铺标签切换
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('mt-store-tab')) {
+        const tab = e.target.dataset.tab;
+        
+        document.querySelectorAll('.mt-store-tab').forEach(t => t.classList.remove('active'));
+        e.target.classList.add('active');
+        
+        document.querySelectorAll('.mt-menu-section, .mt-reviews-section, .mt-info-section').forEach(section => {
+            section.classList.remove('active');
+        });
+        
+        document.getElementById(`mt${tab.charAt(0).toUpperCase() + tab.slice(1)}Section`).classList.add('active');
+    }
+});
+
 // === Instagram 互动系统核心逻辑 ===
 const IgData = {
     stories: [
@@ -1710,11 +3025,25 @@ function shopOpenWriteComment() {
     shopState.currentCommentRating = 5;
 
     const prodEl = document.getElementById('shopWriteCommentProduct');
-    const customImg = (shopState.customProductImgs && shopState.customProductImgs[product.id])
-        ? shopState.customProductImgs[product.id]
-        : `https://picsum.photos/seed/${product.id}img/200/200`;
+    const hasCustomImg = shopState.customProductImgs && shopState.customProductImgs[product.id];
+    const cat = shopGetCatOfProduct(product.id);
+    const descDetail = shopGenerateDescFromProduct(product, cat);
+    
+    let prodMediaHtml = '';
+    if (hasCustomImg) {
+        prodMediaHtml = `<div class="shop-writecomment-prod-img" style="background-image:url('${shopState.customProductImgs[product.id]}')"></div>`;
+    } else {
+        prodMediaHtml = `
+            <div class="shop-writecomment-prod-desc">
+                <div class="shop-writecomment-prod-desc-title">${product.name}</div>
+                <div class="shop-writecomment-prod-desc-text">${descDetail}</div>
+                <div class="shop-writecomment-prod-desc-tag">${shopCatLabels[cat] || '精选好物'}</div>
+            </div>
+        `;
+    }
+    
     prodEl.innerHTML = `
-        <div class="shop-writecomment-prod-img" style="background-image:url('${customImg}')"></div>
+        ${prodMediaHtml}
         <div class="shop-writecomment-prod-info">
             <div class="shop-writecomment-prod-name">${product.name}</div>
             <div class="shop-writecomment-prod-spec">${product.desc}</div>
@@ -1950,7 +3279,7 @@ function shopAddToCart() {
     }
 
     shopUpdateCartBadge();
-    shopShowToast('已加入购物袋');
+    shopShowToast('已加入购物车');
 }
 
 function shopUpdateCartBadge() {
@@ -2153,12 +3482,35 @@ function shopRenderCart() {
     shopState.cart.forEach((item, idx) => {
         const div = document.createElement('div');
         div.className = 'shop-cart-item';
-        div.innerHTML = `
-            <div class="shop-cart-img" style="background-image:url('https://picsum.photos/seed/${item.imgSeed}/200/200')" onclick="shopTriggerCartImgUpload(${idx})">
-                <div class="shop-cart-img-edit">
-                    <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        
+        const hasCustomImg = shopState.customProductImgs && shopState.customProductImgs[item.id];
+        const cat = shopGetCatOfProduct(item.id);
+        const descDetail = shopGenerateDescFromProduct(item, cat);
+        
+        let mediaHtml = '';
+        if (hasCustomImg) {
+            mediaHtml = `
+                <div class="shop-cart-img" style="background-image:url('${shopState.customProductImgs[item.id]}')" onclick="shopTriggerCartImgUpload(${idx})">
+                    <div class="shop-cart-img-edit">
+                        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    </div>
                 </div>
-            </div>
+            `;
+        } else {
+            mediaHtml = `
+                <div class="shop-cart-desc" onclick="shopTriggerCartImgUpload(${idx})">
+                    <div class="shop-cart-desc-title">${item.name}</div>
+                    <div class="shop-cart-desc-text">${descDetail}</div>
+                    <div class="shop-cart-desc-tag">${shopCatLabels[cat] || '精选好物'}</div>
+                    <div class="shop-cart-img-edit">
+                        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    </div>
+                </div>
+            `;
+        }
+        
+        div.innerHTML = `
+            ${mediaHtml}
             <div class="shop-cart-info">
                 <div class="shop-cart-name">${item.name} · ${item.spec}</div>
                 <div class="shop-cart-bottom">
@@ -2195,7 +3547,6 @@ function shopRenderCartFooter() {
             <span class="shop-total-label">合计</span>
             <span class="shop-total-price">¥${total}</span>
         </div>
-        <div class="shop-checkout-btn" onclick="shopCheckout()">去结算</div>
     `;
 }
 
@@ -2723,14 +4074,17 @@ function shopSaveProfile() {
 
     if (newName) {
         shopState.userProfile.name = newName;
-        document.getElementById('shopProfileName').textContent = newName;
+        document.getElementById('shopProfileName').firstChild.textContent = newName + ' ';
     }
     if (newDesc) {
         shopState.userProfile.desc = newDesc;
-        document.getElementById('shopProfileDesc').textContent = newDesc;
+        const descEl = document.getElementById('shopProfileDesc');
+        const svgEl = descEl.querySelector('svg');
+        descEl.innerHTML = '';
+        descEl.appendChild(document.createTextNode(newDesc + ' '));
+        if (svgEl) descEl.appendChild(svgEl);
     }
     shopUpdateProfileAvatar();
-    shopSaveUserProfile();
     shopCloseModal('shopModalEditProfile');
     shopShowToast('资料修改成功');
 }
@@ -2756,59 +4110,6 @@ function shopUpdateProfileAvatar() {
     }
 }
 
-// =============== 个人资料 inline 编辑 & 持久化 ===============
-const SHOP_USER_PROFILE_KEY = 'shop_user_profile_v1';
-
-function shopSaveUserProfile() {
-    try {
-        localStorage.setItem(SHOP_USER_PROFILE_KEY, JSON.stringify(shopState.userProfile));
-    } catch (e) {}
-}
-
-function shopLoadUserProfile() {
-    try {
-        const saved = localStorage.getItem(SHOP_USER_PROFILE_KEY);
-        if (saved) {
-            const data = JSON.parse(saved);
-            if (data.name) shopState.userProfile.name = data.name;
-            if (data.desc) shopState.userProfile.desc = data.desc;
-            if (data.avatarImg) shopState.userProfile.avatarImg = data.avatarImg;
-            if (data.avatarColor) shopState.userProfile.avatarColor = data.avatarColor;
-        }
-    } catch (e) {}
-
-    const nameEl = document.getElementById('shopProfileName');
-    const descEl = document.getElementById('shopProfileDesc');
-    if (nameEl && shopState.userProfile.name) nameEl.textContent = shopState.userProfile.name;
-    if (descEl && shopState.userProfile.desc) descEl.textContent = shopState.userProfile.desc;
-    shopUpdateProfileAvatar();
-}
-
-function shopBindInlineEdit() {
-    const nameEl = document.getElementById('shopProfileName');
-    const descEl = document.getElementById('shopProfileDesc');
-
-    if (nameEl) {
-        nameEl.addEventListener('blur', () => {
-            const val = nameEl.textContent.trim();
-            if (val) {
-                shopState.userProfile.name = val;
-                shopSaveUserProfile();
-            } else {
-                nameEl.textContent = shopState.userProfile.name;
-            }
-        });
-    }
-
-    if (descEl) {
-        descEl.addEventListener('blur', () => {
-            const val = descEl.textContent.trim();
-            shopState.userProfile.desc = val;
-            shopSaveUserProfile();
-        });
-    }
-}
-
 function shopTriggerAvatarUpload() {
     document.getElementById('shopAvatarFile').click();
 }
@@ -2821,14 +4122,9 @@ function shopBindAvatarUpload() {
         const reader = new FileReader();
         reader.onload = (ev) => {
             shopState.userProfile.avatarImg = ev.target.result;
-            shopUpdateProfileAvatar();
-            shopSaveUserProfile();
             const editImg = document.getElementById('shopEditAvatarImg');
-            if (editImg) {
-                editImg.src = ev.target.result;
-                editImg.style.display = 'block';
-            }
-            shopShowToast('头像更换成功');
+            editImg.src = ev.target.result;
+            editImg.style.display = 'block';
         };
         reader.readAsDataURL(file);
         fileInput.value = '';
@@ -2881,8 +4177,10 @@ function shopBindProductImgUpload() {
             } else if (shopState.currentProductImgType === 'cart' && shopState.cartImgIndex !== null) {
                 const item = shopState.cart[shopState.cartImgIndex];
                 if (item) {
-                    item.customImg = imgUrl;
+                    shopState.customProductImgs[item.id] = imgUrl;
                     shopRenderCart();
+                    shopRenderProducts();
+                    shopRenderFavorites();
                 }
             }
             shopShowToast('图片更换成功');
@@ -3028,45 +4326,27 @@ function shopRenderCoupons() {
         if (shopExtendedState.selectedCouponId === coupon.id) {
             card.classList.add('active');
         }
-
+        
         const today = new Date().toISOString().split('T')[0];
         if (coupon.expiry < today) {
             card.classList.add('disabled');
         }
 
-        const typeLabels = {
-            newuser: '新人专享', normal: '通用券', vip: '会员尊享',
-            flash: '限时抢购', category: '品类专享', car: '购车专享', house: '购房专享'
-        };
-        const typeLabel = typeLabels[coupon.type] || '优惠券';
-
         card.onclick = () => {
             if (card.classList.contains('disabled')) return;
-            card.classList.toggle('expanded');
+            shopExtendedState.selectedCouponId = shopExtendedState.selectedCouponId === coupon.id ? null : coupon.id;
+            shopRenderCoupons();
         };
 
         card.innerHTML = `
-            <div class="shop-coupon-main">
-                <div class="shop-coupon-left">
-                    <div class="shop-coupon-amount">${coupon.amount}</div>
-                    <div class="shop-coupon-condition">满${coupon.minAmount}可用</div>
-                </div>
-                <div class="shop-coupon-right">
-                    <div class="shop-coupon-name">${coupon.name}</div>
-                    <div class="shop-coupon-desc">${coupon.desc}</div>
-                    <div class="shop-coupon-expiry">有效期至 ${coupon.expiry}</div>
-                </div>
-                <div class="shop-coupon-expand-icon">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-                </div>
+            <div class="shop-coupon-left">
+                <div class="shop-coupon-amount">${coupon.amount}</div>
+                <div class="shop-coupon-condition">满${coupon.minAmount}可用</div>
             </div>
-            <div class="shop-coupon-detail">
-                <div class="shop-coupon-detail-row"><span class="shop-coupon-detail-label">券类型</span><span class="shop-coupon-detail-val">${typeLabel}</span></div>
-                <div class="shop-coupon-detail-row"><span class="shop-coupon-detail-label">面额</span><span class="shop-coupon-detail-val">¥${coupon.amount}</span></div>
-                <div class="shop-coupon-detail-row"><span class="shop-coupon-detail-label">使用门槛</span><span class="shop-coupon-detail-val">满¥${coupon.minAmount}可用</span></div>
-                <div class="shop-coupon-detail-row"><span class="shop-coupon-detail-label">有效期</span><span class="shop-coupon-detail-val">至 ${coupon.expiry}</span></div>
-                <div class="shop-coupon-detail-row"><span class="shop-coupon-detail-label">说明</span><span class="shop-coupon-detail-val">${coupon.desc}</span></div>
-                <div class="shop-coupon-detail-tip">点击券面可收起</div>
+            <div class="shop-coupon-right">
+                <div class="shop-coupon-name">${coupon.name}</div>
+                <div class="shop-coupon-desc">${coupon.desc}</div>
+                <div class="shop-coupon-expiry">有效期至 ${coupon.expiry}</div>
             </div>
         `;
         listEl.appendChild(card);
@@ -3903,10 +5183,26 @@ function shopRenderOrders(type) {
 
         let itemsHtml = '';
         order.items.forEach(item => {
-            const itemImg = item.customImg || `https://picsum.photos/seed/${item.imgSeed}/200/200`;
+            const hasCustomImg = shopState.customProductImgs && shopState.customProductImgs[item.id];
+            const cat = shopGetCatOfProduct(item.id);
+            const descDetail = shopGenerateDescFromProduct(item, cat);
+            
+            let itemMediaHtml = '';
+            if (hasCustomImg) {
+                itemMediaHtml = `<div class="shop-order-item-img" style="background-image:url('${shopState.customProductImgs[item.id]}')"></div>`;
+            } else {
+                itemMediaHtml = `
+                    <div class="shop-order-item-desc">
+                        <div class="shop-order-item-desc-title">${item.name}</div>
+                        <div class="shop-order-item-desc-text">${descDetail}</div>
+                        <div class="shop-order-item-desc-tag">${shopCatLabels[cat] || '精选好物'}</div>
+                    </div>
+                `;
+            }
+            
             itemsHtml += `
                 <div class="shop-order-item">
-                    <div class="shop-order-item-img" style="background-image:url('${itemImg}')"></div>
+                    ${itemMediaHtml}
                     <div class="shop-order-item-info">
                         <div class="shop-order-item-name">${item.name}</div>
                         <div class="shop-order-item-spec">${item.spec}</div>
@@ -4037,7 +5333,6 @@ function shopInit() {
     shopBindBannerBgUpload();
     shopLoadProfileBg();
     shopBindProfileBgUpload();
-    shopLoadUserProfile();
     shopRenderProducts();
     shopBindCategoryClicks();
     shopBindTabClicks();
@@ -4046,7 +5341,6 @@ function shopInit() {
     shopBindCommentStars();
     shopBindRoleAvatarUpload();
     shopBindBannerClickUpload();
-    shopBindInlineEdit();
     shopInitExtended();
     shopEnsureDefaultAddress();
     shopUpdateOrderBadges();
@@ -4055,3 +5349,2151 @@ function shopInit() {
 document.addEventListener('DOMContentLoaded', () => {
     console.log('商城APP系统已加载');
 });
+
+// ============================================================
+// === 手工屋·图纸库 横屏浏览系统 ===
+// ============================================================
+
+// 6 大分类 × 男/女 × 6 款式 = 72 个款式入口，每个款式 6 种图纸 = 432 个图纸槽位
+const craftData = {
+    categories: [
+        {
+            name: '服装',
+            subs: [
+                { name: '男士', items: ['T恤', '衬衫', '卫衣', '外套', '西装', '风衣'] },
+                { name: '女士', items: ['吊带', '连衣裙', '衬衫', '卫衣', '半身裙', '外套'] }
+            ]
+        },
+        {
+            name: '包包',
+            subs: [
+                { name: '男士', items: ['双肩包', '公文包', '单肩包', '手拿包', '旅行包', '电脑包'] },
+                { name: '女士', items: ['手提包', '单肩包', '斜挎包', '链条包', '双肩包', '手拿包'] }
+            ]
+        },
+        {
+            name: '鞋子',
+            subs: [
+                { name: '男士', items: ['运动鞋', '皮鞋', '板鞋', '休闲鞋', '靴子', '拖鞋'] },
+                { name: '女士', items: ['高跟鞋', '平底鞋', '运动鞋', '靴子', '凉鞋', '单鞋'] }
+            ]
+        },
+        {
+            name: '宠物围兜',
+            subs: [
+                { name: '男士', items: ['经典款', '卡通款', '条纹款', '印花款', '拼色款', '节日款'] },
+                { name: '女士', items: ['蕾丝款', '碎花款', '蝴蝶结款', '印花款', '拼色款', '节日款'] }
+            ]
+        },
+        {
+            name: '饰品',
+            subs: [
+                { name: '男士', items: ['项链', '手链', '戒指', '耳钉', '袖扣', '领带夹'] },
+                { name: '女士', items: ['项链', '手链', '戒指', '耳环', '发饰', '胸针'] }
+            ]
+        },
+        {
+            name: '摆件',
+            subs: [
+                { name: '男士', items: ['飞机模型', '跑车模型', '船模', '动漫手办', '几何摆件', '武器摆件'] },
+                { name: '女士', items: ['花瓶', '玩偶摆件', '装饰画框', '香薰瓶', '水晶球', '八音盒'] }
+            ]
+        }
+    ]
+};
+
+const craftVarNames = ['种类一', '种类二', '种类三', '种类四', '种类五', '种类六'];
+
+const craftState = {
+    catIdx: null,
+    subIdx: null,
+    itemIdx: null,
+    varIdx: null
+};
+
+function craftStorageKey(c, s, i, v) {
+    return `craft_pattern_${c}_${s}_${i}_${v}`;
+}
+
+function craftGetPattern(c, s, i, v) {
+    try {
+        return localStorage.getItem(craftStorageKey(c, s, i, v));
+    } catch (e) {
+        return null;
+    }
+}
+
+function craftSetPattern(c, s, i, v, dataUrl) {
+    try {
+        if (dataUrl) {
+            localStorage.setItem(craftStorageKey(c, s, i, v), dataUrl);
+        } else {
+            localStorage.removeItem(craftStorageKey(c, s, i, v));
+        }
+        return true;
+    } catch (e) {
+        alert('存储空间已满，请先清除一些旧图纸再上传。');
+        return false;
+    }
+}
+
+function craftOpenViewer() {
+    document.getElementById('craftViewerOverlay').classList.add('show');
+    craftRenderAll();
+}
+
+function craftCloseViewer() {
+    document.getElementById('craftViewerOverlay').classList.remove('show');
+}
+
+function craftRenderAll() {
+    craftRenderCategories();
+    craftRenderSubs();
+    craftRenderItems();
+    craftRenderVars();
+    craftRenderSquare();
+    craftRenderBreadcrumb();
+}
+
+function craftRenderCategories() {
+    const wrap = document.getElementById('craftCategories');
+    wrap.innerHTML = craftData.categories.map((c, i) =>
+        `<div class="craft-chip ${craftState.catIdx === i ? 'active' : ''}" onclick="craftSelectCategory(${i})">${c.name}</div>`
+    ).join('');
+}
+
+function craftSelectCategory(idx) {
+    if (craftState.catIdx === idx) return;
+    craftState.catIdx = idx;
+    craftState.subIdx = null;
+    craftState.itemIdx = null;
+    craftState.varIdx = null;
+    craftRenderAll();
+}
+
+function craftRenderSubs() {
+    const wrap = document.getElementById('craftSubs');
+    const section = document.getElementById('craftSubSection');
+    if (craftState.catIdx === null) {
+        wrap.innerHTML = '';
+        section.style.display = 'none';
+        return;
+    }
+    section.style.display = 'flex';
+    const subs = craftData.categories[craftState.catIdx].subs;
+    wrap.innerHTML = subs.map((s, i) =>
+        `<div class="craft-chip ${craftState.subIdx === i ? 'active' : ''}" onclick="craftSelectSub(${i})">${s.name}</div>`
+    ).join('');
+}
+
+function craftSelectSub(idx) {
+    if (craftState.subIdx === idx) return;
+    craftState.subIdx = idx;
+    craftState.itemIdx = null;
+    craftState.varIdx = null;
+    craftRenderAll();
+}
+
+function craftRenderItems() {
+    const wrap = document.getElementById('craftItems');
+    const section = document.getElementById('craftItemSection');
+    if (craftState.catIdx === null || craftState.subIdx === null) {
+        wrap.innerHTML = '';
+        section.style.display = 'none';
+        return;
+    }
+    section.style.display = 'flex';
+    const items = craftData.categories[craftState.catIdx].subs[craftState.subIdx].items;
+    wrap.innerHTML = items.map((name, i) =>
+        `<div class="craft-chip ${craftState.itemIdx === i ? 'active' : ''}" onclick="craftSelectItem(${i})">${name}</div>`
+    ).join('');
+}
+
+function craftSelectItem(idx) {
+    if (craftState.itemIdx === idx) return;
+    craftState.itemIdx = idx;
+    craftState.varIdx = null;
+    craftRenderAll();
+}
+
+function craftRenderVars() {
+    const wrap = document.getElementById('craftVars');
+    const section = document.getElementById('craftVarSection');
+    if (craftState.catIdx === null || craftState.subIdx === null || craftState.itemIdx === null) {
+        wrap.innerHTML = '';
+        section.style.display = 'none';
+        return;
+    }
+    section.style.display = 'flex';
+    wrap.innerHTML = craftVarNames.map((name, i) => {
+        const hasPattern = !!craftGetPattern(craftState.catIdx, craftState.subIdx, craftState.itemIdx, i);
+        return `<div class="craft-chip ${craftState.varIdx === i ? 'active' : ''}" onclick="craftSelectVar(${i})">${name}${hasPattern ? ' ✓' : ''}</div>`;
+    }).join('');
+}
+
+function craftSelectVar(idx) {
+    craftState.varIdx = idx;
+    craftRenderAll();
+}
+
+function craftRenderSquare() {
+    const square = document.getElementById('craftSquare');
+    const img = document.getElementById('craftSquareImg');
+    const placeholder = document.getElementById('craftSquarePlaceholder');
+    const actions = document.getElementById('craftActions');
+
+    if (craftState.catIdx === null || craftState.subIdx === null ||
+        craftState.itemIdx === null || craftState.varIdx === null) {
+        square.classList.remove('has-image', 'clickable');
+        img.src = '';
+        placeholder.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <circle cx="9" cy="9" r="2"/>
+                <path d="M21 15l-5-5L5 21"/>
+            </svg>
+            <div>请按顺序选择<br>分类 → 款式 → 款式 → 种类</div>`;
+        actions.style.display = 'none';
+        return;
+    }
+
+    const patternData = craftGetPattern(craftState.catIdx, craftState.subIdx, craftState.itemIdx, craftState.varIdx);
+    square.classList.add('clickable');
+
+    if (patternData) {
+        square.classList.add('has-image');
+        img.src = patternData;
+        placeholder.innerHTML = '';
+    } else {
+        square.classList.remove('has-image');
+        img.src = '';
+        placeholder.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <div>点击上传对应图纸</div>`;
+    }
+    actions.style.display = 'flex';
+}
+
+function craftRenderBreadcrumb() {
+    const el = document.getElementById('craftBreadcrumb');
+    if (craftState.catIdx === null) {
+        el.textContent = '请选择分类';
+        return;
+    }
+    const cat = craftData.categories[craftState.catIdx];
+    const parts = [cat.name];
+    if (craftState.subIdx !== null) parts.push(cat.subs[craftState.subIdx].name);
+    if (craftState.itemIdx !== null) parts.push(cat.subs[craftState.subIdx].items[craftState.itemIdx]);
+    if (craftState.varIdx !== null) parts.push(craftVarNames[craftState.varIdx]);
+    el.textContent = parts.join(' › ');
+}
+
+function craftHandleSquareClick() {
+    if (craftState.catIdx === null || craftState.subIdx === null ||
+        craftState.itemIdx === null || craftState.varIdx === null) {
+        return;
+    }
+    const existing = craftGetPattern(craftState.catIdx, craftState.subIdx, craftState.itemIdx, craftState.varIdx);
+    if (!existing) {
+        document.getElementById('craftFileUpload').click();
+    }
+}
+
+function craftHandleUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+        alert('请上传图片文件');
+        e.target.value = '';
+        return;
+    }
+    const reader = new FileReader();
+    reader.onload = ev => {
+        if (craftSetPattern(craftState.catIdx, craftState.subIdx, craftState.itemIdx, craftState.varIdx, ev.target.result)) {
+            craftRenderSquare();
+            craftRenderVars();
+        }
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+}
+
+function craftClearPattern() {
+    if (craftState.catIdx === null || craftState.subIdx === null ||
+        craftState.itemIdx === null || craftState.varIdx === null) return;
+    const existing = craftGetPattern(craftState.catIdx, craftState.subIdx, craftState.itemIdx, craftState.varIdx);
+    if (!existing) return;
+    if (confirm('确定清除当前图纸吗？')) {
+        craftSetPattern(craftState.catIdx, craftState.subIdx, craftState.itemIdx, craftState.varIdx, null);
+        craftRenderSquare();
+        craftRenderVars();
+    }
+}
+
+// 全局暴露
+window.craftOpenViewer = craftOpenViewer;
+window.craftCloseViewer = craftCloseViewer;
+window.craftSelectCategory = craftSelectCategory;
+window.craftSelectSub = craftSelectSub;
+window.craftSelectItem = craftSelectItem;
+window.craftSelectVar = craftSelectVar;
+
+// 初始化事件绑定
+document.addEventListener('DOMContentLoaded', () => {
+    const closeBtn = document.getElementById('craftCloseBtn');
+    if (closeBtn) closeBtn.addEventListener('click', craftCloseViewer);
+
+    const square = document.getElementById('craftSquare');
+    if (square) square.addEventListener('click', craftHandleSquareClick);
+
+    const fileInput = document.getElementById('craftFileUpload');
+    if (fileInput) fileInput.addEventListener('change', craftHandleUpload);
+
+    const uploadBtn = document.getElementById('craftUploadBtn');
+    if (uploadBtn) uploadBtn.addEventListener('click', () => document.getElementById('craftFileUpload').click());
+
+    const clearBtn = document.getElementById('craftClearBtn');
+    if (clearBtn) clearBtn.addEventListener('click', craftClearPattern);
+
+    // ESC 关闭
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const overlay = document.getElementById('craftViewerOverlay');
+            if (overlay && overlay.classList.contains('show')) craftCloseViewer();
+        }
+    });
+
+    // 编辑图纸按钮
+    const editBtn = document.getElementById('craftEditBtn');
+    if (editBtn) editBtn.addEventListener('click', craftOpenEditor);
+});
+
+/* ============================================================
+ *  手工屋 · 图纸定制器（分部位填色 / 描边分区 / 布料设计）
+ * ============================================================ */
+
+const craftEditor = {
+    canvas: null,
+    ctx: null,
+    baseImage: null,
+    baseImageData: null,
+    width: 500,
+    height: 500,
+    mode: 'select',
+    currentColor: '#ff6b6b',
+    currentPartIdx: -1,
+    parts: [],
+    drawingPoints: [],
+    isDrawing: false,
+    magicStart: null,
+    magicRect: null,
+    magicRectEl: null,
+    fabricIdx: 0,
+    designIdx: 0,
+    fabricCustomIdx: -1,
+    designCustomIdx: -1,
+    fabricType: 'preset',
+    designType: 'preset',
+    customFabrics: [],
+    customDesigns: [],
+    catIdx: null,
+    subIdx: null,
+    itemIdx: null,
+    varIdx: null,
+    floodCanvas: null,
+    floodCtx: null,
+    fabricPatternCache: {},
+    designPatternCache: {},
+    previewMask: null,
+    previewMode: false
+};
+
+const GRID_COLORS = [
+    '#ff0000', '#ff4444', '#ff6b6b', '#ff8c8c', '#ffb3b3', '#ffe0e0',
+    '#ff6600', '#ff8833', '#ffaa66', '#ffcc99', '#ffe6cc', '#fff4e6',
+    '#ffff00', '#ffff44', '#ffff88', '#ffffbb', '#ffffdd', '#fffff0',
+    '#00cc00', '#33dd33', '#66ee66', '#99ff99', '#ccffcc', '#eeffee',
+    '#0099ff', '#33adff', '#66c2ff', '#99d6ff', '#ccebff', '#e6f5ff',
+    '#9933ff', '#aa55ff', '#bb77ff', '#cc99ff', '#ddbbff', '#eeddff',
+    '#ff3399', '#ff66b3', '#ff99cc', '#ffcce6', '#ffe6f2', '#fff4f9',
+    '#ffffff', '#eeeeee', '#cccccc', '#999999', '#666666', '#000000'
+];
+
+const PRESET_FABRICS = [
+    { name: '平纹', type: 'solid', color: '#ffffff' },
+    { name: '细纹', type: 'lines', color1: '#ffffff', color2: '#f0f0f0' },
+    { name: '格纹', type: 'grid', color1: '#ffffff', color2: '#e8e8e8' },
+    { name: '斜纹', type: 'diagonal', color1: '#ffffff', color2: '#f5f5f5' },
+    { name: '圆点', type: 'dots', color1: '#ffffff', color2: '#e0e0e0' },
+    { name: '绒面', type: 'noise', color: '#f8f8f8' }
+];
+
+const PRESET_DESIGNS = [
+    { name: '无设计', type: 'none' },
+    { name: '条纹', type: 'stripes', color: 'rgba(0,0,0,0.2)' },
+    { name: '波点', type: 'polka', color: 'rgba(0,0,0,0.15)' },
+    { name: '格子', type: 'plaid', color: 'rgba(0,0,0,0.22)' },
+    { name: '花纹', type: 'floral', color: 'rgba(0,0,0,0.18)' },
+    { name: '几何', type: 'geo', color: 'rgba(0,0,0,0.15)' }
+];
+
+function craftEditorStorageKey() {
+    return `craft_editor_${craftEditor.catIdx}_${craftEditor.subIdx}_${craftEditor.itemIdx}_${craftEditor.varIdx}`;
+}
+
+function craftOpenEditor() {
+    if (craftState.catIdx === null || craftState.subIdx === null ||
+        craftState.itemIdx === null || craftState.varIdx === null) return;
+    craftEditor.catIdx = craftState.catIdx;
+    craftEditor.subIdx = craftState.subIdx;
+    craftEditor.itemIdx = craftState.itemIdx;
+    craftEditor.varIdx = craftState.varIdx;
+
+    const overlay = document.getElementById('craftEditorOverlay');
+    overlay.classList.add('show');
+
+    craftEditor.canvas = document.getElementById('craftEditorCanvas');
+    craftEditor.ctx = craftEditor.canvas.getContext('2d');
+    craftEditor.canvas.width = craftEditor.width;
+    craftEditor.canvas.height = craftEditor.height;
+
+    craftEditor.floodCanvas = document.createElement('canvas');
+    craftEditor.floodCanvas.width = craftEditor.width;
+    craftEditor.floodCanvas.height = craftEditor.height;
+    craftEditor.floodCtx = craftEditor.floodCanvas.getContext('2d');
+
+    craftLoadEditorState();
+    craftInitColorPicker();
+    craftInitFabricDesignGrids();
+    craftInitEditorEvents();
+    craftLoadBaseImage();
+}
+
+function craftCloseEditor() {
+    document.getElementById('craftEditorOverlay').classList.remove('show');
+    craftRenderSquare();
+    craftRenderVars();
+}
+
+function craftLoadEditorState() {
+    try {
+        const key = craftEditorStorageKey();
+        const saved = localStorage.getItem(key + '_parts');
+        if (saved) craftEditor.parts = JSON.parse(saved);
+        const customF = localStorage.getItem(key + '_customFabrics');
+        if (customF) craftEditor.customFabrics = JSON.parse(customF);
+        const customD = localStorage.getItem(key + '_customDesigns');
+        if (customD) craftEditor.customDesigns = JSON.parse(customD);
+    } catch (e) {
+        craftEditor.parts = [];
+        craftEditor.customFabrics = [];
+        craftEditor.customDesigns = [];
+    }
+    craftEditor.currentPartIdx = -1;
+    craftRenderPartsList();
+}
+
+function craftSaveEditorState() {
+    try {
+        const key = craftEditorStorageKey();
+        localStorage.setItem(key + '_parts', JSON.stringify(craftEditor.parts));
+        localStorage.setItem(key + '_customFabrics', JSON.stringify(craftEditor.customFabrics));
+        localStorage.setItem(key + '_customDesigns', JSON.stringify(craftEditor.customDesigns));
+    } catch (e) {}
+}
+
+function craftLoadBaseImage() {
+    const patternData = craftGetPattern(craftEditor.catIdx, craftEditor.subIdx, craftEditor.itemIdx, craftEditor.varIdx);
+    if (patternData) {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = function() {
+            craftEditor.baseImage = img;
+            const scale = Math.min(craftEditor.width / img.width, craftEditor.height / img.height) * 0.88;
+            const drawW = img.width * scale;
+            const drawH = img.height * scale;
+            const offX = (craftEditor.width - drawW) / 2;
+            const offY = (craftEditor.height - drawH) / 2;
+
+            const tmpCanvas = document.createElement('canvas');
+            tmpCanvas.width = craftEditor.width;
+            tmpCanvas.height = craftEditor.height;
+            const tmpCtx = tmpCanvas.getContext('2d');
+            tmpCtx.fillStyle = '#ffffff';
+            tmpCtx.fillRect(0, 0, craftEditor.width, craftEditor.height);
+            tmpCtx.drawImage(img, offX, offY, drawW, drawH);
+            craftEditor.baseImageData = tmpCtx.getImageData(0, 0, craftEditor.width, craftEditor.height);
+
+            craftEditor.floodCtx.putImageData(craftEditor.baseImageData, 0, 0);
+            craftEditor.fabricPatternCache = {};
+            craftEditor.designPatternCache = {};
+            craftRedrawCanvas();
+        };
+        img.src = patternData;
+    } else {
+        craftEditor.baseImage = null;
+        craftEditor.baseImageData = null;
+        craftRedrawCanvas();
+    }
+}
+
+function craftRedrawCanvas() {
+    const ctx = craftEditor.ctx;
+    const w = craftEditor.width;
+    const h = craftEditor.height;
+
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, w, h);
+
+    if (craftEditor.baseImageData) {
+        ctx.putImageData(craftEditor.baseImageData, 0, 0);
+    }
+
+    for (let i = 0; i < craftEditor.parts.length; i++) {
+        const p = craftEditor.parts[i];
+        if (!p.points || p.points.length < 3) continue;
+
+        ctx.save();
+        ctx.beginPath();
+        craftDrawPathFromPoints(ctx, p.points);
+        ctx.closePath();
+        ctx.clip();
+
+        if (p.color) {
+            ctx.globalCompositeOperation = 'multiply';
+            ctx.fillStyle = p.color;
+            ctx.fillRect(0, 0, w, h);
+        }
+
+        if (p.fabricType && p.fabricType !== 'none') {
+            ctx.globalCompositeOperation = 'multiply';
+            const pat = craftGetFabricPattern(p.fabricType, p.fabricIdx);
+            if (pat) {
+                ctx.fillStyle = pat;
+                ctx.fillRect(0, 0, w, h);
+            }
+        }
+
+        if (p.designType && p.designType !== 'none') {
+            ctx.globalCompositeOperation = 'multiply';
+            const pat = craftGetDesignPattern(p.designType, p.designIdx);
+            if (pat) {
+                ctx.fillStyle = pat;
+                ctx.fillRect(0, 0, w, h);
+            }
+        }
+
+        ctx.restore();
+    }
+
+    if (craftEditor.previewMode && craftEditor.previewMask) {
+        ctx.save();
+        ctx.globalAlpha = 0.4;
+        ctx.fillStyle = '#ff6b44';
+        const imgData = ctx.createImageData(w, h);
+        for (let y = 0; y < h; y++) {
+            for (let x = 0; x < w; x++) {
+                if (craftEditor.previewMask[y * w + x]) {
+                    const idx = (y * w + x) * 4;
+                    imgData.data[idx] = 255;
+                    imgData.data[idx + 1] = 107;
+                    imgData.data[idx + 2] = 68;
+                    imgData.data[idx + 3] = 100;
+                }
+            }
+        }
+        ctx.putImageData(imgData, 0, 0);
+        ctx.restore();
+
+        const previewPoints = craftMaskToPolygon(craftEditor.previewMask, w, h);
+        const simplified = craftSimplifyPolygon(previewPoints, 2.0);
+        if (simplified.length >= 3) {
+            ctx.save();
+            ctx.strokeStyle = '#ff6b44';
+            ctx.lineWidth = 2.5;
+            ctx.setLineDash([8, 5]);
+            ctx.beginPath();
+            craftDrawPathFromPoints(ctx, simplified);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.restore();
+        }
+    }
+
+    if (craftEditor.isDrawing && craftEditor.drawingPoints.length > 0) {
+        ctx.save();
+        ctx.strokeStyle = '#ff4444';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([5, 4]);
+        ctx.beginPath();
+        craftDrawPathFromPoints(ctx, craftEditor.drawingPoints);
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    if (craftEditor.currentPartIdx >= 0 && craftEditor.mode === 'select') {
+        const p = craftEditor.parts[craftEditor.currentPartIdx];
+        if (p && p.points && p.points.length >= 3) {
+            ctx.save();
+            ctx.strokeStyle = '#ff8800';
+            ctx.lineWidth = 2.5;
+            ctx.setLineDash([6, 4]);
+            ctx.beginPath();
+            craftDrawPathFromPoints(ctx, p.points);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.restore();
+        }
+    }
+}
+
+function craftDrawPathFromPoints(ctx, points) {
+    if (points.length < 2) return;
+    ctx.moveTo(points[0].x, points[0].y);
+    for (let i = 1; i < points.length; i++) {
+        ctx.lineTo(points[i].x, points[i].y);
+    }
+}
+
+function craftGetCanvasPos(e) {
+    const rect = craftEditor.canvas.getBoundingClientRect();
+    const scaleX = craftEditor.canvas.width / rect.width;
+    const scaleY = craftEditor.canvas.height / rect.height;
+    return {
+        x: (e.clientX - rect.left) * scaleX,
+        y: (e.clientY - rect.top) * scaleY
+    };
+}
+
+function craftPointInPolygon(pt, poly) {
+    let inside = false;
+    for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+        const xi = poly[i].x, yi = poly[i].y;
+        const xj = poly[j].x, yj = poly[j].y;
+        const intersect = ((yi > pt.y) !== (yj > pt.y)) &&
+            (pt.x < (xj - xi) * (pt.y - yi) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
+    }
+    return inside;
+}
+
+function craftInitEditorEvents() {
+    const canvas = craftEditor.canvas;
+    const wrap = canvas.parentElement;
+
+    function onMouseDown(e) {
+        const pos = craftGetCanvasPos(e);
+
+        if (craftEditor.mode === 'magic') {
+            e.preventDefault();
+            craftEditor.magicStart = pos;
+            craftEditor.magicRect = { x: pos.x, y: pos.y, w: 0, h: 0 };
+            if (!craftEditor.magicRectEl) {
+                craftEditor.magicRectEl = document.createElement('div');
+                craftEditor.magicRectEl.className = 'craft-selection-rect';
+                wrap.appendChild(craftEditor.magicRectEl);
+            }
+            craftUpdateMagicRect();
+            craftEditor.magicRectEl.style.display = 'block';
+            return;
+        }
+
+        if (craftEditor.mode === 'draw') {
+            e.preventDefault();
+            craftEditor.isDrawing = true;
+            craftEditor.drawingPoints = [pos];
+            craftRedrawCanvas();
+            return;
+        }
+    }
+
+    function onMouseMove(e) {
+        const pos = craftGetCanvasPos(e);
+
+        if (craftEditor.mode === 'magic' && craftEditor.magicStart) {
+            craftEditor.magicRect = {
+                x: Math.min(craftEditor.magicStart.x, pos.x),
+                y: Math.min(craftEditor.magicStart.y, pos.y),
+                w: Math.abs(pos.x - craftEditor.magicStart.x),
+                h: Math.abs(pos.y - craftEditor.magicStart.y)
+            };
+            craftUpdateMagicRect();
+            return;
+        }
+
+        if (craftEditor.mode === 'draw' && craftEditor.isDrawing) {
+            craftEditor.drawingPoints.push(pos);
+            craftRedrawCanvas();
+            return;
+        }
+    }
+
+    function onMouseUp(e) {
+        if (craftEditor.mode === 'magic' && craftEditor.magicStart) {
+            const rect = craftEditor.magicRect;
+            craftEditor.magicStart = null;
+            if (craftEditor.magicRectEl) {
+                craftEditor.magicRectEl.style.display = 'none';
+            }
+            if (rect && rect.w > 10 && rect.h > 10) {
+                craftMagicExtractRegion(rect);
+            }
+            return;
+        }
+
+        if (craftEditor.mode === 'draw' && craftEditor.isDrawing) {
+            craftEditor.isDrawing = false;
+            if (craftEditor.drawingPoints.length >= 10) {
+                craftFinishDrawing();
+            } else {
+                craftEditor.drawingPoints = [];
+                craftRedrawCanvas();
+            }
+            return;
+        }
+    }
+
+    canvas.addEventListener('mousedown', onMouseDown);
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+
+    canvas.addEventListener('click', function(e) {
+        if (craftEditor.mode !== 'select') return;
+        const pos = craftGetCanvasPos(e);
+        let found = -1;
+        for (let i = craftEditor.parts.length - 1; i >= 0; i--) {
+            if (craftEditor.parts[i].points && craftEditor.parts[i].points.length >= 3 &&
+                craftPointInPolygon(pos, craftEditor.parts[i].points)) {
+                found = i;
+                break;
+            }
+        }
+        craftEditor.currentPartIdx = found;
+        if (found >= 0) {
+            craftApplyColorToPart(found, craftEditor.currentColor);
+        }
+        craftRenderPartsList();
+        craftRedrawCanvas();
+        craftUpdateCurrentPartInfo();
+    });
+
+    document.getElementById('craftEditorClose').addEventListener('click', craftCloseEditor);
+
+    document.querySelectorAll('.craft-mode-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.craft-mode-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            craftEditor.mode = this.dataset.mode;
+            craftEditor.canvas.classList.remove('mode-select', 'mode-draw', 'mode-magic');
+            craftEditor.canvas.classList.add('mode-' + craftEditor.mode);
+            document.getElementById('craftDrawSection').style.display = craftEditor.mode === 'draw' ? 'flex' : 'none';
+            document.getElementById('craftMagicSection').style.display = craftEditor.mode === 'magic' ? 'flex' : 'none';
+            craftEditor.isDrawing = false;
+            craftEditor.drawingPoints = [];
+            craftEditor.magicStart = null;
+            if (craftEditor.magicRectEl) craftEditor.magicRectEl.style.display = 'none';
+            document.getElementById('craftPartNameInput').value = '';
+            document.getElementById('craftMagicNameInput').value = '';
+            craftRedrawCanvas();
+        });
+    });
+
+    document.getElementById('craftFinishPart').addEventListener('click', craftFinishDrawing);
+    document.getElementById('craftCancelPart').addEventListener('click', craftCancelDrawing);
+    document.getElementById('craftMagicCancel').addEventListener('click', function() {
+        craftEditor.magicStart = null;
+        if (craftEditor.magicRectEl) craftEditor.magicRectEl.style.display = 'none';
+    });
+
+    document.getElementById('craftDeletePart').addEventListener('click', function() {
+        if (craftEditor.currentPartIdx < 0) {
+            alert('请先选择一个部位');
+            return;
+        }
+        if (!confirm('确定删除该部位吗？')) return;
+        craftEditor.parts.splice(craftEditor.currentPartIdx, 1);
+        craftEditor.currentPartIdx = -1;
+        craftRenderPartsList();
+        craftRedrawCanvas();
+        craftSaveEditorState();
+        craftUpdateCurrentPartInfo();
+    });
+
+    document.getElementById('craftResetColor').addEventListener('click', function() {
+        if (craftEditor.currentPartIdx < 0) {
+            alert('请先选择一个部位');
+            return;
+        }
+        craftEditor.parts[craftEditor.currentPartIdx].color = null;
+        craftEditor.parts[craftEditor.currentPartIdx].fabricType = null;
+        craftEditor.parts[craftEditor.currentPartIdx].fabricIdx = 0;
+        craftEditor.parts[craftEditor.currentPartIdx].designType = null;
+        craftEditor.parts[craftEditor.currentPartIdx].designIdx = 0;
+        craftRenderPartsList();
+        craftRedrawCanvas();
+        craftSaveEditorState();
+    });
+
+    document.getElementById('craftEditorUpload').addEventListener('click', function() {
+        document.getElementById('craftEditorFileUpload').click();
+    });
+
+    document.getElementById('craftEditorFileUpload').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            craftSetPattern(craftEditor.catIdx, craftEditor.subIdx, craftEditor.itemIdx, craftEditor.varIdx, ev.target.result);
+            craftLoadBaseImage();
+        };
+        reader.readAsDataURL(file);
+        e.target.value = '';
+    });
+
+    document.getElementById('craftApplyToAll').addEventListener('click', function() {
+        if (!craftEditor.baseImageData) {
+            alert('请先上传图纸');
+            return;
+        }
+        craftApplyOverallColor();
+    });
+
+    document.getElementById('craftAutoPartition').addEventListener('click', function() {
+        craftAutoPartitionAll();
+    });
+
+    document.getElementById('craftClearAll').addEventListener('click', function() {
+        if (!confirm('确定清空所有分区和颜色吗？')) return;
+        craftEditor.parts = [];
+        craftEditor.currentPartIdx = -1;
+        craftRenderPartsList();
+        craftRedrawCanvas();
+        craftSaveEditorState();
+        craftUpdateCurrentPartInfo();
+    });
+
+    document.getElementById('craftEditorSave').addEventListener('click', function() {
+        craftSaveEditorResult();
+    });
+
+    document.getElementById('craftUploadFabric').addEventListener('click', function() {
+        document.getElementById('craftFabricUpload').click();
+    });
+
+    document.getElementById('craftFabricUpload').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            craftEditor.customFabrics.push({ name: '自定义' + (craftEditor.customFabrics.length + 1), dataUrl: ev.target.result });
+            craftSaveEditorState();
+            craftInitFabricDesignGrids();
+        };
+        reader.readAsDataURL(file);
+        e.target.value = '';
+    });
+
+    document.getElementById('craftUploadDesign').addEventListener('click', function() {
+        document.getElementById('craftDesignUpload').click();
+    });
+
+    document.getElementById('craftDesignUpload').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            craftEditor.customDesigns.push({ name: '自定义' + (craftEditor.customDesigns.length + 1), dataUrl: ev.target.result });
+            craftSaveEditorState();
+            craftInitFabricDesignGrids();
+        };
+        reader.readAsDataURL(file);
+        e.target.value = '';
+    });
+}
+
+function craftUpdateMagicRect() {
+    if (!craftEditor.magicRectEl || !craftEditor.magicRect) return;
+    const rect = craftEditor.magicRect;
+    const canvasRect = craftEditor.canvas.getBoundingClientRect();
+    const wrapRect = craftEditor.canvas.parentElement.getBoundingClientRect();
+    const scaleX = canvasRect.width / craftEditor.canvas.width;
+    const scaleY = canvasRect.height / craftEditor.canvas.height;
+    const left = (canvasRect.left - wrapRect.left) + rect.x * scaleX;
+    const top = (canvasRect.top - wrapRect.top) + rect.y * scaleY;
+    craftEditor.magicRectEl.style.left = left + 'px';
+    craftEditor.magicRectEl.style.top = top + 'px';
+    craftEditor.magicRectEl.style.width = (rect.w * scaleX) + 'px';
+    craftEditor.magicRectEl.style.height = (rect.h * scaleY) + 'px';
+}
+
+function craftMagicExtractRegion(rect) {
+    if (!craftEditor.baseImageData) return;
+
+    const startPt = craftFindStartPoint(rect);
+    if (!startPt) {
+        alert('未在选框内找到可识别区域，请调整选框位置');
+        return;
+    }
+
+    const coloredMask = craftBuildColoredMask();
+
+    const mask = craftFloodFill(startPt.x, startPt.y, {
+        rect: rect,
+        tolerance: 90,
+        edgeThreshold: 110,
+        extraBoundaryMask: coloredMask
+    });
+
+    if (!mask) {
+        alert('未识别到有效区域，请调整选框位置');
+        return;
+    }
+
+    let count = 0;
+    for (let i = 0; i < mask.length; i++) if (mask[i]) count++;
+    if (count < 100) {
+        alert('识别区域过小，请框选更大范围');
+        return;
+    }
+
+    craftEditor.previewMask = mask;
+    craftEditor.previewMode = true;
+    craftRedrawCanvas();
+
+    const confirmed = confirm('识别到一个区域，确定添加为分区吗？');
+    craftEditor.previewMode = false;
+    craftEditor.previewMask = null;
+
+    if (!confirmed) {
+        craftRedrawCanvas();
+        return;
+    }
+
+    const points = craftMaskToPolygon(mask, craftEditor.width, craftEditor.height);
+    const simplified = craftSimplifyPolygon(points, 2.0);
+
+    const nameInput = document.getElementById('craftMagicNameInput');
+    const name = nameInput.value.trim() || ('部位' + (craftEditor.parts.length + 1));
+
+    craftEditor.parts.push({
+        name: name,
+        points: simplified,
+        color: null,
+        fabricType: null,
+        fabricIdx: 0,
+        designType: null,
+        designIdx: 0
+    });
+
+    craftEditor.currentPartIdx = craftEditor.parts.length - 1;
+    nameInput.value = '';
+    craftRenderPartsList();
+    craftRedrawCanvas();
+    craftSaveEditorState();
+    craftUpdateCurrentPartInfo();
+    craftUpdateFabricDesignSelection();
+
+    craftEditor.mode = 'select';
+    document.querySelectorAll('.craft-mode-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.craft-mode-btn[data-mode="select"]').classList.add('active');
+    craftEditor.canvas.classList.remove('mode-magic');
+    craftEditor.canvas.classList.add('mode-select');
+    document.getElementById('craftMagicSection').style.display = 'none';
+}
+
+function craftFindStartPoint(rect) {
+    const w = craftEditor.width;
+    const h = craftEditor.height;
+    const imgData = craftEditor.floodCtx.getImageData(0, 0, w, h);
+    const data = imgData.data;
+
+    const cx = Math.floor(rect.x + rect.w / 2);
+    const cy = Math.floor(rect.y + rect.h / 2);
+
+    const idx0 = (cy * w + cx) * 4;
+    const b0 = (data[idx0] + data[idx0 + 1] + data[idx0 + 2]) / 3;
+    if (b0 > 140 && b0 < 255) return { x: cx, y: cy };
+
+    const step = Math.max(4, Math.floor(Math.min(rect.w, rect.h) / 15));
+    for (let r = step; r < Math.min(rect.w, rect.h) / 2; r += step) {
+        for (let angle = 0; angle < 360; angle += 30) {
+            const rad = angle * Math.PI / 180;
+            const x = Math.floor(cx + Math.cos(rad) * r);
+            const y = Math.floor(cy + Math.sin(rad) * r);
+            if (x < rect.x + 2 || x > rect.x + rect.w - 2 ||
+                y < rect.y + 2 || y > rect.y + rect.h - 2) continue;
+            if (x < 2 || x >= w - 2 || y < 2 || y >= h - 2) continue;
+            const idx = (y * w + x) * 4;
+            const b = (data[idx] + data[idx + 1] + data[idx + 2]) / 3;
+            if (b > 140 && b < 250) return { x, y };
+        }
+    }
+
+    for (let y = Math.floor(rect.y) + 5; y < rect.y + rect.h - 5; y += 8) {
+        for (let x = Math.floor(rect.x) + 5; x < rect.x + rect.w - 5; x += 8) {
+            const idx = (y * w + x) * 4;
+            const b = (data[idx] + data[idx + 1] + data[idx + 2]) / 3;
+            if (b > 140 && b < 250) return { x, y };
+        }
+    }
+
+    return null;
+}
+
+function craftBuildColoredMask() {
+    const w = craftEditor.width;
+    const h = craftEditor.height;
+    const mask = new Uint8Array(w * h);
+
+    const tmpCanvas = document.createElement('canvas');
+    tmpCanvas.width = w;
+    tmpCanvas.height = h;
+    const tmpCtx = tmpCanvas.getContext('2d');
+    tmpCtx.fillStyle = '#ffffff';
+    tmpCtx.fillRect(0, 0, w, h);
+    if (craftEditor.baseImageData) {
+        tmpCtx.putImageData(craftEditor.baseImageData, 0, 0);
+    }
+
+    for (let i = 0; i < craftEditor.parts.length; i++) {
+        const p = craftEditor.parts[i];
+        if (!p.points || p.points.length < 3 || !p.color) continue;
+        tmpCtx.save();
+        tmpCtx.beginPath();
+        craftDrawPathFromPoints(tmpCtx, p.points);
+        tmpCtx.closePath();
+        tmpCtx.clip();
+        tmpCtx.fillStyle = '#ff0000';
+        tmpCtx.fillRect(0, 0, w, h);
+        tmpCtx.restore();
+    }
+
+    const imgData = tmpCtx.getImageData(0, 0, w, h);
+    const data = imgData.data;
+
+    for (let i = 0; i < w * h; i++) {
+        const idx = i * 4;
+        const r = data[idx];
+        const g = data[idx + 1];
+        const b = data[idx + 2];
+        if (r > 200 && g < 100 && b < 100) {
+            mask[i] = 1;
+        }
+    }
+
+    return mask;
+}
+
+function craftFloodFill(startX, startY, opts) {
+    const imgData = craftEditor.floodCtx.getImageData(0, 0, craftEditor.width, craftEditor.height);
+    const data = imgData.data;
+    const w = craftEditor.width;
+    const h = craftEditor.height;
+    const tolerance = opts.tolerance || 60;
+    const edgeThreshold = opts.edgeThreshold || 100;
+    const rect = opts.rect || { x: 0, y: 0, w: w, h: h };
+    const extraBoundary = opts.extraBoundaryMask || null;
+
+    const startIdx = (Math.floor(startY) * w + Math.floor(startX)) * 4;
+    const startR = data[startIdx];
+    const startG = data[startIdx + 1];
+    const startB = data[startIdx + 2];
+    const startBrightness = (startR + startG + startB) / 3;
+
+    const mask = new Uint8Array(w * h);
+    const stack = [];
+    stack.push([Math.floor(startX), Math.floor(startY)]);
+    mask[Math.floor(startY) * w + Math.floor(startX)] = 1;
+
+    let count = 0;
+    const maxCount = w * h * 0.6;
+
+    while (stack.length > 0 && count < maxCount) {
+        const [x, y] = stack.pop();
+        count++;
+
+        if (x < rect.x || x > rect.x + rect.w || y < rect.y || y > rect.y + rect.h) continue;
+        if (x < 1 || x >= w - 1 || y < 1 || y >= h - 1) continue;
+
+        const pIdx = y * w + x;
+        if (extraBoundary && extraBoundary[pIdx]) continue;
+
+        const idx = pIdx * 4;
+        const r = data[idx];
+        const g = data[idx + 1];
+        const b = data[idx + 2];
+
+        const brightness = (r + g + b) / 3;
+        if (brightness < edgeThreshold) continue;
+
+        const dr = Math.abs(r - startR);
+        const dg = Math.abs(g - startG);
+        const db = Math.abs(b - startB);
+        const diff = Math.max(dr, dg, db);
+        if (diff > tolerance && brightness > edgeThreshold) continue;
+
+        mask[pIdx] = 1;
+
+        const right = pIdx + 1;
+        const left = pIdx - 1;
+        const down = pIdx + w;
+        const up = pIdx - w;
+
+        if (!mask[right] && x + 1 < w - 1) {
+            if (!extraBoundary || !extraBoundary[right]) {
+                mask[right] = 1;
+                stack.push([x + 1, y]);
+            }
+        }
+        if (!mask[left] && x - 1 > 0) {
+            if (!extraBoundary || !extraBoundary[left]) {
+                mask[left] = 1;
+                stack.push([x - 1, y]);
+            }
+        }
+        if (!mask[down] && y + 1 < h - 1) {
+            if (!extraBoundary || !extraBoundary[down]) {
+                mask[down] = 1;
+                stack.push([x, y + 1]);
+            }
+        }
+        if (!mask[up] && y - 1 > 0) {
+            if (!extraBoundary || !extraBoundary[up]) {
+                mask[up] = 1;
+                stack.push([x, y - 1]);
+            }
+        }
+    }
+
+    return mask;
+}
+
+function craftMaskToPolygon(mask, w, h) {
+    let topY = -1, bottomY = -1;
+    for (let y = 0; y < h; y++) {
+        for (let x = 0; x < w; x++) {
+            if (mask[y * w + x]) { topY = y; break; }
+        }
+        if (topY >= 0) break;
+    }
+    for (let y = h - 1; y >= 0; y--) {
+        for (let x = 0; x < w; x++) {
+            if (mask[y * w + x]) { bottomY = y; break; }
+        }
+        if (bottomY >= 0) break;
+    }
+    if (topY < 0 || bottomY < 0) return [];
+
+    const points = [];
+    const step = Math.max(1, Math.floor((bottomY - topY) / 100));
+
+    for (let y = topY; y <= bottomY; y += step) {
+        let leftX = -1, rightX = -1;
+        for (let x = 0; x < w; x++) {
+            if (mask[y * w + x]) { leftX = x; break; }
+        }
+        for (let x = w - 1; x >= 0; x--) {
+            if (mask[y * w + x]) { rightX = x; break; }
+        }
+        if (leftX >= 0) points.push({ x: leftX, y: y });
+    }
+
+    for (let y = bottomY; y >= topY; y -= step) {
+        let rightX = -1;
+        for (let x = w - 1; x >= 0; x--) {
+            if (mask[y * w + x]) { rightX = x; break; }
+        }
+        if (rightX >= 0) points.push({ x: rightX, y: y });
+    }
+
+    return points;
+}
+
+function craftSimplifyPolygon(points, tolerance) {
+    if (points.length <= 2) return points;
+
+    function perpendicularDistance(pt, lineStart, lineEnd) {
+        const dx = lineEnd.x - lineStart.x;
+        const dy = lineEnd.y - lineStart.y;
+        const mag = Math.sqrt(dx * dx + dy * dy);
+        if (mag === 0) return Math.sqrt((pt.x - lineStart.x) ** 2 + (pt.y - lineStart.y) ** 2);
+        const pvx = pt.x - lineStart.x;
+        const pvy = pt.y - lineStart.y;
+        const t = (pvx * dx + pvy * dy) / (mag * mag);
+        const closestX = lineStart.x + t * dx;
+        const closestY = lineStart.y + t * dy;
+        return Math.sqrt((pt.x - closestX) ** 2 + (pt.y - closestY) ** 2);
+    }
+
+    function rdp(pts, tol) {
+        if (pts.length < 3) return pts;
+        let maxDist = 0;
+        let index = 0;
+        const end = pts.length - 1;
+        for (let i = 1; i < end; i++) {
+            const d = perpendicularDistance(pts[i], pts[0], pts[end]);
+            if (d > maxDist) { maxDist = d; index = i; }
+        }
+        if (maxDist > tol) {
+            const rec1 = rdp(pts.slice(0, index + 1), tol);
+            const rec2 = rdp(pts.slice(index), tol);
+            return rec1.slice(0, -1).concat(rec2);
+        } else {
+            return [pts[0], pts[end]];
+        }
+    }
+
+    return rdp(points, tolerance);
+}
+
+function craftApplyOverallColor() {
+    if (!craftEditor.baseImageData) return;
+
+    const color = craftEditor.currentColor;
+
+    const w = craftEditor.width;
+    const h = craftEditor.height;
+    const cx = Math.floor(w / 2);
+    const cy = Math.floor(h / 2);
+
+    const startPt = craftFindStartPoint({ x: 0, y: 0, w, h });
+    if (!startPt) {
+        alert('无法识别图纸区域');
+        return;
+    }
+
+    const mask = craftFloodFill(startPt.x, startPt.y, {
+        rect: { x: 0, y: 0, w: w, h: h },
+        tolerance: 100,
+        edgeThreshold: 90
+    });
+
+    if (!mask) {
+        alert('无法识别图纸区域');
+        return;
+    }
+
+    const points = craftMaskToPolygon(mask, w, h);
+    if (points.length < 10) {
+        alert('无法识别图纸区域');
+        return;
+    }
+
+    const simplified = craftSimplifyPolygon(points, 3.0);
+
+    const name = '整体';
+    const existingIdx = craftEditor.parts.findIndex(p => p.name === '整体');
+    if (existingIdx >= 0) {
+        craftEditor.parts[existingIdx].points = simplified;
+        craftEditor.parts[existingIdx].color = color;
+        craftEditor.currentPartIdx = existingIdx;
+    } else {
+        craftEditor.parts.unshift({
+            name: name,
+            points: simplified,
+            color: color,
+            fabricType: null,
+            fabricIdx: 0,
+            designType: null,
+            designIdx: 0
+        });
+        craftEditor.currentPartIdx = 0;
+    }
+
+    craftRenderPartsList();
+    craftRedrawCanvas();
+    craftSaveEditorState();
+    craftUpdateCurrentPartInfo();
+    craftUpdateFabricDesignSelection();
+}
+
+function craftAutoPartitionAll() {
+    if (!craftEditor.baseImageData) {
+        alert('请先上传图纸');
+        return;
+    }
+
+    if (!confirm('将自动识别图纸中的所有封闭区域并生成分区，确定继续吗？')) return;
+
+    const w = craftEditor.width;
+    const h = craftEditor.height;
+    const regions = craftFindAllClosedRegions();
+
+    if (regions.length === 0) {
+        alert('未识别到有效区域');
+        return;
+    }
+
+    const newParts = [];
+    for (let i = 0; i < regions.length; i++) {
+        const r = regions[i];
+        const points = craftMaskToPolygon(r.mask, w, h);
+        const simplified = craftSimplifyPolygon(points, 2.0);
+        if (simplified.length < 10) continue;
+
+        const name = craftAutoNameRegion(r, w, h, newParts);
+        newParts.push({
+            name: name,
+            points: simplified,
+            color: null,
+            fabricType: null,
+            fabricIdx: 0,
+            designType: null,
+            designIdx: 0,
+            area: r.area,
+            cx: r.cx,
+            cy: r.cy
+        });
+    }
+
+    newParts.sort((a, b) => a.cy - b.cy);
+
+    for (let i = 0; i < newParts.length; i++) {
+        delete newParts[i].area;
+        delete newParts[i].cx;
+        delete newParts[i].cy;
+    }
+
+    craftEditor.parts = newParts;
+    craftEditor.currentPartIdx = newParts.length > 0 ? 0 : -1;
+
+    craftRenderPartsList();
+    craftRedrawCanvas();
+    craftSaveEditorState();
+    craftUpdateCurrentPartInfo();
+    craftUpdateFabricDesignSelection();
+
+    alert('已自动识别 ' + newParts.length + ' 个区域');
+}
+
+function craftFindAllClosedRegions() {
+    const w = craftEditor.width;
+    const h = craftEditor.height;
+    const imgData = craftEditor.floodCtx.getImageData(0, 0, w, h);
+    const data = imgData.data;
+
+    const visited = new Uint8Array(w * h);
+    const regions = [];
+
+    const step = 12;
+
+    for (let y = step; y < h - step; y += step) {
+        for (let x = step; x < w - step; x += step) {
+            const pIdx = y * w + x;
+            if (visited[pIdx]) continue;
+
+            const idx = pIdx * 4;
+            const r = data[idx];
+            const g = data[idx + 1];
+            const b = data[idx + 2];
+            const brightness = (r + g + b) / 3;
+
+            if (brightness < 120) continue;
+            if (brightness > 252) continue;
+
+            const mask = new Uint8Array(w * h);
+            const stack = [[x, y]];
+            mask[pIdx] = 1;
+            visited[pIdx] = 1;
+
+            let area = 0;
+            let sumX = 0;
+            let sumY = 0;
+            let count = 0;
+            const maxCount = w * h * 0.3;
+
+            while (stack.length > 0 && count < maxCount) {
+                const [cx, cy] = stack.pop();
+                count++;
+                area++;
+                sumX += cx;
+                sumY += cy;
+
+                const neighbors = [[cx + 1, cy], [cx - 1, cy], [cx, cy + 1], [cx, cy - 1]];
+                for (const [nx, ny] of neighbors) {
+                    if (nx < 1 || nx >= w - 1 || ny < 1 || ny >= h - 1) continue;
+                    const nIdx = ny * w + nx;
+                    if (visited[nIdx]) continue;
+                    if (mask[nIdx]) continue;
+
+                    const nDataIdx = nIdx * 4;
+                    const nr = data[nDataIdx];
+                    const ng = data[nDataIdx + 1];
+                    const nb = data[nDataIdx + 2];
+                    const nBright = (nr + ng + nb) / 3;
+
+                    const dr = Math.abs(nr - r);
+                    const dg = Math.abs(ng - g);
+                    const db = Math.abs(nb - b);
+                    const diff = Math.max(dr, dg, db);
+
+                    if (nBright < 100) continue;
+                    if (diff > 90 && nBright > 120) continue;
+
+                    mask[nIdx] = 1;
+                    visited[nIdx] = 1;
+                    stack.push([nx, ny]);
+                }
+            }
+
+            if (area > 500) {
+                regions.push({
+                    mask: mask,
+                    area: area,
+                    cx: sumX / area,
+                    cy: sumY / area
+                });
+            }
+        }
+    }
+
+    regions.sort((a, b) => b.area - a.area);
+    return regions.slice(0, 20);
+}
+
+function craftAutoNameRegion(region, w, h, existingParts) {
+    const cx = region.cx;
+    const cy = region.cy;
+    const area = region.area;
+
+    const topThird = h * 0.33;
+    const midThird = h * 0.66;
+
+    const totalArea = w * h;
+    const areaRatio = area / totalArea;
+
+    let name = '部位' + (existingParts.length + 1);
+
+    if (cy < topThird) {
+        if (areaRatio > 0.08) {
+            name = '上衣';
+        } else if (cx < w * 0.4) {
+            name = '左袖';
+        } else if (cx > w * 0.6) {
+            name = '右袖';
+        } else {
+            name = '领口';
+        }
+    } else if (cy < midThird) {
+        if (areaRatio < 0.06) {
+            name = '腰带';
+        } else if (areaRatio > 0.15) {
+            name = '腰裙';
+        } else {
+            name = '腰部';
+        }
+    } else {
+        if (areaRatio > 0.12) {
+            name = '下裙';
+        } else if (cx < w * 0.45) {
+            name = '左下摆';
+        } else if (cx > w * 0.55) {
+            name = '右下摆';
+        } else {
+            name = '裙摆';
+        }
+    }
+
+    let count = 1;
+    let baseName = name;
+    while (existingParts.some(p => p.name === name)) {
+        count++;
+        name = baseName + count;
+    }
+
+    return name;
+}
+
+function craftFinishDrawing() {
+    if (craftEditor.drawingPoints.length < 3) {
+        alert('至少需要3个点才能形成一个区域');
+        return;
+    }
+    const name = document.getElementById('craftPartNameInput').value.trim() || ('部位' + (craftEditor.parts.length + 1));
+    craftEditor.parts.push({
+        name: name,
+        points: [...craftEditor.drawingPoints],
+        color: null,
+        fabricType: null,
+        fabricIdx: 0,
+        designType: null,
+        designIdx: 0
+    });
+    craftEditor.isDrawing = false;
+    craftEditor.drawingPoints = [];
+    document.getElementById('craftPartNameInput').value = '';
+    craftEditor.currentPartIdx = craftEditor.parts.length - 1;
+    craftRenderPartsList();
+    craftRedrawCanvas();
+    craftSaveEditorState();
+    craftUpdateCurrentPartInfo();
+    craftEditor.canvas.classList.remove('mode-draw');
+    craftEditor.canvas.classList.add('mode-select');
+    craftEditor.mode = 'select';
+    document.querySelectorAll('.craft-mode-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.craft-mode-btn[data-mode="select"]').classList.add('active');
+    document.getElementById('craftDrawSection').style.display = 'none';
+}
+
+function craftCancelDrawing() {
+    craftEditor.isDrawing = false;
+    craftEditor.drawingPoints = [];
+    document.getElementById('craftPartNameInput').value = '';
+    craftRedrawCanvas();
+}
+
+function craftApplyColorToPart(idx, color) {
+    if (idx < 0 || idx >= craftEditor.parts.length) return;
+    craftEditor.parts[idx].color = color;
+    craftSaveEditorState();
+}
+
+function craftRenderPartsList() {
+    const list = document.getElementById('craftPartsList');
+    if (craftEditor.parts.length === 0) {
+        list.innerHTML = '<div class="craft-part-empty">暂无分区，请先分区</div>';
+        return;
+    }
+    list.innerHTML = craftEditor.parts.map((p, i) => `
+        <div class="craft-part-item ${craftEditor.currentPartIdx === i ? 'active' : ''}" data-idx="${i}">
+            <div class="craft-part-color" style="background:${p.color || '#ffffff'}"></div>
+            <div class="craft-part-name">${p.name}</div>
+        </div>
+    `).join('');
+    list.querySelectorAll('.craft-part-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const idx = parseInt(this.dataset.idx);
+            craftEditor.currentPartIdx = idx;
+            craftApplyColorToPart(idx, craftEditor.currentColor);
+            craftUpdateFabricDesignSelection();
+            craftRenderPartsList();
+            craftRedrawCanvas();
+            craftUpdateCurrentPartInfo();
+        });
+    });
+}
+
+function craftUpdateCurrentPartInfo() {
+    const el = document.getElementById('craftCurrentPart');
+    if (craftEditor.currentPartIdx >= 0 && craftEditor.parts[craftEditor.currentPartIdx]) {
+        el.textContent = craftEditor.parts[craftEditor.currentPartIdx].name;
+    } else {
+        el.textContent = '未选择';
+    }
+}
+
+function craftSaveEditorResult() {
+    const tmpCanvas = document.createElement('canvas');
+    tmpCanvas.width = craftEditor.width;
+    tmpCanvas.height = craftEditor.height;
+    const tmpCtx = tmpCanvas.getContext('2d');
+    tmpCtx.fillStyle = '#ffffff';
+    tmpCtx.fillRect(0, 0, craftEditor.width, craftEditor.height);
+    if (craftEditor.baseImageData) {
+        tmpCtx.putImageData(craftEditor.baseImageData, 0, 0);
+    }
+    const w = craftEditor.width;
+    const h = craftEditor.height;
+    for (let i = 0; i < craftEditor.parts.length; i++) {
+        const p = craftEditor.parts[i];
+        if (!p.points || p.points.length < 3) continue;
+        tmpCtx.save();
+        tmpCtx.beginPath();
+        craftDrawPathFromPoints(tmpCtx, p.points);
+        tmpCtx.closePath();
+        tmpCtx.clip();
+        if (p.color) {
+            tmpCtx.globalCompositeOperation = 'multiply';
+            tmpCtx.fillStyle = p.color;
+            tmpCtx.fillRect(0, 0, w, h);
+        }
+        if (p.fabricType && p.fabricType !== 'none') {
+            tmpCtx.globalCompositeOperation = 'multiply';
+            const pat = craftGetFabricPattern(p.fabricType, p.fabricIdx);
+            if (pat) { tmpCtx.fillStyle = pat; tmpCtx.fillRect(0, 0, w, h); }
+        }
+        if (p.designType && p.designType !== 'none') {
+            tmpCtx.globalCompositeOperation = 'multiply';
+            const pat = craftGetDesignPattern(p.designType, p.designIdx);
+            if (pat) { tmpCtx.fillStyle = pat; tmpCtx.fillRect(0, 0, w, h); }
+        }
+        tmpCtx.restore();
+    }
+    const dataUrl = tmpCanvas.toDataURL('image/png');
+    craftSetPattern(craftEditor.catIdx, craftEditor.subIdx, craftEditor.itemIdx, craftEditor.varIdx, dataUrl);
+    craftSaveEditorState();
+    alert('已保存！');
+}
+
+/* ===== 颜色选择器 ===== */
+
+function craftInitColorPicker() {
+    const gridPicker = document.getElementById('craftGridPicker');
+    gridPicker.innerHTML = GRID_COLORS.map(c =>
+        `<div class="craft-grid-color" style="background:${c}" data-color="${c}" title="${c}"></div>`
+    ).join('');
+    gridPicker.querySelectorAll('.craft-grid-color').forEach(el => {
+        el.addEventListener('click', function() {
+            craftSetColor(this.dataset.color);
+            gridPicker.querySelectorAll('.craft-grid-color').forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    document.querySelectorAll('.craft-color-mode-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.craft-color-mode-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const mode = this.dataset.cmode;
+            document.getElementById('craftColorGrid').style.display = mode === 'grid' ? 'block' : 'none';
+            document.getElementById('craftColorSpectrum').style.display = mode === 'spectrum' ? 'block' : 'none';
+            document.getElementById('craftColorSlider').style.display = mode === 'slider' ? 'block' : 'none';
+            if (mode === 'spectrum') craftDrawSpectrum();
+        });
+    });
+
+    ['craftSliderR', 'craftSliderG', 'craftSliderB'].forEach((id, i) => {
+        document.getElementById(id).addEventListener('input', function() {
+            document.getElementById(id + 'Val').textContent = this.value;
+            const r = parseInt(document.getElementById('craftSliderR').value);
+            const g = parseInt(document.getElementById('craftSliderG').value);
+            const b = parseInt(document.getElementById('craftSliderB').value);
+            const hex = craftRgbToHex(r, g, b);
+            craftSetColor(hex, false);
+        });
+    });
+
+    craftDrawSpectrum();
+    craftSetColor('#ff6b6b');
+}
+
+function craftDrawSpectrum() {
+    const specCanvas = document.getElementById('craftSpectrumCanvas');
+    const hueCanvas = document.getElementById('craftHueCanvas');
+    if (!specCanvas || !hueCanvas) return;
+
+    const sCtx = specCanvas.getContext('2d');
+    const hCtx = hueCanvas.getContext('2d');
+    const sw = specCanvas.width;
+    const sh = specCanvas.height;
+    const hw = hueCanvas.width;
+    const hh = hueCanvas.height;
+
+    const hueGrad = hCtx.createLinearGradient(0, 0, hw, 0);
+    const hueStops = [0, 60, 120, 180, 240, 300, 360];
+    const hueColors = ['#ff0000', '#ffff00', '#00ff00', '#00ffff', '#0000ff', '#ff00ff', '#ff0000'];
+    for (let i = 0; i < hueStops.length; i++) {
+        hueGrad.addColorStop(hueStops[i] / 360, hueColors[i]);
+    }
+    hCtx.fillStyle = hueGrad;
+    hCtx.fillRect(0, 0, hw, hh);
+
+    const baseColor = craftEditor.currentColor;
+    const rgb = craftHexToRgb(baseColor);
+    const [h, s, v] = craftRgbToHsv(rgb.r, rgb.g, rgb.b);
+
+    const rgbHue = craftHsvToRgb(h, 1, 1);
+    const hueColor = `rgb(${rgbHue[0]}, ${rgbHue[1]}, ${rgbHue[2]})`;
+
+    const gradH = sCtx.createLinearGradient(0, 0, sw, 0);
+    gradH.addColorStop(0, '#ffffff');
+    gradH.addColorStop(1, hueColor);
+    sCtx.fillStyle = gradH;
+    sCtx.fillRect(0, 0, sw, sh);
+
+    const gradV = sCtx.createLinearGradient(0, 0, 0, sh);
+    gradV.addColorStop(0, 'rgba(0,0,0,0)');
+    gradV.addColorStop(1, '#000000');
+    sCtx.fillStyle = gradV;
+    sCtx.fillRect(0, 0, sw, sh);
+
+    let isDraggingSpec = false;
+    let isDraggingHue = false;
+
+    specCanvas.onmousedown = function(e) {
+        isDraggingSpec = true;
+        craftPickSpectrum(e);
+    };
+    specCanvas.onmousemove = function(e) {
+        if (isDraggingSpec) craftPickSpectrum(e);
+    };
+    document.addEventListener('mouseup', function() { isDraggingSpec = false; isDraggingHue = false; });
+
+    hueCanvas.onmousedown = function(e) {
+        isDraggingHue = true;
+        craftPickHue(e);
+    };
+    hueCanvas.onmousemove = function(e) {
+        if (isDraggingHue) craftPickHue(e);
+    };
+}
+
+function craftPickSpectrum(e) {
+    const canvas = document.getElementById('craftSpectrumCanvas');
+    const rect = canvas.getBoundingClientRect();
+    const x = Math.max(0, Math.min(canvas.width, (e.clientX - rect.left) * (canvas.width / rect.width)));
+    const y = Math.max(0, Math.min(canvas.height, (e.clientY - rect.top) * (canvas.height / rect.height)));
+    const s = x / canvas.width;
+    const v = 1 - y / canvas.height;
+    const rgb = craftHexToRgb(craftEditor.currentColor);
+    const [h, , ] = craftRgbToHsv(rgb.r, rgb.g, rgb.b);
+    const [r, g, b] = craftHsvToRgb(h, s, v);
+    const hex = craftRgbToHex(r, g, b);
+    craftSetColor(hex);
+}
+
+function craftPickHue(e) {
+    const canvas = document.getElementById('craftHueCanvas');
+    const rect = canvas.getBoundingClientRect();
+    const x = Math.max(0, Math.min(canvas.width, (e.clientX - rect.left) * (canvas.width / rect.width)));
+    const h = (x / canvas.width) * 360;
+    const rgb = craftHexToRgb(craftEditor.currentColor);
+    const [, s, v] = craftRgbToHsv(rgb.r, rgb.g, rgb.b);
+    const [r, g, b] = craftHsvToRgb(h, Math.max(s, 0.5), Math.max(v, 0.9));
+    const hex = craftRgbToHex(r, g, b);
+    craftSetColor(hex);
+    craftDrawSpectrum();
+}
+
+function craftSetColor(hex, applyToSelected = true) {
+    craftEditor.currentColor = hex;
+    document.getElementById('craftColorSwatch').style.background = hex;
+    document.getElementById('craftColorHex').textContent = hex.toUpperCase();
+
+    const rgb = craftHexToRgb(hex);
+    document.getElementById('craftSliderR').value = rgb.r;
+    document.getElementById('craftSliderG').value = rgb.g;
+    document.getElementById('craftSliderB').value = rgb.b;
+    document.getElementById('craftSliderRVal').textContent = rgb.r;
+    document.getElementById('craftSliderGVal').textContent = rgb.g;
+    document.getElementById('craftSliderBVal').textContent = rgb.b;
+
+    const gridPicker = document.getElementById('craftGridPicker');
+    gridPicker.querySelectorAll('.craft-grid-color').forEach(el => {
+        el.classList.toggle('active', el.dataset.color.toLowerCase() === hex.toLowerCase());
+    });
+
+    if (applyToSelected && craftEditor.currentPartIdx >= 0) {
+        craftApplyColorToPart(craftEditor.currentPartIdx, hex);
+        craftRenderPartsList();
+        craftRedrawCanvas();
+    }
+}
+
+function craftHexToRgb(hex) {
+    hex = hex.replace('#', '');
+    if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+    return {
+        r: parseInt(hex.substr(0, 2), 16),
+        g: parseInt(hex.substr(2, 2), 16),
+        b: parseInt(hex.substr(4, 2), 16)
+    };
+}
+
+function craftRgbToHex(r, g, b) {
+    r = Math.round(Math.max(0, Math.min(255, r)));
+    g = Math.round(Math.max(0, Math.min(255, g)));
+    b = Math.round(Math.max(0, Math.min(255, b)));
+    return '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+}
+
+function craftRgbToHsv(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    const d = max - min;
+    let h = 0;
+    const s = max === 0 ? 0 : d / max;
+    const v = max;
+    if (d !== 0) {
+        switch (max) {
+            case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+            case g: h = ((b - r) / d + 2) / 6; break;
+            case b: h = ((r - g) / d + 4) / 6; break;
+        }
+    }
+    return [h * 360, s, v];
+}
+
+function craftHsvToRgb(h, s, v) {
+    h = h / 360;
+    let r, g, b;
+    const i = Math.floor(h * 6);
+    const f = h * 6 - i;
+    const p = v * (1 - s);
+    const q = v * (1 - f * s);
+    const t = v * (1 - (1 - f) * s);
+    switch (i % 6) {
+        case 0: r = v; g = t; b = p; break;
+        case 1: r = q; g = v; b = p; break;
+        case 2: r = p; g = v; b = t; break;
+        case 3: r = p; g = q; b = v; break;
+        case 4: r = t; g = p; b = v; break;
+        case 5: r = v; g = p; b = q; break;
+    }
+    return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+}
+
+/* ===== 布料 / 设计 ===== */
+
+function craftInitFabricDesignGrids() {
+    const fabricPresetGrid = document.getElementById('craftFabricPresetGrid');
+    const fabricCustomGrid = document.getElementById('craftFabricCustomGrid');
+    const designPresetGrid = document.getElementById('craftDesignPresetGrid');
+    const designCustomGrid = document.getElementById('craftDesignCustomGrid');
+    if (!fabricPresetGrid || !designPresetGrid) return;
+
+    fabricPresetGrid.innerHTML = PRESET_FABRICS.map((f, i) => {
+        const bg = craftGetFabricPreview(f);
+        return `<div class="craft-pattern-item" style="${bg}" data-fidx="${i}" title="${f.name}"></div>`;
+    }).join('');
+    fabricPresetGrid.querySelectorAll('.craft-pattern-item').forEach(el => {
+        el.addEventListener('click', function() {
+            if (craftEditor.currentPartIdx < 0) { alert('请先选择一个部位'); return; }
+            const idx = parseInt(this.dataset.fidx);
+            craftEditor.parts[craftEditor.currentPartIdx].fabricType = 'preset';
+            craftEditor.parts[craftEditor.currentPartIdx].fabricIdx = idx;
+            craftUpdateFabricDesignSelection();
+            craftRedrawCanvas();
+            craftSaveEditorState();
+        });
+    });
+
+    if (craftEditor.customFabrics.length === 0) {
+        fabricCustomGrid.innerHTML = '<div class="craft-pattern-empty">暂无自定义</div>';
+    } else {
+        fabricCustomGrid.innerHTML = craftEditor.customFabrics.map((f, i) => {
+            return `<div class="craft-pattern-item" style="background-image:url(${f.dataUrl});background-size:cover;" data-fcidx="${i}" title="${f.name}"></div>`;
+        }).join('');
+        fabricCustomGrid.querySelectorAll('.craft-pattern-item').forEach(el => {
+            el.addEventListener('click', function() {
+                if (craftEditor.currentPartIdx < 0) { alert('请先选择一个部位'); return; }
+                const idx = parseInt(this.dataset.fcidx);
+                craftEditor.parts[craftEditor.currentPartIdx].fabricType = 'custom';
+                craftEditor.parts[craftEditor.currentPartIdx].fabricIdx = idx;
+                craftUpdateFabricDesignSelection();
+                craftRedrawCanvas();
+                craftSaveEditorState();
+            });
+        });
+    }
+
+    designPresetGrid.innerHTML = PRESET_DESIGNS.map((d, i) => {
+        if (d.type === 'none') {
+            return `<div class="craft-pattern-item none" data-didx="${i}" title="${d.name}">无</div>`;
+        }
+        const bg = craftGetDesignPreview(d);
+        return `<div class="craft-pattern-item" style="${bg}" data-didx="${i}" title="${d.name}"></div>`;
+    }).join('');
+    designPresetGrid.querySelectorAll('.craft-pattern-item').forEach(el => {
+        el.addEventListener('click', function() {
+            if (craftEditor.currentPartIdx < 0) { alert('请先选择一个部位'); return; }
+            const idx = parseInt(this.dataset.didx);
+            if (PRESET_DESIGNS[idx].type === 'none') {
+                craftEditor.parts[craftEditor.currentPartIdx].designType = null;
+                craftEditor.parts[craftEditor.currentPartIdx].designIdx = 0;
+            } else {
+                craftEditor.parts[craftEditor.currentPartIdx].designType = 'preset';
+                craftEditor.parts[craftEditor.currentPartIdx].designIdx = idx;
+            }
+            craftUpdateFabricDesignSelection();
+            craftRedrawCanvas();
+            craftSaveEditorState();
+        });
+    });
+
+    if (craftEditor.customDesigns.length === 0) {
+        designCustomGrid.innerHTML = '<div class="craft-pattern-empty">暂无自定义</div>';
+    } else {
+        designCustomGrid.innerHTML = craftEditor.customDesigns.map((d, i) => {
+            return `<div class="craft-pattern-item" style="background-image:url(${d.dataUrl});background-size:cover;" data-dcidx="${i}" title="${d.name}"></div>`;
+        }).join('');
+        designCustomGrid.querySelectorAll('.craft-pattern-item').forEach(el => {
+            el.addEventListener('click', function() {
+                if (craftEditor.currentPartIdx < 0) { alert('请先选择一个部位'); return; }
+                const idx = parseInt(this.dataset.dcidx);
+                craftEditor.parts[craftEditor.currentPartIdx].designType = 'custom';
+                craftEditor.parts[craftEditor.currentPartIdx].designIdx = idx;
+                craftUpdateFabricDesignSelection();
+                craftRedrawCanvas();
+                craftSaveEditorState();
+            });
+        });
+    }
+
+    craftUpdateFabricDesignSelection();
+}
+
+function craftUpdateFabricDesignSelection() {
+    const fabricPresetGrid = document.getElementById('craftFabricPresetGrid');
+    const fabricCustomGrid = document.getElementById('craftFabricCustomGrid');
+    const designPresetGrid = document.getElementById('craftDesignPresetGrid');
+    const designCustomGrid = document.getElementById('craftDesignCustomGrid');
+
+    fabricPresetGrid.querySelectorAll('.craft-pattern-item').forEach(e => e.classList.remove('active'));
+    fabricCustomGrid.querySelectorAll('.craft-pattern-item').forEach(e => e.classList.remove('active'));
+    designPresetGrid.querySelectorAll('.craft-pattern-item').forEach(e => e.classList.remove('active'));
+    designCustomGrid.querySelectorAll('.craft-pattern-item').forEach(e => e.classList.remove('active'));
+
+    if (craftEditor.currentPartIdx < 0) return;
+    const p = craftEditor.parts[craftEditor.currentPartIdx];
+    if (!p) return;
+
+    if (p.fabricType === 'preset') {
+        const el = fabricPresetGrid.querySelector(`[data-fidx="${p.fabricIdx}"]`);
+        if (el) el.classList.add('active');
+    } else if (p.fabricType === 'custom') {
+        const el = fabricCustomGrid.querySelector(`[data-fcidx="${p.fabricIdx}"]`);
+        if (el) el.classList.add('active');
+    }
+
+    if (p.designType === 'preset') {
+        const el = designPresetGrid.querySelector(`[data-didx="${p.designIdx}"]`);
+        if (el) el.classList.add('active');
+    } else if (p.designType === 'custom') {
+        const el = designCustomGrid.querySelector(`[data-dcidx="${p.designIdx}"]`);
+        if (el) el.classList.add('active');
+    } else if (!p.designType) {
+        const el = designPresetGrid.querySelector(`[data-didx="0"]`);
+        if (el) el.classList.add('active');
+    }
+}
+
+function craftGetFabricPattern(type, idx) {
+    const cacheKey = `f_${type}_${idx}`;
+    if (craftEditor.fabricPatternCache[cacheKey]) return craftEditor.fabricPatternCache[cacheKey];
+
+    let fabric;
+    if (type === 'preset') {
+        fabric = PRESET_FABRICS[idx];
+    } else if (type === 'custom') {
+        fabric = craftEditor.customFabrics[idx];
+    }
+    if (!fabric) return null;
+
+    if (type === 'custom' && fabric.dataUrl) {
+        const patCanvas = document.createElement('canvas');
+        patCanvas.width = 100;
+        patCanvas.height = 100;
+        const patCtx = patCanvas.getContext('2d');
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.src = fabric.dataUrl;
+        if (img.complete) {
+            patCtx.drawImage(img, 0, 0, 100, 100);
+            const pat = craftEditor.ctx.createPattern(patCanvas, 'repeat');
+            craftEditor.fabricPatternCache[cacheKey] = pat;
+            return pat;
+        } else {
+            return null;
+        }
+    }
+
+    const patCanvas = document.createElement('canvas');
+    patCanvas.width = 60;
+    patCanvas.height = 60;
+    const patCtx = patCanvas.getContext('2d');
+
+    if (fabric.type === 'solid') {
+        patCtx.fillStyle = fabric.color;
+        patCtx.fillRect(0, 0, 60, 60);
+    } else if (fabric.type === 'lines') {
+        patCtx.fillStyle = fabric.color1;
+        patCtx.fillRect(0, 0, 60, 60);
+        patCtx.fillStyle = fabric.color2;
+        for (let y = 0; y < 60; y += 6) {
+            patCtx.fillRect(0, y, 60, 3);
+        }
+    } else if (fabric.type === 'grid') {
+        patCtx.fillStyle = fabric.color1;
+        patCtx.fillRect(0, 0, 60, 60);
+        patCtx.strokeStyle = fabric.color2;
+        patCtx.lineWidth = 1;
+        for (let x = 0; x <= 60; x += 12) {
+            patCtx.beginPath(); patCtx.moveTo(x, 0); patCtx.lineTo(x, 60); patCtx.stroke();
+        }
+        for (let y = 0; y <= 60; y += 12) {
+            patCtx.beginPath(); patCtx.moveTo(0, y); patCtx.lineTo(60, y); patCtx.stroke();
+        }
+    } else if (fabric.type === 'diagonal') {
+        patCtx.fillStyle = fabric.color1;
+        patCtx.fillRect(0, 0, 60, 60);
+        patCtx.fillStyle = fabric.color2;
+        for (let i = -60; i < 60; i += 10) {
+            patCtx.beginPath();
+            patCtx.moveTo(i, 0);
+            patCtx.lineTo(i + 60, 60);
+            patCtx.lineTo(i + 65, 60);
+            patCtx.lineTo(i + 5, 0);
+            patCtx.closePath();
+            patCtx.fill();
+        }
+    } else if (fabric.type === 'dots') {
+        patCtx.fillStyle = fabric.color1;
+        patCtx.fillRect(0, 0, 60, 60);
+        patCtx.fillStyle = fabric.color2;
+        for (let y = 6; y < 60; y += 12) {
+            for (let x = 6; x < 60; x += 12) {
+                patCtx.beginPath();
+                patCtx.arc(x, y, 2.5, 0, Math.PI * 2);
+                patCtx.fill();
+            }
+        }
+    } else if (fabric.type === 'noise') {
+        patCtx.fillStyle = fabric.color;
+        patCtx.fillRect(0, 0, 60, 60);
+        for (let i = 0; i < 200; i++) {
+            const x = Math.random() * 60;
+            const y = Math.random() * 60;
+            const a = Math.random() * 0.08;
+            patCtx.fillStyle = `rgba(0,0,0,${a})`;
+            patCtx.fillRect(x, y, 1, 1);
+        }
+    }
+
+    const pat = craftEditor.ctx.createPattern(patCanvas, 'repeat');
+    craftEditor.fabricPatternCache[cacheKey] = pat;
+    return pat;
+}
+
+function craftGetDesignPattern(type, idx) {
+    const cacheKey = `d_${type}_${idx}`;
+    if (craftEditor.designPatternCache[cacheKey]) return craftEditor.designPatternCache[cacheKey];
+
+    let design;
+    if (type === 'preset') {
+        design = PRESET_DESIGNS[idx];
+    } else if (type === 'custom') {
+        design = craftEditor.customDesigns[idx];
+    }
+    if (!design) return null;
+
+    if (type === 'custom' && design.dataUrl) {
+        const patCanvas = document.createElement('canvas');
+        patCanvas.width = 100;
+        patCanvas.height = 100;
+        const patCtx = patCanvas.getContext('2d');
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.src = design.dataUrl;
+        if (img.complete) {
+            patCtx.drawImage(img, 0, 0, 100, 100);
+            const pat = craftEditor.ctx.createPattern(patCanvas, 'repeat');
+            craftEditor.designPatternCache[cacheKey] = pat;
+            return pat;
+        } else {
+            return null;
+        }
+    }
+
+    const patCanvas = document.createElement('canvas');
+    patCanvas.width = 80;
+    patCanvas.height = 80;
+    const patCtx = patCanvas.getContext('2d');
+    patCtx.fillStyle = 'rgba(255,255,255,0)';
+    patCtx.clearRect(0, 0, 80, 80);
+
+    if (design.type === 'stripes') {
+        patCtx.fillStyle = design.color;
+        for (let x = 0; x < 80; x += 12) {
+            patCtx.fillRect(x, 0, 4, 80);
+        }
+    } else if (design.type === 'polka') {
+        patCtx.fillStyle = design.color;
+        for (let y = 10; y < 80; y += 20) {
+            for (let x = 10; x < 80; x += 20) {
+                patCtx.beginPath();
+                patCtx.arc(x, y, 4, 0, Math.PI * 2);
+                patCtx.fill();
+            }
+        }
+    } else if (design.type === 'plaid') {
+        patCtx.strokeStyle = design.color;
+        patCtx.lineWidth = 1.5;
+        for (let x = 0; x <= 80; x += 20) {
+            patCtx.beginPath(); patCtx.moveTo(x, 0); patCtx.lineTo(x, 80); patCtx.stroke();
+        }
+        for (let y = 0; y <= 80; y += 20) {
+            patCtx.beginPath(); patCtx.moveTo(0, y); patCtx.lineTo(80, y); patCtx.stroke();
+        }
+    } else if (design.type === 'floral') {
+        patCtx.fillStyle = design.color;
+        const centers = [[20, 20], [60, 60], [60, 20], [20, 60]];
+        centers.forEach(([cx, cy]) => {
+            for (let i = 0; i < 5; i++) {
+                const angle = (i / 5) * Math.PI * 2;
+                const px = cx + Math.cos(angle) * 5;
+                const py = cy + Math.sin(angle) * 5;
+                patCtx.beginPath();
+                patCtx.arc(px, py, 3, 0, Math.PI * 2);
+                patCtx.fill();
+            }
+            patCtx.beginPath();
+            patCtx.arc(cx, cy, 2, 0, Math.PI * 2);
+            patCtx.fill();
+        });
+    } else if (design.type === 'geo') {
+        patCtx.fillStyle = design.color;
+        for (let y = 0; y < 80; y += 16) {
+            for (let x = 0; x < 80; x += 16) {
+                patCtx.beginPath();
+                patCtx.moveTo(x, y + 8);
+                patCtx.lineTo(x + 8, y);
+                patCtx.lineTo(x + 16, y + 8);
+                patCtx.lineTo(x + 8, y + 16);
+                patCtx.closePath();
+                patCtx.fill();
+            }
+        }
+    }
+
+    const pat = craftEditor.ctx.createPattern(patCanvas, 'repeat');
+    craftEditor.designPatternCache[cacheKey] = pat;
+    return pat;
+}
+
+function craftGetFabricPreview(f) {
+    if (f.type === 'custom' && f.dataUrl) {
+        return `background-image:url(${f.dataUrl});background-size:cover;`;
+    }
+    if (f.type === 'solid') return `background:${f.color};`;
+    if (f.type === 'lines') return `background:repeating-linear-gradient(0deg,${f.color1},${f.color1} 3px,${f.color2} 3px,${f.color2} 5px);`;
+    if (f.type === 'grid') return `background:linear-gradient(${f.color2} 1px, transparent 1px),linear-gradient(90deg,${f.color2} 1px, transparent 1px),${f.color1};background-size:8px 8px;`;
+    if (f.type === 'diagonal') return `background:repeating-linear-gradient(45deg,${f.color1},${f.color1} 4px,${f.color2} 4px,${f.color2} 8px);`;
+    if (f.type === 'dots') return `background:radial-gradient(${f.color2} 1.5px, ${f.color1} 1.5px);background-size:8px 8px;`;
+    if (f.type === 'noise') return `background:${f.color};`;
+    return `background:#eee;`;
+}
+
+function craftGetDesignPreview(d) {
+    if (d.type === 'custom' && d.dataUrl) {
+        return `background-image:url(${d.dataUrl});background-size:cover;`;
+    }
+    if (d.type === 'stripes') return `background:repeating-linear-gradient(90deg,transparent,transparent 6px,${d.color} 6px,${d.color} 8px),#fff;`;
+    if (d.type === 'polka') return `background:radial-gradient(${d.color} 2px, #fff 2px);background-size:12px 12px;`;
+    if (d.type === 'plaid') return `background:linear-gradient(${d.color} 1px, transparent 1px),linear-gradient(90deg,${d.color} 1px, transparent 1px),#fff;background-size:12px 12px;`;
+    if (d.type === 'floral') return `background:radial-gradient(circle at 30% 30%, ${d.color} 2px, transparent 3px),radial-gradient(circle at 70% 70%, ${d.color} 1.5px, transparent 2.5px),#fff;background-size:16px 16px;`;
+    if (d.type === 'geo') return `background:linear-gradient(45deg, ${d.color} 25%, transparent 25%) 0 0 / 10px 10px,linear-gradient(-45deg, ${d.color} 25%, transparent 25%) 0 0 / 10px 10px,#fff;`;
+    return `background:#eee;`;
+}
+
+/* ===== 与主流程对接 ===== */
+
+function craftUpdateEditButton() {
+    const editBtn = document.getElementById('craftEditBtn');
+    if (!editBtn) return;
+    const hasPattern = craftState.catIdx !== null && craftState.subIdx !== null &&
+        craftState.itemIdx !== null && craftState.varIdx !== null &&
+        !!craftGetPattern(craftState.catIdx, craftState.subIdx, craftState.itemIdx, craftState.varIdx);
+    editBtn.style.display = hasPattern ? 'inline-block' : 'none';
+}
+
+const _origCraftRenderAll = craftRenderAll;
+craftRenderAll = function() {
+    _origCraftRenderAll();
+    craftUpdateEditButton();
+};
