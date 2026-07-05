@@ -1805,18 +1805,16 @@
 
     <!-- === 美团APP全屏容器 === -->
     <div class="mt-app-container" id="mtAppMain">
-        <!-- 顶部状态栏 -->
-        <div class="mt-status-bar">
-            <div class="mt-status-left">
-                <span class="mt-time">9:41</span>
-            </div>
-            <div class="mt-status-right">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="#000"><path d="M12 3C7.46 3 3.34 4.78.29 7.67c-.18.18-.29.43-.29.71 0 .28.11.53.29.71l11 11c.18.18.43.29.71.29s.53-.11.71-.29l11-11c.18-.18.29-.43.29-.71 0-.28-.11-.53-.29-.71C20.66 4.78 16.54 3 12 3z"/></svg>
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="#000"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
-            </div>
+        <!-- 关闭按钮 -->
+        <div class="mt-close-btn" onclick="mtCloseApp()">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#333" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </div>
+        <!-- iframe嵌入新美团APP -->
+        <iframe id="mtAppIframe" src="meituan/index.html" class="mt-app-iframe" frameborder="0"></iframe>
+    </div>
 
-        <!-- 主内容区 -->
+    <!-- 原美团APP内容（已移除以上） -->
+    <div style="display:none;">
         <div class="mt-body">
             <!-- 首页 -->
             <div class="mt-view active" id="mtViewHome">
@@ -2389,6 +2387,7 @@
 
         <!-- Toast提示 -->
         <div class="mt-toast" id="mtToast"></div>
+    </div>
     </div>
 
 <script src="script.js"></script>
