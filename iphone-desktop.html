@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="桌面">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#000000">
+    <title>桌面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+
+        .desktop-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pages-wrapper {
+            display: flex;
+            width: 200%;
+            height: 100%;
+            transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform;
+        }
+
+        .pages-wrapper.no-transition {
+            transition: none;
+        }
+
+        .page {
+            width: 50%;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: calc(60px + env(safe-area-inset-top, 0px));
+        }
+
+        .page-indicators {
+            position: fixed;
+            bottom: calc(100px + env(safe-area-inset-bottom, 0px));
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .indicator {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: rgba(255, 255, 255, 0.95);
+            transform: scale(1.1);
+        }
+
+        .dock {
+            position: fixed;
+            bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+        }
+
+        .dock-bg {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 12px 16px;
+            display: flex;
+            gap: 20px;
+            border: 0.5px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .app-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .app-icon svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .app-1 {
+            background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+        }
+
+        .app-2 {
+            background: linear-gradient(135deg, #34C759 0%, #28A745 100%);
+        }
+
+        .app-3 {
+            background: linear-gradient(135deg, #FF9500 0%, #FF6B00 100%);
+        }
+
+        .app-4 {
+            background: linear-gradient(135deg, #AF52DE 0%, #8E44AD 100%);
+        }
+
+        .home-indicator {
+            position: fixed;
+            bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+            left: 50%;
+            transform: translateX(-50%);
+            width: 134px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            z-index: 30;
+        }
+
+        .status-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: calc(44px + env(safe-area-inset-top, 0px));
+            padding-top: env(safe-area-inset-top, 0px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 24px;
+            padding-right: 24px;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            z-index: 40;
+            pointer-events: none;
+        }
+
+        .status-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .battery {
+            width: 24px;
+            height: 11px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 3px;
+            position: relative;
+            padding: 1px;
+        }
+
+        .battery::after {
+            content: '';
+            position: absolute;
+            right: -3px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 0 1px 1px 0;
+        }
+
+        .battery-level {
+            height: 100%;
+            width: 85%;
+            background: white;
+            border-radius: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop-container">
+        <div class="status-bar">
+            <span class="time" id="time">9:41</span>
+            <div class="status-bar-right">
+                <svg width="17" height="11" viewBox="0 0 17 11" fill="white">
+                    <path d="M8.5 2.5C10.985 2.5 13.185 3.485 14.765 5.065L16.175 3.655C14.195 1.675 11.505 0.5 8.5 0.5C5.495 0.5 2.805 1.675 0.825 3.655L2.235 5.065C3.815 3.485 6.015 2.5 8.5 2.5ZM8.5 6.5C9.88 6.5 11.09 7.05 11.955 7.915L14.075 5.795C12.535 4.255 10.625 3.5 8.5 3.5C6.375 3.5 4.465 4.255 2.925 5.795L5.045 7.915C5.91 7.05 7.12 6.5 8.5 6.5ZM8.5 10.5C7.67 10.5 7 9.83 7 9C7 8.17 7.67 7.5 8.5 7.5C9.33 7.5 10 8.17 10 9C10 9.83 9.33 10.5 8.5 10.5Z"/>
+                </svg>
+                <div class="battery">
+                    <div class="battery-level"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pages-wrapper" id="pagesWrapper">
+            <div class="page page-1"></div>
+            <div class="page page-2"></div>
+        </div>
+
+        <div class="page-indicators">
+            <div class="indicator active" data-page="0"></div>
+            <div class="indicator" data-page="1"></div>
+        </div>
+
+        <div class="dock">
+            <div class="dock-bg">
+                <div class="app-icon app-1">
+                    <svg viewBox="0 0 24 24" fill="white">
+                        <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
+                    </svg>
+                </div>
+                <div class="app-icon app-2">
+                    <svg viewBox="0 0 24 24" fill="white">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                </div>
+                <div class="app-icon app-3">
+                    <svg viewBox="0 0 24 24" fill="white">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                    </svg>
+                </div>
+                <div class="app-icon app-4">
+                    <svg viewBox="0 0 24 24" fill="white">
+                        <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="home-indicator"></div>
+    </div>
+
+    <script>
+        const pagesWrapper = document.getElementById('pagesWrapper');
+        const indicators = document.querySelectorAll('.indicator');
+        let currentPage = 0;
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+        const pageWidth = window.innerWidth;
+
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('time').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        function goToPage(pageIndex) {
+            currentPage = pageIndex;
+            pagesWrapper.classList.remove('no-transition');
+            pagesWrapper.style.transform = `translateX(-${currentPage * 50}%)`;
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentPage);
+            });
+        }
+
+        function handleTouchStart(e) {
+            startX = e.touches[0].clientX;
+            currentX = startX;
+            isDragging = true;
+            pagesWrapper.classList.add('no-transition');
+        }
+
+        function handleTouchMove(e) {
+            if (!isDragging) return;
+            currentX = e.touches[0].clientX;
+            const diff = currentX - startX;
+            const offsetPercent = (diff / pageWidth) * 50;
+            const baseOffset = -currentPage * 50;
+            pagesWrapper.style.transform = `translateX(${baseOffset + offsetPercent}%)`;
+        }
+
+        function handleTouchEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+            const diff = currentX - startX;
+            const threshold = pageWidth * 0.2;
+
+            if (diff > threshold && currentPage > 0) {
+                goToPage(currentPage - 1);
+            } else if (diff < -threshold && currentPage < 1) {
+                goToPage(currentPage + 1);
+            } else {
+                goToPage(currentPage);
+            }
+        }
+
+        pagesWrapper.addEventListener('touchstart', handleTouchStart, { passive: true });
+        pagesWrapper.addEventListener('touchmove', handleTouchMove, { passive: true });
+        pagesWrapper.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+        let mouseStartX = 0;
+        let mouseCurrentX = 0;
+        let isMouseDown = false;
+
+        pagesWrapper.addEventListener('mousedown', (e) => {
+            mouseStartX = e.clientX;
+            mouseCurrentX = mouseStartX;
+            isMouseDown = true;
+            pagesWrapper.classList.add('no-transition');
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isMouseDown) return;
+            mouseCurrentX = e.clientX;
+            const diff = mouseCurrentX - mouseStartX;
+            const offsetPercent = (diff / pageWidth) * 50;
+            const baseOffset = -currentPage * 50;
+            pagesWrapper.style.transform = `translateX(${baseOffset + offsetPercent}%)`;
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (!isMouseDown) return;
+            isMouseDown = false;
+            const diff = mouseCurrentX - mouseStartX;
+            const threshold = pageWidth * 0.2;
+
+            if (diff > threshold && currentPage > 0) {
+                goToPage(currentPage - 1);
+            } else if (diff < -threshold && currentPage < 1) {
+                goToPage(currentPage + 1);
+            } else {
+                goToPage(currentPage);
+            }
+        });
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                goToPage(index);
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            goToPage(currentPage);
+        });
+    </script>
+</body>
+</html>
