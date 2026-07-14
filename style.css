@@ -16,7 +16,8 @@ html, body {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
+    height: 100vh;
+    height: 100dvh;
     z-index: 10000;
     overflow: hidden;
     transition: transform 0.4s ease, opacity 0.3s ease;
@@ -20119,41 +20120,42 @@ html, body {
     min-width: 0 !important;
 }
 
-/* 锁屏：全屏铺满整屏，背景图靠布局拉伸铺满 */
+/* 锁屏：只在 safe area 内铺满，不延伸进系统栏，不补色块 */
 .phone-lockscreen {
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    bottom: 0 !important;
+    bottom: auto !important;
+    height: 100vh !important;
+    height: 100dvh !important;
     width: auto !important;
-    height: auto !important;
 }
 
 .phone-lockscreen-bg {
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    bottom: 0 !important;
+    bottom: auto !important;
+    height: 100% !important;
     width: auto !important;
-    height: auto !important;
 }
 
 .phone-password-panel {
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    bottom: 0 !important;
+    bottom: auto !important;
+    height: 100% !important;
     width: auto !important;
-    height: auto !important;
 }
 
 .phone-password-panel-bg {
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    bottom: 0 !important;
+    bottom: auto !important;
+    height: 100% !important;
     width: auto !important;
-    height: auto !important;
     background-size: cover !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
