@@ -1,11 +1,11 @@
 /* design by censy */
 html, body {
     margin: 0; padding: 0; width: 100%; height: 100%;
-    overflow: hidden; background: #1a1a2e;
+    overflow: hidden; background: transparent;
 }
 /* --- 基础界面样式 (严格保留原样，未提及绝不改变) --- */
 .censy-phone-wrapper {
-    width: 100vw; height: 100dvh; min-height: 100vh; margin: 0; padding: 0;
+    margin: 0; padding: 0;
     background: #ffffff; background-size: cover; background-position: center; background-repeat: no-repeat;
     overflow: hidden; position: fixed; top: 0; left: 0; right: 0; bottom: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; transition: background 0.3s ease;
 }
@@ -16,7 +16,8 @@ html, body {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
+    height: 100vh;
+    height: 100dvh;
     z-index: 10000;
     overflow: hidden;
     transition: transform 0.4s ease, opacity 0.3s ease;
@@ -1800,7 +1801,7 @@ html, body {
 .censy-dot.active { background: rgba(0,0,0,0.5); width: 16px; border-radius: 3px; }
 .censy-dock-container {
     background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.9); border-radius: 30px;
-    padding: 10px 14px 12px; display: flex; justify-content: space-around; align-items: flex-start; box-shadow: 0 8px 30px rgba(0,0,0,0.08); width: 90%; pointer-events: auto;
+    padding: 10px 14px calc(12px + env(safe-area-inset-bottom, 0px)); display: flex; justify-content: space-around; align-items: flex-start; box-shadow: 0 8px 30px rgba(0,0,0,0.08); width: 90%; pointer-events: auto;
 }
 .censy-dock-item { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 64px; cursor: pointer; }
 .censy-dock-icon {
@@ -20101,11 +20102,11 @@ select.wx-form-input {
     }
 }
 
-/* 确保所有页面无底部留白 - 四方向定位强制覆盖 */
+/* 确保所有页面无底部留白 - 精准适配 */
 html, body {
     margin: 0 !important;
     padding: 0 !important;
-    background: #1a1a2e !important;
+    background: transparent !important;
 }
 
 .censy-phone-wrapper {
@@ -20119,45 +20120,48 @@ html, body {
     min-width: 0 !important;
 }
 
+/* 锁屏：保持在 safe area 内，不延伸进系统栏，不补色块 */
 .phone-lockscreen {
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    bottom: 0 !important;
+    bottom: auto !important;
+    height: 100vh !important;
+    height: 100dvh !important;
     width: auto !important;
-    height: auto !important;
 }
 
 .phone-lockscreen-bg {
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    bottom: 0 !important;
+    bottom: auto !important;
+    height: 100% !important;
     width: auto !important;
-    height: auto !important;
 }
 
 .phone-password-panel {
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    bottom: 0 !important;
+    bottom: auto !important;
+    height: 100% !important;
     width: auto !important;
-    height: auto !important;
 }
 
 .phone-password-panel-bg {
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    bottom: 0 !important;
+    bottom: auto !important;
+    height: 100% !important;
     width: auto !important;
-    height: auto !important;
     background-size: cover !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
 }
 
+/* 主页底部按钮：贴到屏幕物理最底部，覆盖系统栏蓝色 */
 .censy-fixed-bottom {
     position: fixed !important;
     bottom: 0 !important;
@@ -20166,4 +20170,8 @@ html, body {
     padding-bottom: 0 !important;
     padding-top: 0 !important;
     margin-bottom: 0 !important;
+}
+
+.censy-dock-container {
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)) !important;
 }
