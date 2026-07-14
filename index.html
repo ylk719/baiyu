@@ -13,6 +13,60 @@
 </head>
 <body>
     <div class="censy-phone-wrapper" id="censyPhoneMain">
+    <!-- 小手机锁屏界面 -->
+    <div class="phone-lockscreen" id="phoneLockscreen">
+        <div class="phone-lockscreen-bg" id="phoneLockscreenBg"></div>
+        <div class="phone-lockscreen-content" id="phoneLockscreenContent">
+            <div class="phone-lockscreen-time-block">
+                <div class="phone-lockscreen-time" id="phoneLockscreenTime">00:00</div>
+                <div class="phone-lockscreen-date" id="phoneLockscreenDate">加载中...</div>
+            </div>
+            <div class="phone-lockscreen-hint">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+                <span>向上滑动解锁</span>
+            </div>
+        </div>
+        <div class="phone-password-panel" id="phonePasswordPanel">
+            <div class="phone-password-panel-bg" id="phonePasswordPanelBg"></div>
+            <div class="phone-password-panel-content">
+                <div class="phone-password-close" onclick="phoneClosePasswordPanel()">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </div>
+                <div class="phone-password-icon">
+                    <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </div>
+                <div class="phone-password-title" id="phonePasswordTitle">请输入密码</div>
+                <div class="phone-password-dots" id="phonePasswordDots">
+                    <span></span><span></span><span></span><span></span>
+                </div>
+                <div class="phone-password-error" id="phonePasswordError"></div>
+                <div class="phone-keypad">
+                    <div class="phone-keypad-row">
+                        <div class="phone-key" data-key="1">1</div>
+                        <div class="phone-key" data-key="2">2<span class="phone-key-sub">ABC</span></div>
+                        <div class="phone-key" data-key="3">3<span class="phone-key-sub">DEF</span></div>
+                    </div>
+                    <div class="phone-keypad-row">
+                        <div class="phone-key" data-key="4">4<span class="phone-key-sub">GHI</span></div>
+                        <div class="phone-key" data-key="5">5<span class="phone-key-sub">JKL</span></div>
+                        <div class="phone-key" data-key="6">6<span class="phone-key-sub">MNO</span></div>
+                    </div>
+                    <div class="phone-keypad-row">
+                        <div class="phone-key" data-key="7">7<span class="phone-key-sub">PQRS</span></div>
+                        <div class="phone-key" data-key="8">8<span class="phone-key-sub">TUV</span></div>
+                        <div class="phone-key" data-key="9">9<span class="phone-key-sub">WXYZ</span></div>
+                    </div>
+                    <div class="phone-keypad-row">
+                        <div class="phone-key phone-key-empty"></div>
+                        <div class="phone-key" data-key="0">0</div>
+                        <div class="phone-key phone-key-delete" data-key="del">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#fff" stroke-width="2"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><line x1="18" y1="9" x2="12" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <input type="file" id="censyFileCover" class="censy-hidden-file" accept="image/*" style="display:none;">
     <input type="file" id="censyFileAvatar" class="censy-hidden-file" accept="image/*" style="display:none;">
     <input type="file" id="censyPhotoFile" class="censy-hidden-file" accept="image/*" style="display:none;">
@@ -33,260 +87,264 @@
     <input type="file" id="snowIconFile2" accept="image/*" style="display:none;">
     <input type="file" id="snowIconFile3" accept="image/*" style="display:none;">
     <input type="file" id="snowIconFile4" accept="image/*" style="display:none;">
+    <input type="file" id="insSocialAvatarFile" accept="image/*" style="display:none;">
+    <input type="file" id="insSocialImg1File" accept="image/*" style="display:none;">
+    <input type="file" id="insSocialImg2File" accept="image/*" style="display:none;">
+    <input type="file" id="insSocialImg3File" accept="image/*" style="display:none;">
+    <input type="file" id="catCardAvatarFile" accept="image/*" style="display:none;">
+    <input type="file" id="catCardContentFile" accept="image/*" style="display:none;">
+
+    <input type="file" id="capsuleAvatarFile1" accept="image/*" style="display:none;">
+    <input type="file" id="capsuleAvatarFile2" accept="image/*" style="display:none;">
+    <input type="file" id="animalAvatarFile1" accept="image/*" style="display:none;">
+    <input type="file" id="animalAvatarFile2" accept="image/*" style="display:none;">
+    <input type="file" id="animalAvatarFile3" accept="image/*" style="display:none;">
+    <input type="file" id="animalAvatarFile4" accept="image/*" style="display:none;">
+    <input type="file" id="animalAvatarFile5" accept="image/*" style="display:none;">
 
     <div class="censy-pages-container" id="censyPagesContainer">
         <!-- 第1页 -->
         <div class="censy-page">
           <div class="censy-top-section">
-          <div class="neo-profile-card">
-            <div class="neo-card-cover" id="neoCoverUpload">
-              <svg class="neo-cover-svg" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice">
-                <defs>
-                  <linearGradient id="fogBg" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#f0f0f2"/>
-                    <stop offset="50%" stop-color="#e5e5e8"/>
-                    <stop offset="100%" stop-color="#d8d8dc"/>
-                  </linearGradient>
-                  <filter id="blurSoft" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="2.5"/>
-                  </filter>
-                  <filter id="blurLight" x="-10%" y="-10%" width="120%" height="120%">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="1"/>
-                  </filter>
-                  <linearGradient id="branchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#3a3a3f" stop-opacity="0.85"/>
-                    <stop offset="100%" stop-color="#5a5a60" stop-opacity="0.6"/>
-                  </linearGradient>
-                </defs>
-                <rect width="400" height="220" fill="url(#fogBg)"/>
-                <g filter="url(#blurSoft)" opacity="0.4">
-                  <path d="M0,220 Q20,180 10,150 Q5,120 25,95 Q45,70 70,55 Q100,38 140,30 Q180,22 220,28 Q260,34 290,50 Q310,62 325,80" fill="none" stroke="#7a7a80" stroke-width="8" stroke-linecap="round"/>
-                </g>
-                <g filter="url(#blurLight)" opacity="0.75">
-                  <path d="M-5,220 Q15,175 8,142 Q2,110 30,82 Q55,55 88,40 Q125,25 170,18 Q215,12 255,20 Q290,28 315,48 Q335,65 345,88" fill="none" stroke="url(#branchGrad)" stroke-width="5" stroke-linecap="round"/>
-                </g>
-                <g opacity="0.55" filter="url(#blurLight)">
-                  <path d="M40,120 Q60,115 75,100 Q88,88 100,95 Q110,100 105,115" fill="none" stroke="#5a5a60" stroke-width="1.5" stroke-linecap="round"/>
-                  <path d="M80,90 Q100,82 115,70 Q128,60 140,65 Q150,70 145,85" fill="none" stroke="#5a5a60" stroke-width="1.2" stroke-linecap="round"/>
-                  <path d="M130,60 Q155,50 175,42 Q195,35 210,38 Q220,42 215,55" fill="none" stroke="#5a5a60" stroke-width="1" stroke-linecap="round"/>
-                  <path d="M180,45 Q200,38 220,35 Q240,32 255,36 Q265,40 260,52" fill="none" stroke="#5a5a60" stroke-width="0.8" stroke-linecap="round"/>
-                  <path d="M60,140 Q78,135 92,125 Q102,118 110,125 Q115,132 110,145" fill="none" stroke="#6a6a70" stroke-width="1.2" stroke-linecap="round"/>
-                  <path d="M100,100 Q120,92 138,82 Q152,74 165,80 Q172,85 168,98" fill="none" stroke="#6a6a70" stroke-width="1" stroke-linecap="round"/>
-                  <path d="M150,68 Q172,58 195,52 Q215,46 232,52 Q240,56 235,70" fill="none" stroke="#6a6a70" stroke-width="0.7" stroke-linecap="round"/>
-                  <path d="M30,160 Q48,155 62,145 Q72,138 80,145 Q85,152 80,165" fill="none" stroke="#7a7a80" stroke-width="1" stroke-linecap="round"/>
-                  <path d="M15,180 Q30,175 42,168 Q50,163 55,172 Q58,180 52,190" fill="none" stroke="#7a7a80" stroke-width="0.8" stroke-linecap="round"/>
-                  <path d="M200,50 Q218,44 238,40 Q255,37 270,42 Q278,46 273,58" fill="none" stroke="#7a7a80" stroke-width="0.6" stroke-linecap="round"/>
-                </g>
-                <g opacity="0.35" filter="url(#blurSoft)">
-                  <path d="M-10,200 Q50,190 90,175 Q130,160 170,150 Q210,140 250,145 Q290,150 320,165" fill="none" stroke="#aaaab0" stroke-width="30"/>
-                </g>
-                <g class="neo-russian-text" fill="#6a6a70" opacity="0.5">
-                  <text x="290" y="70" font-family="Georgia, serif" font-style="italic" font-size="13" font-weight="300" text-anchor="end">я не знаю будет ли</text>
-                  <text x="290" y="98" font-family="Georgia, serif" font-style="italic" font-size="17" font-weight="300" text-anchor="end">хуже</text>
-                </g>
-                <rect width="400" height="220" fill="url(#fogBg)" opacity="0.15"/>
-              </svg>
-              <img id="neoCoverImg" class="neo-cover-img" src="" alt="cover">
-            </div>
-            <div class="neo-avatar-wrap">
-              <div class="neo-avatar" id="neoAvatarUpload">
-                <svg class="neo-avatar-svg" viewBox="0 0 160 160">
-                  <defs>
-                    <radialGradient id="avatarBg" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stop-color="#ffffff"/>
-                      <stop offset="100%" stop-color="#f0f0f2"/>
-                    </radialGradient>
-                    <filter id="softFeather">
-                      <feGaussianBlur in="SourceAlpha" stdDeviation="1.5"/>
-                      <feOffset dx="0" dy="0" result="offsetblur"/>
-                      <feComponentTransfer>
-                        <feFuncA type="linear" slope="0.9"/>
-                      </feComponentTransfer>
-                      <feMerge>
-                        <feMergeNode/>
-                        <feMergeNode in="SourceGraphic"/>
-                      </feMerge>
-                    </filter>
-                  </defs>
-                  <circle cx="80" cy="80" r="78" fill="url(#avatarBg)"/>
-                  <g filter="url(#softFeather)">
-                    <ellipse cx="80" cy="65" rx="30" ry="12" fill="#2a2a2e"/>
-                    <path d="M55,65 Q50,95 58,110 Q62,118 70,120 L90,120 Q98,118 102,110 Q110,95 105,65 Q100,45 80,42 Q60,45 55,65Z" fill="#2a2a2e"/>
-                    <path d="M58,55 Q62,48 70,46 Q75,45 80,48" fill="none" stroke="#1a1a1e" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M50,68 Q48,75 52,80 Q56,85 62,82" fill="#2a2a2e"/>
-                    <path d="M110,68 Q112,75 108,80 Q104,85 98,82" fill="#2a2a2e"/>
-                    <ellipse cx="80" cy="52" rx="28" ry="22" fill="#2a2a2e"/>
-                    <path d="M55,50 Q50,35 60,28 Q70,22 80,20 Q90,22 100,28 Q110,35 105,50" fill="#2a2a2e"/>
-                    <path d="M72,25 Q75,15 80,12 Q85,15 88,25" fill="#2a2a2e"/>
-                    <rect x="90" y="30" width="12" height="6" rx="1" fill="#fff" transform="rotate(15 96 33)"/>
-                    <line x1="96" y1="30" x2="96" y2="36" stroke="#e0e0e0" stroke-width="1" transform="rotate(15 96 33)"/>
-                  </g>
-                  <g filter="url(#softFeather)">
-                    <ellipse cx="80" cy="78" rx="24" ry="26" fill="#f8f8fa"/>
-                    <ellipse cx="70" cy="85" rx="5" ry="3" fill="#f0d8dc" opacity="0.6"/>
-                    <ellipse cx="90" cy="85" rx="5" ry="3" fill="#f0d8dc" opacity="0.6"/>
-                    <ellipse cx="71" cy="76" rx="4" ry="5" fill="#2a2a2e"/>
-                    <ellipse cx="89" cy="76" rx="4" ry="5" fill="#2a2a2e"/>
-                    <circle cx="72" cy="75" r="1.5" fill="#fff"/>
-                    <circle cx="90" cy="75" r="1.5" fill="#fff"/>
-                    <path d="M77,88 Q80,91 83,88" fill="none" stroke="#5a5a60" stroke-width="1.2" stroke-linecap="round"/>
-                    <path d="M68,80 Q68,78 70,78" fill="none" stroke="#4a4a4e" stroke-width="1" stroke-linecap="round"/>
-                    <path d="M92,80 Q92,78 90,78" fill="none" stroke="#4a4a4e" stroke-width="1" stroke-linecap="round"/>
-                  </g>
-                  <g filter="url(#softFeather)" transform="translate(30, 105)">
-                    <path d="M12,20 Q8,18 5,15 Q2,12 4,8 Q7,3 13,2 Q18,1 22,4 Q26,8 25,14 Q24,18 20,20 Q16,22 12,20Z" fill="#f8f8fa" stroke="#d0d0d4" stroke-width="1"/>
-                    <ellipse cx="9" cy="13" rx="2" ry="2.5" fill="#3a3a3e"/>
-                    <path d="M14,16 Q16,17 18,16" fill="none" stroke="#c0c0c4" stroke-width="0.8" stroke-linecap="round"/>
-                    <path d="M6,5 Q4,0 8,-2 Q10,-1 10,3" fill="#f8f8fa" stroke="#d0d0d4" stroke-width="0.8"/>
-                    <path d="M18,4 Q20,-1 17,-3 Q15,-2 14,2" fill="#f8f8fa" stroke="#d0d0d4" stroke-width="0.8"/>
-                  </g>
-                  <g filter="url(#softFeather)" opacity="0.5">
-                    <ellipse cx="25" cy="130" rx="12" ry="6" fill="#e8e8ec"/>
-                    <path d="M18,128 Q25,124 32,128" fill="none" stroke="#d0d0d4" stroke-width="1"/>
-                    <ellipse cx="135" cy="50" rx="8" ry="4" fill="#e8e8ec"/>
-                    <path d="M130,48 Q135,45 140,48" fill="none" stroke="#d0d0d4" stroke-width="0.8"/>
-                  </g>
-                  <g filter="url(#softFeather)" transform="translate(55, 102)">
-                    <path d="M8,25 Q5,20 8,15 Q12,12 18,15 Q22,18 20,25 Q18,30 13,32 Q8,30 8,25Z" fill="#f8f8fa" stroke="#d0d0d4" stroke-width="0.8" opacity="0.8"/>
-                    <path d="M8,25 Q5,20 8,15 Q12,12 18,15" fill="#2a2a2e" opacity="0.15"/>
-                    <path d="M15,22 Q18,20 22,22" fill="none" stroke="#4a4a4e" stroke-width="0.8" stroke-linecap="round"/>
-                  </g>
-                </svg>
-                <img id="neoAvatarImg" class="neo-avatar-img" src="" alt="avatar">
+          <div class="personal-info-card">
+            <div class="ins-social-card">
+              <div class="ins-social-top-bar">
+                <div class="ins-social-avatar-wrap" id="insSocialAvatarWrap" style="cursor:pointer;">
+                  <div class="ins-social-avatar">
+                    <img id="insSocialAvatarImg" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=young%20asian%20woman%20wearing%20light%20gray%20coat%20pink%20scarf%20hands%20forming%20heart%20shape%20above%20head%20soft%20dreamy%20white%20background%20high%20key%20lighting&image_size=square" alt="avatar">
+                  </div>
+                  <div class="ins-social-camera-icon">
+                    <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="#999" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="12" cy="12" r="5"/><path d="M17 7l-5 5-5-5"/></svg>
+                  </div>
+                </div>
+                <div class="ins-social-time-bubble">
+                  <span contenteditable="true">17:47</span>
+                  <div class="ins-social-time-bubble-tail"></div>
+                </div>
+                <div class="ins-social-user-info">
+                  <div class="ins-social-username" contenteditable="true">Susoon♡༘⋆…˚?♡</div>
+                  <div class="ins-social-subtitle" contenteditable="true">★< The heartbeat has an ensemble "</div>
+                </div>
               </div>
-            </div>
-            <div class="neo-card-body">
-              <div class="neo-username" data-editable="true" id="neoUsername">Lies7core</div>
-              <div class="neo-userid" data-editable="true" id="neoUserid">@NianGao_</div>
-              <div class="neo-signature" data-editable="true" id="neoSignature">"让我们都变成幸福大王&gt;~ω~&lt;!!♡☽⊃"</div>
-              <div class="neo-location-row">
-                <span class="neo-loc-icon" id="neoLocIcon">
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#999" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                    <circle cx="12" cy="10" r="3"/>
-                  </svg>
-                </span>
-                <span class="neo-location-text" data-editable="true" id="neoLocation">China</span>
+              <div class="ins-social-title-bar">
+                <span class="ins-social-title-text" contenteditable="true">「plog ° ✧ ༘ 8つ ～ ✧!!♫」</span>
+                <span class="ins-social-title-arrow">></span>
               </div>
-              <div class="neo-footer-label" data-editable="true" id="neoFooterLabel">Colorful Widget</div>
+              <div class="ins-social-images-row">
+                <div class="ins-social-image-item" style="cursor:pointer;" id="insSocialImg1Wrap">
+                  <img id="insSocialImg1" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pink%20knit%20fabric%20background%20with%20large%20matte%20pink%20ribbon%20bows%20gold%20rim%20oval%20hand%20mirror%20with%20gold%20hearts%20pearl%20chain%20white%20snowflakes%20small%20white%20flowers%20soft%20dreamy%20pink%20aesthetic&image_size=square" alt="img1">
+                </div>
+                <div class="ins-social-image-item" style="cursor:pointer;" id="insSocialImg2Wrap">
+                  <img id="insSocialImg2" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=indoor%20floor%20to%20ceiling%20window%20with%20pink%20lace%20curtains%20soft%20blue%20sky%20outside%20green%20vines%20trees%20misty%20mountains%20dreamy%20overexposed%20soft%20light&image_size=square" alt="img2">
+                </div>
+                <div class="ins-social-image-item" style="cursor:pointer;" id="insSocialImg3Wrap">
+                  <img id="insSocialImg3" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20cat%20shaped%20cream%20dessert%20on%20white%20plate%20pink%20bow%20on%20head%20brown%20dot%20eyes%20smile%20mouth%20cream%20white%20color%20soft%20blurry%20dreamy%20food%20photography&image_size=square" alt="img3">
+                </div>
+              </div>
+              <div class="ins-social-anniversary-row">
+                <div class="ins-social-anniversary-left">
+                  <span class="ins-social-heart-icon">♥</span>
+                  <span class="ins-social-anniversary-text" contenteditable="true">•• × • 距离我们的纪念日 还有</span>
+                </div>
+                <div class="ins-social-anniversary-right" contenteditable="true">446 days</div>
+              </div>
+              <div class="ins-social-text-box">
+                <span contenteditable="true">无论世界如何喧嚣，你永远是我的偏爱……</span>
+              </div>
             </div>
           </div>
           </div>
           <div class="censy-mid-section">
-          <div class="censy-polaroid-card">
-          <div class="censy-photo-area" id="censyPhotoBox">
-          <div class="censy-placeholder">
-          <svg width="200" height="180" viewBox="0 0 200 180">
-          <path d="M 30 140 L 70 50 L 130 50 L 160 70 L 160 140 L 30 140 Z" fill="#d8d8d8" stroke="#999" stroke-width="3"/>
-          <path d="M 30 140 L 60 110 L 90 140 Z" fill="#d8d8d8" stroke="#999" stroke-width="2"/>
-          <text x="60" y="130" font-size="18" fill="#999" text-anchor="middle">!</text>
-          <rect x="165" y="70" width="30" height="70" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="4 3"/>
-          <path d="M 70 50 L 70 20 L 90 20 L 100 30 L 110 20 L 130 20 L 130 50 Z" fill="#fff" stroke="#999" stroke-width="2"/>
-          <line x1="80" y1="30" x2="90" y2="35" stroke="#999" stroke-width="2"/>
-          <line x1="110" y1="30" x2="100" y2="35" stroke="#999" stroke-width="2"/>
-          <circle cx="100" cy="40" r="3" fill="#999"/>
-          <circle cx="150" cy="30" r="20" fill="none" stroke="#999" stroke-width="2"/>
-          <text x="150" y="38" font-size="16" fill="#999" text-anchor="middle">嗝</text>
-          <path d="M 130 30 L 140 35 L 130 40" stroke="#999" stroke-width="2" fill="none"/>
-          </svg>
-          </div>
-          <img id="censyPhotoImg" src="" alt="照片">
-          </div>
-          <div class="censy-polaroid-text-area">
-          <div class="censy-polaroid-desc" contenteditable="true">图片已被小猫吃掉</div>
-          <div class="censy-polaroid-label" contenteditable="true">Polaroid</div>
-          </div>
+          <div class="censy-polaroid-card cat-info-card">
+            <div class="cat-card-wrapper">
+              <div class="cat-card-bg"></div>
+              <div class="cat-card-inner">
+                <div class="cat-card-header">
+                  <div class="cat-card-avatar" id="catCardAvatarWrap" style="cursor:pointer;">
+                    <img id="catCardAvatarImg" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20white%20cat%20wearing%20pink%20chef%20hat%20holding%20dessert%20plate%20soft%20pink%20aesthetic%20kawaii&image_size=square" alt="cat avatar">
+                  </div>
+                  <div class="cat-card-id-section">
+                    <div class="cat-card-id-label">ID:</div>
+                    <div class="cat-card-id-tag"><span contenteditable="true">L.KIMJE</span></div>
+                  </div>
+                </div>
+                <div class="cat-card-content">
+                  <div class="cat-card-content-img" id="catCardContentWrap" style="cursor:pointer;">
+                    <img id="catCardContentImg" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pink%20aesthetic%20bow%20pattern%20soft%20pastel%20pink%20ribbon%20decorative&image_size=square" alt="content">
+                  </div>
+                  <div class="cat-card-content-text">
+                    <div class="cat-card-title" contenteditable="true"><span class="pink-star">☆</span> Hello Bunny <span class="pink-star">☆</span></div>
+                    <div class="cat-card-line1" contenteditable="true"><span class="pink-dot">✩</span> 9ℌ-- 其实小猫很爱你</div>
+                    <div class="cat-card-line2" contenteditable="true"><span class="pink-dot">✩.*˚</span> 但小猫开口后会变成喵喵(^･ω･^)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="censy-apps-grid">
           <div class="censy-app-item" id="censyWechatEntry">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-          <div class="censy-app-name">信息</div>
+          <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+          <div class="censy-app-name">微信</div>
           </div>
           <div class="censy-app-item">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-          <div class="censy-app-name">名册</div>
+          <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+          <div class="censy-app-name">手帐</div>
           </div>
           <div class="censy-app-item">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
           <div class="censy-app-name">世界书</div>
           </div>
           <div class="censy-app-item">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+          <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
           <div class="censy-app-name">邀约</div>
           </div>
           </div>
           </div>
         </div>
 
-        <!-- 第2页 & 第3页 保持原样 -->
-        <div class="censy-page"><div class="censy-p2-wrapper"><div class="censy-psp-wrapper"><div class="censy-psp-scale-box"><div class="psp-machine"><div class="left-group"><div class="dpad-full"><span class="d-up"></span><span class="d-down"></span><span class="d-left"></span><span class="d-right"></span></div><div class="speaker-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="paw-joystick"></div></div><div class="center-screen" id="censyPspScreenWrap"><div class="screen-text">点击更换图片</div><img id="censyPspShowImg"></div><div class="right-group"><div class="action-buttons"><div class="action-btn"></div><div class="action-btn"></div><div class="action-btn"></div><div class="action-btn"></div></div><div class="paw-joystick"></div><div class="speaker-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></div></div></div><div class="censy-p2-bottom-section"><div class="censy-p2-col"><div class="censy-iscreen-wrapper"><div class="pvc-card-wrapper" id="pvcCardWrap">
-            <div class="pvc-clip">
-              <div class="pvc-clip-top"></div>
-              <div class="pvc-clip-base">
-                <div class="pvc-clip-ring"></div>
+        <!-- 第2页 -->
+        <div class="censy-page">
+          <div class="censy-p2-wrapper">
+            <input type="file" id="insPanelAvatarFile" accept="image/*" style="display:none;">
+            <div class="ins-panel-wrapper">
+              <div class="ins-panel-inner">
+                <div class="ins-panel-center-avatar">
+                  <div class="ins-panel-avatar" id="insPanelAvatar">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=black%20white%20girl%20double%20ponytails%20bang%20white%20shirt%20black%20tie%20holding%20transparent%20umbrella%20rain%20gray%20tile%20wall%20moody%20aesthetic&image_size=square" alt="avatar">
+                  </div>
+                </div>
+                <div class="ins-panel-btn ins-panel-btn-tl">
+                  <div class="ins-panel-btn-icon" contenteditable="true">🎧</div>
+                  <div class="ins-panel-btn-text" contenteditable="true">Keep:♡:</div>
+                </div>
+                <div class="ins-panel-btn ins-panel-btn-tr">
+                  <div class="ins-panel-btn-icon" contenteditable="true">📸</div>
+                  <div class="ins-panel-btn-text" contenteditable="true">blooms•°</div>
+                </div>
+                <div class="ins-panel-btn ins-panel-btn-bl">
+                  <div class="ins-panel-btn-icon ins-panel-btn-icon-black" contenteditable="true">♡</div>
+                  <div class="ins-panel-btn-text" contenteditable="true">Twilight℮</div>
+                </div>
+                <div class="ins-panel-btn ins-panel-btn-br">
+                  <div class="ins-panel-btn-icon" contenteditable="true">☁️</div>
+                  <div class="ins-panel-btn-text" contenteditable="true">blingℴ3°</div>
+                </div>
+                <div class="ins-panel-deco-row">
+                  <span contenteditable="true">♪ ✦ ♪ · * * · っ っ ♪</span>
+                </div>
               </div>
             </div>
-            <div class="pvc-card-body">
-              <div class="pvc-card-inner">
-                <div class="pvc-content">
-                  <div class="pvc-avatar-box" id="pvcAvatarBox">
-                    <svg class="pvc-rabbit-svg" viewBox="0 0 80 80">
-                      <rect width="80" height="80" fill="#fff"/>
-                      <ellipse cx="28" cy="18" rx="8" ry="18" fill="#f0f0f2"/>
-                      <ellipse cx="52" cy="18" rx="8" ry="18" fill="#f0f0f2"/>
-                      <ellipse cx="28" cy="20" rx="4" ry="10" fill="#f8e8ec"/>
-                      <ellipse cx="52" cy="20" rx="4" ry="10" fill="#f8e8ec"/>
-                      <ellipse cx="40" cy="50" rx="26" ry="24" fill="#f8f8fa"/>
-                      <ellipse cx="30" cy="42" rx="6" ry="7" fill="#f0f0f2"/>
-                      <ellipse cx="50" cy="42" rx="6" ry="7" fill="#f0f0f2"/>
-                      <circle cx="32" cy="44" r="2.5" fill="#3a3a3f"/>
-                      <circle cx="48" cy="44" r="2.5" fill="#3a3a3f"/>
-                      <circle cx="33" cy="43" r="0.8" fill="#fff"/>
-                      <circle cx="49" cy="43" r="0.8" fill="#fff"/>
-                      <ellipse cx="40" cy="52" rx="2.5" ry="1.8" fill="#f0d8dc"/>
-                      <path d="M37,54 Q40,57 43,54" fill="none" stroke="#a0a0a8" stroke-width="1" stroke-linecap="round"/>
-                      <ellipse cx="24" cy="50" rx="4" ry="2.5" fill="#f8e8ec" opacity="0.6"/>
-                      <ellipse cx="56" cy="50" rx="4" ry="2.5" fill="#f8e8ec" opacity="0.6"/>
-                      <path d="M12,68 L68,68 L64,76 L16,76 Z" fill="#fff" stroke="#e8e8ec" stroke-width="0.5"/>
-                      <path d="M20,72 L30,72 M36,72 L50,72 M56,72 L60,72" stroke="#d0d0d4" stroke-width="0.5" stroke-dasharray="1 1"/>
-                      <ellipse cx="30" cy="66" rx="6" ry="4" fill="#f0f0f2"/>
-                      <ellipse cx="50" cy="66" rx="6" ry="4" fill="#f0f0f2"/>
-                    </svg>
-                    <img id="pvcAvatarImg" class="pvc-avatar-img" src="" alt="avatar">
+            <div class="censy-p2-bottom-section">
+              <div class="censy-p2-col">
+                <div class="censy-iscreen-wrapper">
+                  <div class="vinyl-card-wrapper" id="vinylCardWrap">
+                    <input type="file" id="vinylAvatarFile" accept="image/*" style="display:none;">
+                    <div class="vinyl-disc" id="vinylDisc">
+                      <div class="vinyl-groove vinyl-groove-1"></div>
+                      <div class="vinyl-groove vinyl-groove-2"></div>
+                      <div class="vinyl-groove vinyl-groove-3"></div>
+                      <div class="vinyl-groove vinyl-groove-4"></div>
+                      <div class="vinyl-center">
+                        <img id="vinylCenterImg" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20kawaii%20anime%20girl%20pastel%20pink%20soft%20dreamy%20aesthetic%20portrait&image_size=square" alt="vinyl center">
+                      </div>
+                      <div class="vinyl-center-hole"></div>
+                    </div>
+                    <div class="vinyl-tonearm">
+                      <div class="vinyl-tonearm-base"></div>
+                      <div class="vinyl-tonearm-arm"></div>
+                      <div class="vinyl-tonearm-head"></div>
+                    </div>
                   </div>
-                  <div class="pvc-info-list">
-                    <div class="pvc-info-row">
-                      <span class="pvc-info-icon">
-                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#b0b0b8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                          <circle cx="12" cy="7" r="4"/>
-                        </svg>
-                      </span>
-                      <span class="pvc-info-text" data-editable="true" id="pvcText1">☆ウサギの診断書÷3</span>
+                  <div class="censy-iscreen-label" contenteditable="true">Vinyl</div>
+                </div>
+                <div class="censy-apps-grid-small">
+                  <div class="censy-app-item app-small">
+                    <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15" cy="13" r="1"/><circle cx="18" cy="11" r="1"/><path d="M2 12c0-3.5 2.5-6 6-6h8c3.5 0 6 2.5 6 6s-2.5 6-6 6c-1.5 0-2.8-.5-3.8-1.5L12 15l-.2 1.5C10.8 17.5 9.5 18 8 18c-3.5 0-6-2.5-6-6z"/></svg></div>
+                    <div class="censy-app-name">游戏</div>
+                  </div>
+                  <div class="censy-app-item app-small">
+                    <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8 15h8"/><path d="M9 21h6"/><path d="M10 18h4"/></svg></div>
+                    <div class="censy-app-name">占卜屋</div>
+                  </div>
+                  <div class="censy-app-item app-small">
+                    <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+                    <div class="censy-app-name">日程</div>
+                  </div>
+                  <div class="censy-app-item app-small">
+                    <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/><path d="M8 6h8"/></svg></div>
+                    <div class="censy-app-name">查手机</div>
+                  </div>
+                </div>
+              </div>
+              <div class="censy-p2-col">
+                <div class="censy-apps-grid">
+                  <div class="censy-app-item" onclick="shopOpenApp()">
+                    <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+                    <div class="censy-app-name">商城</div>
+                  </div>
+                  <div class="censy-app-item app-small" onclick="craftOpenViewer()">
+                    <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+                    <div class="censy-app-name">手工屋</div>
+                  </div>
+                  <div class="censy-app-item">
+                    <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+                    <div class="censy-app-name">小屋</div>
+                  </div>
+                  <div class="censy-app-item" onclick="mtOpenApp()">
+                    <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                    <div class="censy-app-name">论坛</div>
+                  </div>
+                </div>
+                <div class="censy-iscreen-wrapper">
+                  <div class="capsule-row capsule-row-1">
+                    <div class="capsule-avatar" id="capsuleAvatar1Wrap" style="cursor:pointer;">
+                      <img id="capsuleAvatarImg1" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20kawaii%20pink%20aesthetic%20avatar%20soft%20dreamy&image_size=square" alt="avatar">
                     </div>
-                    <div class="pvc-info-row">
-                      <span class="pvc-info-icon">
-                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#b0b0b8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                          <circle cx="12" cy="10" r="3"/>
-                        </svg>
-                      </span>
-                      <span class="pvc-info-text" data-editable="true" id="pvcText2">*🐾🧴･♡☆★</span>
+                    <div class="capsule-text" contenteditable="true">have a nice day⭐</div>
+                  </div>
+                  <div class="capsule-row capsule-row-2">
+                    <div class="capsule-text capsule-text-left" contenteditable="true">·° HAPPYEVERYDAY ᵕ̈</div>
+                    <div class="capsule-avatar" id="capsuleAvatar2Wrap" style="cursor:pointer;">
+                      <img id="capsuleAvatarImg2" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20kawaii%20pink%20aesthetic%20avatar%20soft%20dreamy%20girl&image_size=square" alt="avatar">
                     </div>
-                    <div class="pvc-info-row">
-                      <span class="pvc-info-icon">
-                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#b0b0b8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-                          <text x="10" y="16" font-size="8" fill="#b0b0b8" font-weight="bold">#</text>
-                        </svg>
-                      </span>
-                      <span class="pvc-info-text" data-editable="true" id="pvcText3">∂ふわふわの初戀∂</span>
+                  </div>
+                  <div class="animal-panel">
+                    <div class="animal-unit">
+                      <div class="animal-avatar-circle" id="animalAvatarWrap1" style="cursor:pointer;">
+                        <img id="animalAvatarImg1" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20kawaii%20pink%20bunny%20rabbit%20cartoon%20simple%20flat%20illustration%20white%20background&image_size=square" alt="rabbit">
+                      </div>
+                      <svg class="animal-heart" viewBox="0 0 24 24" width="14" height="14"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#e8364f"/></svg>
+                    </div>
+                    <div class="animal-unit">
+                      <div class="animal-avatar-circle" id="animalAvatarWrap2" style="cursor:pointer;">
+                        <img id="animalAvatarImg2" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20kawaii%20brown%20bear%20cartoon%20simple%20flat%20illustration%20white%20background&image_size=square" alt="bear">
+                      </div>
+                      <svg class="animal-heart" viewBox="0 0 24 24" width="14" height="14"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#6b4423"/></svg>
+                    </div>
+                    <div class="animal-unit">
+                      <div class="animal-avatar-circle" id="animalAvatarWrap3" style="cursor:pointer;">
+                        <img id="animalAvatarImg3" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20kawaii%20yellow%20chick%20cartoon%20simple%20flat%20illustration%20white%20background&image_size=square" alt="chick">
+                      </div>
+                      <svg class="animal-heart" viewBox="0 0 24 24" width="14" height="14"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#f5a623"/></svg>
+                    </div>
+                    <div class="animal-unit">
+                      <div class="animal-avatar-circle" id="animalAvatarWrap4" style="cursor:pointer;">
+                        <img id="animalAvatarImg4" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20kawaii%20green%20frog%20cartoon%20simple%20flat%20illustration%20white%20background&image_size=square" alt="frog">
+                      </div>
+                      <svg class="animal-heart" viewBox="0 0 24 24" width="14" height="14"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#4caf50"/></svg>
+                    </div>
+                    <div class="animal-unit">
+                      <div class="animal-avatar-circle" id="animalAvatarWrap5" style="cursor:pointer;">
+                        <img id="animalAvatarImg5" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20kawaii%20blue%20elephant%20cartoon%20simple%20flat%20illustration%20white%20background&image_size=square" alt="elephant">
+                      </div>
+                      <svg class="animal-heart" viewBox="0 0 24 24" width="14" height="14"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#2196f3"/></svg>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div><div class="censy-iscreen-label" contenteditable="true">iScreen</div></div><div class="censy-apps-grid-small"><div class="censy-app-item app-small"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div class="censy-app-name">日程</div></div><div class="censy-app-item app-small" onclick="craftOpenViewer()"><div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/><path d="M6 5l3 4"/></svg></div><div class="censy-app-name">手工屋</div></div><div class="censy-app-item app-small"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4"/><path d="M8 10v4"/><circle cx="15" cy="13" r="1"/><circle cx="18" cy="11" r="1"/></svg></div><div class="censy-app-name">游戏</div></div><div class="censy-app-item app-small"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/></svg></div><div class="censy-app-name">查手机</div></div></div></div><div class="censy-p2-col"><div class="censy-apps-grid"><div class="censy-app-item" onclick="shopOpenApp()"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div><div class="censy-app-name">商城</div></div><div class="censy-app-item" onclick="mtOpenApp()"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div><div class="censy-app-name">美团</div></div><div class="censy-app-item"><div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="censy-app-name">小屋</div></div><div class="censy-app-item"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div><div class="censy-app-name">记忆库</div></div></div><div class="censy-iscreen-wrapper"><div class="censy-iscreen-frame" id="censyIscreenBox2"><span class="censy-iscreen-placeholder">点击上传</span><img id="censyIscreenImg2" src=""></div><div class="censy-iscreen-label" contenteditable="true">Widget</div></div></div></div></div></div>
+          </div>
+        </div>
         <div class="censy-page"><div class="censy-p3-wrapper"><div class="censy-p3-top-wrapper"><div class="censy-p3-scale-box"><div class="censy-p3-container"><div class="snow-card">
               <div class="snow-card-inner">
                 <svg class="snowflakes-bg" viewBox="0 0 460 240" preserveAspectRatio="none">
@@ -406,15 +464,73 @@
                   </div>
                 </div>
               </div>
-            </div></div></div></div><div class="censy-p3-bottom-apps"><div class="censy-app-item"><div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><path d="M12 9v2"/><path d="M12 15h.01"/><path d="M9.5 11l-1 1"/><path d="M15.5 11l1 1"/></svg></div><div class="censy-app-name">占卜房</div></div><div class="censy-app-item"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14L21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></div><div class="censy-app-name">外出</div></div></div></div></div>
+            </div></div></div></div><div class="censy-p3-bottom-apps"><div class="censy-app-item"><div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8 15h8"/><path d="M9 21h6"/><path d="M10 18h4"/></svg></div><div class="censy-app-name">占卜房</div></div><div class="censy-app-item"><div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14L21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></div><div class="censy-app-name">外出</div></div></div></div></div>
     </div>
 
     <div class="censy-fixed-bottom">
         <div class="censy-page-indicators" id="censyPageDots"><span class="censy-dot active"></span><span class="censy-dot"></span><span class="censy-dot"></span></div>
-        <div class="censy-dock-container"><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24"><path d="M4 19l5.5-5.5"/><path d="M14.5 8.5L20 3"/><path d="M8 21l-5-5 9-9 5 5-9 9z"/><path d="M13 6l5 5"/></svg></div><div class="censy-dock-name">外观</div></div><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg></div><div class="censy-dock-name">论坛</div></div><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24"><path d="M12 21s-6.5-4.35-8.5-7.12C1.5 11.1 2.2 7.4 5.4 5.5c2.1-1.25 4.55-.73 6.1.94 1.55-1.67 4-2.19 6.1-.94 3.2 1.9 3.9 5.6 1.9 8.38C18.5 16.65 12 21 12 21z"/></svg></div><div class="censy-dock-name">情侣空间</div></div><div class="censy-dock-item" id="censySettingsDockBtn"><div class="censy-dock-icon"><svg viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></div><div class="censy-dock-name">设置</div></div></div>
+        <div class="censy-dock-container"><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></div><div class="censy-dock-name">外观</div></div><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0 0-9h-1.8A7 7 0 1 0 4 15.3"/><path d="M2 19h20"/></svg></div><div class="censy-dock-name">天气</div></div><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="censy-dock-name">情侣空间</div></div><div class="censy-dock-item" id="censySettingsDockBtn"><div class="censy-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><div class="censy-dock-name">设置</div></div></div>
     </div>
     
-    <div class="censy-settings-panel" id="censySettingsPanel"><div class="censy-settings-header"><span>?? 定制偏好设置</span><div class="censy-close-btn" id="censyCloseSettings">?</div></div><div class="censy-settings-body"><div class="censy-settings-block"><div class="censy-settings-title">全局呈现</div><div class="censy-bg-upload-btn" id="censyBgBtn">??? 更改聊天背景壁纸</div></div><div class="censy-settings-block"><details class="censy-settings-details"><summary class="censy-settings-summary"><div class="censy-settings-title" style="margin-bottom:0;">应用与功能区图标调整</div><span class="censy-details-arrow">▼</span></summary><div id="censyIconList" class="censy-details-content"></div></details></div></div></div>
+    <div class="censy-settings-panel" id="censySettingsPanel"><div class="censy-settings-header"><span>⚙️ 定制偏好设置</span><div class="censy-close-btn" id="censyCloseSettings">×</div></div><div class="censy-settings-body"><div class="censy-settings-block"><div class="censy-settings-title">全局呈现</div><div class="censy-bg-upload-btn" id="censyBgBtn">🖼️ 更改聊天背景壁纸</div><div class="censy-bg-upload-btn" id="censyLockBgBtn" style="margin-top:8px;">🔒 更改锁屏壁纸</div></div><div class="censy-settings-block"><div class="censy-settings-title">锁屏密码</div><div class="censy-lock-pwd-row"><input type="password" class="censy-lock-pwd-input" id="censyLockPwdInput" placeholder="输入4位新密码" maxlength="4"><button class="censy-api-btn censy-api-btn-connect" id="censyLockPwdSaveBtn">保存密码</button></div><div class="censy-api-hint">当前默认密码: 1234，更改后永久保存在本地</div></div><div class="censy-settings-block"><details class="censy-settings-details"><summary class="censy-settings-summary"><div class="censy-settings-title" style="margin-bottom:0;">应用与功能区图标调整</div><span class="censy-details-arrow">▼</span></summary><div id="censyIconList" class="censy-details-content"></div></details></div>
+                <input type="file" id="censyLockBgFile" accept="image/*" style="display:none;">
+                <!-- API设置区块 -->
+                <div class="censy-settings-block">
+                    <div class="censy-settings-title">API 配置</div>
+                    <div class="censy-api-field">
+                        <label class="censy-api-label">API 地址</label>
+                        <div class="censy-api-input-wrap">
+                            <input type="text" class="censy-api-input" id="censyApiUrl" placeholder="例如: https://api.example.com/v1">
+                            <button class="censy-api-history-btn" id="censyApiHistoryBtn" title="历史记录">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#6a5a8a" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            </button>
+                        </div>
+                        <div class="censy-api-history-list" id="censyApiHistoryList" style="display:none;"></div>
+                    </div>
+                    <div class="censy-api-field">
+                        <label class="censy-api-label">API Key</label>
+                        <div class="censy-api-input-wrap">
+                            <input type="password" class="censy-api-input" id="censyApiKey" placeholder="输入你的 API Key">
+                            <button class="censy-api-toggle-vis" id="censyApiKeyToggle" title="显示/隐藏">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#6a5a8a" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
+                        </div>
+                        <div class="censy-api-hint">点击"保存配置"按钮后，API 地址、Key 和默认模型将永久保存在本地</div>
+                    </div>
+                    <div class="censy-api-actions">
+                        <button class="censy-api-btn censy-api-btn-test" id="censyApiTestBtn">测试连接</button>
+                        <button class="censy-api-btn censy-api-btn-connect" id="censyApiFetchBtn">拉取模型</button>
+                        <button class="censy-api-btn censy-api-btn-disconnect" id="censyApiSaveBtn">保存配置</button>
+                    </div>
+                    <div class="censy-api-status" id="censyApiStatus"></div>
+                    <div class="censy-api-models-section" id="censyApiModelsSection" style="display:none;">
+                        <div class="censy-api-models-header">
+                            <span class="censy-api-models-title">可用模型</span>
+                            <span class="censy-api-models-count">共 <span id="censyApiModelsCount">0</span> 个，已选 <span id="censyApiSelectedCount">0</span> 个</span>
+                        </div>
+                        <div class="censy-api-models-list" id="censyApiModelsList"></div>
+                    </div>
+                    <div class="censy-api-field" id="censyApiDefaultModelWrap" style="display:none;">
+                        <label class="censy-api-label">默认模型</label>
+                        <select class="censy-api-select" id="censyApiDefaultModel">
+                            <option value="">请先连接并拉取模型</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- AI对话测试区块 -->
+                <div class="censy-settings-block" id="censyApiChatBlock" style="display:none;">
+                    <div class="censy-settings-title">AI 对话测试</div>
+                    <div class="censy-api-chat-messages" id="censyApiChatMessages">
+                        <div class="censy-api-chat-msg censy-api-chat-system">连接成功后可在此测试对话</div>
+                    </div>
+                    <div class="censy-api-chat-input-wrap">
+                        <input type="text" class="censy-api-chat-input" id="censyApiChatInput" placeholder="输入消息进行对话测试...">
+                        <button class="censy-api-chat-send" id="censyApiChatSend">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div></div>
 
     <!-- === 新增：Instagram APP全屏容器 === -->
     <div class="ig-app-container" id="igAppMain">
@@ -1813,6 +1929,1130 @@
         </div>
         <!-- React应用渲染容器 -->
         <div id="mtRoot" class="mt-app-root"></div>
+    </div>
+
+    <!-- === 微信APP全屏容器 === -->
+    <div class="wx-app-container" id="wxAppMain">
+        <div class="wx-close-btn" onclick="wxCloseApp()">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#333" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </div>
+        <div class="wx-app-body">
+            <!-- 顶部状态栏（微信绿色） -->
+            <div class="wx-status-bar">
+                <div class="wx-status-left">9:41</div>
+                <div class="wx-status-right">
+                    <!-- 信号、wifi、电池图标 -->
+                </div>
+            </div>
+            <!-- 主内容区，各Tab页面通过wx-tab-page类切换 -->
+            <div class="wx-content" id="wxContent">
+                <!-- 微信（消息）页 -->
+                <div class="wx-tab-page active" id="wxTabChats">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-title">微信</div>
+                        <div class="wx-nav-right">
+                            <div class="wx-nav-btn" id="wxAddBtn">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            </div>
+                            <div class="wx-add-menu" id="wxAddMenu">
+                                <div class="wx-add-menu-item" onclick="wxStartGroupChat()">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                    <span>发起群聊</span>
+                                </div>
+                                <div class="wx-add-menu-item" onclick="wxOpenAddContact()">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                                    <span>添加角色</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-chat-list" id="wxChatList">
+                    </div>
+                </div>
+                <!-- 通讯录页 -->
+                <div class="wx-tab-page" id="wxTabContacts">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-title">通讯录</div>
+                    </div>
+                    <div class="wx-contacts-container">
+                        <div class="wx-contacts-search">
+                            <div class="wx-contacts-search-box">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#999" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                <span>搜索</span>
+                            </div>
+                        </div>
+                        <div class="wx-contacts-func-list">
+                            <div class="wx-contacts-func-item" onclick="wxShowToast('新的朋友')">
+                                <div class="wx-contacts-func-icon wx-func-icon-blue">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                                </div>
+                                <span class="wx-contacts-func-name">新的朋友</span>
+                                <div class="wx-contacts-arrow">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                            <div class="wx-contacts-func-item" onclick="wxOpenGroupList()">
+                                <div class="wx-contacts-func-icon wx-func-icon-green">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                </div>
+                                <span class="wx-contacts-func-name">群聊</span>
+                                <div class="wx-contacts-arrow">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                            <div class="wx-contacts-func-item" onclick="wxShowToast('标签')">
+                                <div class="wx-contacts-func-icon wx-func-icon-blue">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                                </div>
+                                <span class="wx-contacts-func-name">标签</span>
+                                <div class="wx-contacts-arrow">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                            <div class="wx-contacts-func-item" onclick="wxShowToast('公众号')">
+                                <div class="wx-contacts-func-icon wx-func-icon-red">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                </div>
+                                <span class="wx-contacts-func-name">公众号</span>
+                                <div class="wx-contacts-arrow">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wx-contacts-list" id="wxContactsList">
+                        </div>
+                        <div class="wx-contacts-index" id="wxContactsIndex">
+                        </div>
+                    </div>
+                </div>
+                <!-- 发现/朋友圈页 -->
+                <div class="wx-tab-page" id="wxTabDiscover">
+                    <div class="wx-moments-container" id="wxMomentsContainer">
+                        <div class="wx-moments-header">
+                            <div class="wx-nav-bar wx-nav-bar-transparent wx-moments-navbar">
+                                <div class="wx-nav-left">
+                                    <div class="wx-nav-btn" onclick="wxShowToast('返回')">
+                                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                                    </div>
+                                </div>
+                                <div class="wx-nav-title wx-moments-nav-title">朋友圈</div>
+                                <div class="wx-nav-right">
+                                    <div class="wx-nav-btn" id="wxCameraBtn">
+                                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wx-moments-cover" id="wxMomentsCover" onclick="wxTriggerMomentsCoverUpload()">
+                                <div class="wx-moments-cover-bg" id="wxMomentsCoverBg"></div>
+                                <div class="wx-moments-upload-tip">点击更换背景</div>
+                                <div class="wx-moments-avatar" id="wxMomentsAvatar" onclick="wxOpenEditSignature()">
+                                    <div class="wx-moments-avatar-placeholder">我</div>
+                                </div>
+                                <div class="wx-moments-nickname" id="wxMomentsNickname" onclick="wxOpenEditSignature()">我</div>
+                            </div>
+                            <div class="wx-moments-profile-bar">
+                                <div class="wx-moments-signature-row">
+                                    <div class="wx-moments-signature" id="wxMomentsSignature" onclick="wxOpenEditSignature()">点击添加个性签名</div>
+                                </div>
+                            </div>
+                            <input type="file" id="wxMomentsCoverFile" accept="image/*" style="display:none;">
+                        </div>
+                        <div class="wx-moments-list" id="wxMomentsList">
+                        </div>
+                        <div class="wx-moments-input-area">
+                            <input type="text" class="wx-moments-input" id="wxMomentsInput" placeholder="发一条朋友圈...">
+                            <div class="wx-moments-input-btn" onclick="wxQuickPostMoment()">发布</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 我的页面 -->
+                <div class="wx-tab-page" id="wxTabMe">
+                    <div class="wx-me-container">
+                        <div class="wx-me-header" onclick="wxOpenProfile()">
+                            <div class="wx-me-avatar" id="wxMeAvatar">
+                                <div class="wx-me-avatar-placeholder" id="wxMeAvatarPlaceholder">我</div>
+                            </div>
+                            <div class="wx-me-info">
+                                <div class="wx-me-nickname" id="wxMeNickname">我</div>
+                                <div class="wx-me-wxid">微信号：<span id="wxMeWxid">wxid_xxxx</span></div>
+                            </div>
+                            <div class="wx-me-qr-arrow">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#999" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14h1M14 20h1M20 20h1"/></svg>
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-me-section">
+                            <div class="wx-me-cell" onclick="wxShowToast('朋友圈')">
+                                <div class="wx-me-cell-icon wx-me-icon-orange">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                </div>
+                                <div class="wx-me-cell-text">朋友圈</div>
+                                <div class="wx-contacts-arrow">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wx-me-section">
+                            <div class="wx-me-cell" onclick="wxOpenAccountManager()">
+                                <div class="wx-me-cell-icon wx-me-icon-green">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                                </div>
+                                <div class="wx-me-cell-text">切换账号</div>
+                                <div class="wx-contacts-arrow">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                            <div class="wx-me-cell" onclick="wxOpenSettings()">
+                                <div class="wx-me-cell-icon wx-me-icon-gray">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                                </div>
+                                <div class="wx-me-cell-text">设置</div>
+                                <div class="wx-contacts-arrow">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 设置页面 -->
+                <div class="wx-page" id="wxPageSettings">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseSettings()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#262626" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">设置</div>
+                        <div class="wx-nav-right"></div>
+                    </div>
+                    <div class="wx-settings-body">
+                        <div class="wx-settings-section">
+                            <div class="wx-settings-row" onclick="wxShowToast('API设置')">
+                                <div class="wx-settings-row-label">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><polyline points="2 17 10 22 17 19"/><polyline points="22 12 12 17 2 12"/></svg>
+                                    <span>API设置</span>
+                                </div>
+                                <div class="wx-contacts-arrow">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#dbdbdb" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                            <div class="wx-settings-row" onclick="wxOpenAccountManager()">
+                                <div class="wx-settings-row-label">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                    <span>账号管理</span>
+                                </div>
+                                <div class="wx-contacts-arrow">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#dbdbdb" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 账号管理页面 -->
+                <div class="wx-page" id="wxPageAccountManager">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseAccountManager()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">切换账号</div>
+                        <div class="wx-nav-right">
+                            <div class="wx-nav-btn wx-nav-btn-green" onclick="wxAddNewAccount()">
+                                <span>添加账号</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-account-list" id="wxAccountList">
+                    </div>
+                </div>
+
+                <!-- 添加账号页面 -->
+                <div class="wx-page" id="wxPageAddAccount">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseAddAccount()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">添加账号</div>
+                        <div class="wx-nav-right">
+                            <div class="wx-nav-btn wx-nav-btn-green" onclick="wxSaveNewAccount()">
+                                <span>完成</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-add-account-body">
+                        <div class="wx-avatar-upload-wrap">
+                            <div class="wx-avatar-upload" id="wxAddAccountAvatarUpload">
+                                <svg class="wx-avatar-placeholder" viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#ccc" stroke-width="1.5"><path d="M12 20v-2M12 14v.01M4.93 10.93a9 9 0 1 1 14.14 0"/><path d="M12 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
+                                <img id="wxAddAccountAvatarImg" class="wx-avatar-img" src="" alt="头像">
+                            </div>
+                            <div class="wx-avatar-tip">点击上传头像</div>
+                        </div>
+                        <div class="wx-form-group">
+                            <div class="wx-form-label">昵称</div>
+                            <input type="text" class="wx-form-input" id="wxAddAccountNickname" placeholder="请输入昵称">
+                        </div>
+                        <div class="wx-form-group">
+                            <div class="wx-form-label">微信号</div>
+                            <input type="text" class="wx-form-input" id="wxAddAccountWxid" placeholder="请输入微信号">
+                        </div>
+                        <div class="wx-form-group">
+                            <div class="wx-form-label">我的人设</div>
+                            <textarea class="wx-form-textarea" id="wxAddAccountPersona" placeholder="请输入你的人设描述..."></textarea>
+                        </div>
+                    </div>
+                    <input type="file" id="wxAddAccountAvatarFile" accept="image/*" style="display:none;">
+                </div>
+
+                <!-- 编辑个性签名页面 -->
+                <div class="wx-page" id="wxPageEditSignature">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseEditSignature()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">个性签名</div>
+                        <div class="wx-nav-right">
+                            <div class="wx-nav-btn wx-nav-btn-green" onclick="wxSaveEditSignature()">
+                                <span>完成</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-edit-signature-body">
+                        <textarea class="wx-edit-signature-textarea" id="wxEditSignatureTextarea" placeholder="请输入个性签名..."></textarea>
+                        <div class="wx-edit-signature-tip">最多可输入200个字符</div>
+                    </div>
+                </div>
+
+                <!-- 个人信息页面 -->
+                <div class="wx-page" id="wxPageProfile">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseProfile()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">个人信息</div>
+                        <div class="wx-nav-right"></div>
+                    </div>
+                    <div class="wx-profile-body">
+                        <div class="wx-profile-section">
+                            <div class="wx-profile-row" onclick="wxTriggerProfileAvatarUpload()">
+                                <div class="wx-profile-label">头像</div>
+                                <div class="wx-profile-value">
+                                    <div class="wx-profile-avatar" id="wxProfileAvatar">
+                                        <div class="wx-profile-avatar-placeholder" id="wxProfileAvatarPlaceholder">头</div>
+                                    </div>
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                            <div class="wx-profile-row" onclick="wxOpenEditName()">
+                                <div class="wx-profile-label">名字</div>
+                                <div class="wx-profile-value">
+                                    <span class="wx-profile-text" id="wxProfileName">我</span>
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                            <div class="wx-profile-row">
+                                <div class="wx-profile-label">微信号</div>
+                                <div class="wx-profile-value">
+                                    <span class="wx-profile-text wx-profile-text-gray" id="wxProfileWxid">wxid_xxxx</span>
+                                </div>
+                            </div>
+                            <div class="wx-profile-row" onclick="wxOpenEditPersona()">
+                                <div class="wx-profile-label">我的人设</div>
+                                <div class="wx-profile-value">
+                                    <span class="wx-profile-text wx-profile-persona" id="wxProfilePersona">暂无</span>
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="file" id="wxProfileAvatarFile" accept="image/*" style="display:none;">
+                </div>
+
+                <!-- 修改名字页面 -->
+                <div class="wx-page" id="wxPageEditName">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseEditName()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">修改名字</div>
+                        <div class="wx-nav-right">
+                            <div class="wx-nav-btn wx-nav-btn-green" onclick="wxSaveEditName()">
+                                <span>完成</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-edit-name-body">
+                        <div class="wx-edit-name-input-wrap">
+                            <input type="text" class="wx-edit-name-input" id="wxEditNameInput" placeholder="请输入名字" maxlength="20">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 人设编辑页面 -->
+                <div class="wx-page" id="wxPageEditPersona">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseEditPersona()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">我的人设</div>
+                        <div class="wx-nav-right">
+                            <div class="wx-nav-btn wx-nav-btn-green" onclick="wxSaveEditPersona()">
+                                <span>完成</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-edit-persona-body">
+                        <textarea class="wx-edit-persona-textarea" id="wxEditPersonaTextarea" placeholder="请输入你的人设描述..."></textarea>
+                    </div>
+                </div>
+
+                <!-- 添加角色页面 -->
+                <div class="wx-page" id="wxPageAddContact">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseAddContact()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">添加角色</div>
+                        <div class="wx-nav-right"></div>
+                    </div>
+                    <div class="wx-add-contact-body">
+                        <div class="wx-avatar-upload-wrap">
+                            <div class="wx-avatar-upload" id="wxAddAvatarUpload">
+                                <svg class="wx-avatar-placeholder" viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#ccc" stroke-width="1.5"><path d="M12 20v-2M12 14v.01M4.93 10.93a9 9 0 1 1 14.14 0"/><path d="M12 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
+                                <img id="wxAddAvatarImg" class="wx-avatar-img" src="" alt="头像">
+                            </div>
+                            <div class="wx-avatar-tip">点击上传头像</div>
+                        </div>
+                        <div class="wx-form-group">
+                            <div class="wx-form-label">昵称</div>
+                            <input type="text" class="wx-form-input" id="wxAddNickname" placeholder="请输入昵称">
+                        </div>
+                        <div class="wx-form-group">
+                            <div class="wx-form-label">星座</div>
+                            <select class="wx-form-input" id="wxAddConstellation">
+                                <option value="">请选择星座</option>
+                                <option value="白羊座">白羊座</option>
+                                <option value="金牛座">金牛座</option>
+                                <option value="双子座">双子座</option>
+                                <option value="巨蟹座">巨蟹座</option>
+                                <option value="狮子座">狮子座</option>
+                                <option value="处女座">处女座</option>
+                                <option value="天秤座">天秤座</option>
+                                <option value="天蝎座">天蝎座</option>
+                                <option value="射手座">射手座</option>
+                                <option value="摩羯座">摩羯座</option>
+                                <option value="水瓶座">水瓶座</option>
+                                <option value="双鱼座">双鱼座</option>
+                            </select>
+                        </div>
+                        <div class="wx-form-group">
+                            <div class="wx-form-label">人设</div>
+                            <textarea class="wx-form-textarea" id="wxAddPersona" placeholder="请输入角色人设描述..."></textarea>
+                        </div>
+                        <div class="wx-form-group">
+                            <div class="wx-form-label">聊天背景</div>
+                            <div class="wx-bg-upload" id="wxAddBgUpload">
+                                <div class="wx-bg-placeholder">
+                                    <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#ccc" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                    <span>点击上传背景</span>
+                                </div>
+                                <img id="wxAddBgImg" class="wx-bg-img" src="" alt="背景">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-add-contact-footer">
+                        <div class="wx-complete-btn" onclick="wxSaveNewContact()">完成</div>
+                    </div>
+                    <input type="file" id="wxAddAvatarFile" accept="image/*" style="display:none;">
+                    <input type="file" id="wxAddBgFile" accept="image/*" style="display:none;">
+                </div>
+
+                <!-- 聊天页面 -->
+                <div class="wx-page" id="wxPageChat">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseChat()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title" id="wxChatTitle">聊天</div>
+                        <div class="wx-nav-right">
+                            <div class="wx-nav-btn" onclick="wxOpenChatMenu(event)">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-chat-messages" id="wxChatMessages">
+                    </div>
+                    <div class="wx-chat-bottom-container">
+                        <div class="wx-chat-input-bar">
+                            <div class="wx-chat-voice-btn">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#333" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                            </div>
+                            <div class="wx-chat-input-wrap">
+                                <input type="text" class="wx-chat-input" id="wxChatInput" placeholder="输入消息">
+                            </div>
+                            <div class="wx-chat-emoji-btn">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#333" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                            </div>
+                            <div class="wx-chat-more-btn" onclick="wxToggleChatMorePanel()">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#333" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                            </div>
+                        </div>
+                        <!-- 私聊更多功能面板 -->
+                        <div class="wx-more-panel" id="wxChatMorePanel">
+                            <div class="wx-more-panel-grid">
+                                <div class="wx-more-panel-item" onclick="wxOpenChatRedPacket()">
+                                    <div class="wx-more-panel-icon wx-more-icon-redpacket">
+                                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><circle cx="12" cy="14" r="2.5"/></svg>
+                                    </div>
+                                    <div class="wx-more-panel-label">红包</div>
+                                </div>
+                                <div class="wx-more-panel-item" onclick="wxOpenChatTransfer()">
+                                    <div class="wx-more-panel-icon wx-more-icon-transfer">
+                                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2"><path d="M4 10h16"/><path d="M4 14h16"/><path d="M8 6l-4 4 4 4"/><path d="M16 12l4 4-4 4"/></svg>
+                                    </div>
+                                    <div class="wx-more-panel-label">转账</div>
+                                </div>
+                                <div class="wx-more-panel-item" onclick="wxOpenChatVote()">
+                                    <div class="wx-more-panel-icon wx-more-icon-vote">
+                                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2"><path d="M9 17l-5-5 2-2 3 3 7-7 2 2z"/></svg>
+                                    </div>
+                                    <div class="wx-more-panel-label">投票</div>
+                                </div>
+                                <div class="wx-more-panel-item" onclick="wxOpenChatSolitaire()">
+                                    <div class="wx-more-panel-icon wx-more-icon-solitaire">
+                                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3.5" cy="6" r="1.5"/><circle cx="3.5" cy="12" r="1.5"/><circle cx="3.5" cy="18" r="1.5"/></svg>
+                                    </div>
+                                    <div class="wx-more-panel-label">接龙</div>
+                                </div>
+                                <div class="wx-more-panel-item" onclick="wxTriggerChatImageUpload()">
+                                    <div class="wx-more-panel-icon wx-more-icon-image">
+                                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                                    </div>
+                                    <div class="wx-more-panel-label">图片</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="file" id="wxChatImageFile" accept="image/*" style="display:none;">
+                </div>
+
+                <!-- 私聊页面菜单 -->
+                <div class="wx-chat-menu-panel" id="wxChatMenuPanel">
+                    <div class="wx-chat-menu-mask" onclick="wxCloseChatMenu()"></div>
+                    <div class="wx-chat-menu-content">
+                        <div class="wx-chat-menu-item" onclick="wxChatMenuViewDetail()">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#333" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <span>查看详细资料</span>
+                        </div>
+                        <div class="wx-chat-menu-item" onclick="wxChatMenuSetRemark()">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#333" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                            <span>设置备注</span>
+                        </div>
+                        <div class="wx-chat-menu-item wx-chat-menu-item-danger" onclick="wxChatMenuDeleteContact()">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#e74c3c" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                            <span>删除联系人</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 联系人详情页 -->
+                <div class="wx-page" id="wxPageContactDetail">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseContactDetail()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">详细资料</div>
+                        <div class="wx-nav-right">
+                            <div class="wx-nav-btn" onclick="wxToggleContactMenu(event)">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-contact-detail-body">
+                        <div class="wx-contact-detail-header">
+                            <div class="wx-contact-detail-avatar" id="wxContactDetailAvatar" onclick="wxTriggerContactAvatarUpload()">
+                                <div class="wx-contact-detail-avatar-placeholder" id="wxContactDetailAvatarPlaceholder">?</div>
+                            </div>
+                            <div class="wx-contact-detail-info">
+                                <div class="wx-contact-detail-name" id="wxContactDetailName">昵称</div>
+                                <div class="wx-contact-detail-wxid" id="wxContactDetailWxid">微信号</div>
+                                <div class="wx-contact-detail-constellation" id="wxContactDetailConstellation">星座</div>
+                            </div>
+                        </div>
+                        <div class="wx-contact-detail-section">
+                            <div class="wx-contact-detail-row" onclick="wxOpenRemarkTagPage()">
+                                <span class="wx-contact-detail-label">设置备注和标签</span>
+                                <div class="wx-contact-detail-arrow">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wx-contact-detail-section">
+                            <div class="wx-contact-detail-row" onclick="wxOpenContactMoments()">
+                                <span class="wx-contact-detail-label">朋友圈</span>
+                                <div class="wx-contact-detail-arrow">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                            <div class="wx-contact-detail-divider"></div>
+                            <div class="wx-contact-detail-row">
+                                <span class="wx-contact-detail-label">更多信息</span>
+                                <div class="wx-contact-detail-arrow">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wx-contact-detail-persona-section">
+                            <div class="wx-contact-detail-persona-title">人设描述
+                                <span class="wx-persona-edit-btn" onclick="wxEditContactPersona()">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#576b95" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                </span>
+                            </div>
+                            <div class="wx-contact-detail-persona-content" id="wxContactDetailPersona">暂无描述</div>
+                        </div>
+                        <div class="wx-contact-detail-footer">
+                            <div class="wx-contact-detail-btn" onclick="wxContactDetailSendMsg()">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#07c160" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                <span>发消息</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 联系人详情菜单面板（移到页面外层避免overflow:hidden裁剪） -->
+                <div class="wx-contact-menu-panel" id="wxContactMenuPanel">
+                    <div class="wx-contact-menu-mask" onclick="wxCloseContactMenu()"></div>
+                    <div class="wx-contact-menu-content">
+                        <div class="wx-contact-menu-item" onclick="wxOpenRemarkTagPage()">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#333" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                            <span>设置备注和标签</span>
+                        </div>
+                        <div class="wx-contact-menu-item wx-contact-menu-item-danger" onclick="wxDeleteContact()">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#e74c3c" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                            <span>删除联系人</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 联系人朋友圈页面 -->
+                <div class="wx-page" id="wxPageContactMoments">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseContactMoments()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">朋友圈</div>
+                        <div class="wx-nav-right"></div>
+                    </div>
+                    <div class="wx-contact-moments-header">
+                        <div class="wx-contact-moments-avatar" id="wxContactMomentsAvatar">
+                            <div class="wx-contact-moments-avatar-placeholder">?</div>
+                        </div>
+                        <div class="wx-contact-moments-name" id="wxContactMomentsName">联系人</div>
+                    </div>
+                    <div class="wx-contact-moments-list" id="wxContactMomentsList">
+                        <div style="text-align:center;color:#999;padding:60px 0;">暂无朋友圈动态</div>
+                    </div>
+                </div>
+
+                <!-- 人设编辑页面 -->
+                <div class="wx-page" id="wxPageEditPersona">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseEditPersona()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">编辑人设</div>
+                        <div class="wx-nav-right">
+                            <div class="wx-nav-btn" onclick="wxSaveContactPersona()">
+                                <span style="font-size:16px;">完成</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-contact-detail-body">
+                        <textarea class="wx-edit-persona-textarea" id="wxEditContactPersonaTextarea" placeholder="请输入人设描述..."></textarea>
+                    </div>
+                </div>
+
+                <!-- 备注和标签设置页面 -->
+                <div class="wx-page" id="wxPageRemarkTag">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseRemarkTagPage()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">设置备注和标签</div>
+                        <div class="wx-nav-right">
+                            <div class="wx-nav-btn" onclick="wxSaveRemarkTag()">
+                                <span style="font-size:16px;">完成</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-contact-detail-body">
+                        <div class="wx-contact-detail-header">
+                            <div class="wx-contact-detail-avatar" id="wxRemarkTagAvatar" onclick="wxTriggerContactAvatarUpload()">
+                                <div class="wx-contact-detail-avatar-placeholder" id="wxRemarkTagAvatarPlaceholder">?</div>
+                            </div>
+                            <div class="wx-contact-detail-info">
+                                <div class="wx-contact-detail-name" id="wxRemarkTagOriginalName">昵称</div>
+                            </div>
+                        </div>
+                        <div class="wx-form-group">
+                            <div class="wx-form-label">备注名</div>
+                            <input type="text" class="wx-form-input" id="wxRemarkInput" placeholder="请输入备注名">
+                        </div>
+                        <div class="wx-form-group">
+                            <div class="wx-form-label">标签</div>
+                            <div class="wx-tag-list" id="wxTagList">
+                                <div class="wx-tag-item wx-tag-add" onclick="wxAddTag()">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#999" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                    <span>添加标签</span>
+                                </div>
+                            </div>
+                            <input type="text" class="wx-form-input wx-tag-input" id="wxTagInput" placeholder="输入标签后按回车添加" style="display:none;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 头像上传文件输入框 -->
+                <input type="file" id="wxContactAvatarFile" accept="image/*" style="display:none;">
+
+                <!-- 创建群聊页面 -->
+                <div class="wx-page" id="wxPageCreateGroup">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseCreateGroup()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">发起群聊</div>
+                        <div class="wx-nav-right"></div>
+                    </div>
+                    <div class="wx-create-group-body">
+                        <div class="wx-group-avatar-upload-wrap">
+                            <div class="wx-group-avatar-upload" id="wxGroupAvatarUpload" onclick="wxTriggerGroupAvatarUpload()">
+                                <svg class="wx-group-avatar-placeholder" viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#ccc" stroke-width="1.5"><path d="M12 20v-2M12 14v.01M4.93 10.93a9 9 0 1 1 14.14 0"/><path d="M12 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
+                                <img id="wxGroupAvatarImg" class="wx-avatar-img" src="" alt="群头像">
+                            </div>
+                            <div class="wx-avatar-tip">点击上传群头像</div>
+                        </div>
+                        <div class="wx-form-group">
+                            <div class="wx-form-label">群名称</div>
+                            <input type="text" class="wx-form-input" id="wxGroupNameInput" placeholder="请输入群名称" maxlength="30">
+                        </div>
+                        <div class="wx-form-group">
+                            <div class="wx-form-label">群介绍</div>
+                            <textarea class="wx-form-textarea" id="wxGroupIntroInput" placeholder="请输入群介绍（可选）"></textarea>
+                        </div>
+                        <div class="wx-group-select-section">
+                            <div class="wx-group-select-title">选择成员</div>
+                            <div class="wx-group-selected-members" id="wxGroupSelectedMembers"></div>
+                            <div class="wx-group-member-list" id="wxGroupMemberList"></div>
+                        </div>
+                    </div>
+                    <div class="wx-add-contact-footer">
+                        <div class="wx-complete-btn" onclick="wxSaveGroup()">完成</div>
+                    </div>
+                    <input type="file" id="wxGroupAvatarFile" accept="image/*" style="display:none;">
+                </div>
+
+                <!-- 群聊聊天页面 -->
+                <div class="wx-page" id="wxPageGroupChat">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseGroupChat()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title" id="wxGroupChatTitle">群聊</div>
+                        <div class="wx-nav-right">
+                            <div class="wx-nav-btn" id="wxGroupChatSettingsBtn">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-chat-messages" id="wxGroupChatMessages"></div>
+                    <div class="wx-chat-bottom-container">
+                        <div class="wx-chat-input-bar">
+                            <div class="wx-chat-voice-btn">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#333" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                            </div>
+                            <div class="wx-chat-input-wrap">
+                                <input type="text" class="wx-chat-input" id="wxGroupChatInput" placeholder="输入消息">
+                            </div>
+                            <div class="wx-chat-emoji-btn">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#333" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                            </div>
+                            <div class="wx-chat-more-btn">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#333" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                            </div>
+                        </div>
+                        <!-- 更多功能面板（+号面板） -->
+                        <div class="wx-more-panel" id="wxGroupMorePanel">
+                            <div class="wx-more-panel-grid">
+                                <div class="wx-more-panel-item" onclick="wxOpenRedPacket()">
+                                    <div class="wx-more-panel-icon wx-more-icon-redpacket">
+                                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><circle cx="12" cy="14" r="2.5"/></svg>
+                                    </div>
+                                    <div class="wx-more-panel-label">红包</div>
+                                </div>
+                                <div class="wx-more-panel-item" onclick="wxOpenTransfer()">
+                                    <div class="wx-more-panel-icon wx-more-icon-transfer">
+                                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2"><path d="M4 10h16"/><path d="M4 14h16"/><path d="M8 6l-4 4 4 4"/><path d="M16 12l4 4-4 4"/></svg>
+                                    </div>
+                                    <div class="wx-more-panel-label">转账</div>
+                                </div>
+                                <div class="wx-more-panel-item" onclick="wxOpenVote()">
+                                    <div class="wx-more-panel-icon wx-more-icon-vote">
+                                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2"><path d="M9 17l-5-5 2-2 3 3 7-7 2 2z"/></svg>
+                                    </div>
+                                    <div class="wx-more-panel-label">投票</div>
+                                </div>
+                                <div class="wx-more-panel-item" onclick="wxOpenSolitaire()">
+                                    <div class="wx-more-panel-icon wx-more-icon-solitaire">
+                                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3.5" cy="6" r="1.5"/><circle cx="3.5" cy="12" r="1.5"/><circle cx="3.5" cy="18" r="1.5"/></svg>
+                                    </div>
+                                    <div class="wx-more-panel-label">接龙</div>
+                                </div>
+                                <div class="wx-more-panel-item" onclick="wxTriggerGroupImageUpload()">
+                                    <div class="wx-more-panel-icon wx-more-icon-image">
+                                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                                    </div>
+                                    <div class="wx-more-panel-label">图片</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-mention-panel" id="wxMentionPanel"></div>
+                    <!-- 群聊图片上传隐藏input -->
+                    <input type="file" id="wxGroupImageFile" accept="image/*" style="display:none;">
+                </div>
+
+                <!-- 群聊设置页面 -->
+                <div class="wx-page" id="wxPageGroupSettings">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseGroupSettings()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">聊天信息</div>
+                        <div class="wx-nav-right"></div>
+                    </div>
+                    <div class="wx-group-settings-body" id="wxGroupSettingsBody"></div>
+                </div>
+
+                <!-- 添加群成员选择面板 -->
+                <div class="wx-add-member-panel-overlay" id="wxAddGroupMemberOverlay" onclick="wxCloseAddGroupMemberPanel()"></div>
+                <div class="wx-add-member-panel" id="wxAddGroupMemberPanel">
+                    <div class="wx-add-member-panel-header">
+                        <div class="wx-add-member-panel-cancel" onclick="wxCloseAddGroupMemberPanel()">取消</div>
+                        <div class="wx-add-member-panel-title">添加成员</div>
+                        <div class="wx-add-member-panel-confirm" id="wxAddGroupMemberConfirmBtn" onclick="wxConfirmAddGroupMembers()">完成</div>
+                    </div>
+                    <div class="wx-add-member-panel-list" id="wxAddGroupMemberList"></div>
+                </div>
+
+                <!-- 发红包页面 -->
+                <div class="wx-page" id="wxPageRedPacket">
+                    <div class="wx-nav-bar wx-nav-bar-redpacket">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseRedPacket()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title" style="color:#fff;">发红包</div>
+                        <div class="wx-nav-right"></div>
+                    </div>
+                    <div class="wx-redpacket-body">
+                        <div class="wx-redpacket-type-tabs">
+                            <div class="wx-redpacket-type-tab active" data-type="lucky" onclick="wxSetRedPacketType('lucky')">拼手气红包</div>
+                            <div class="wx-redpacket-type-tab" data-type="exclusive" onclick="wxSetRedPacketType('exclusive')">专属红包</div>
+                        </div>
+                        <div class="wx-redpacket-form">
+                            <div class="wx-redpacket-form-row">
+                                <span class="wx-redpacket-form-label">总金额</span>
+                                <div class="wx-redpacket-form-input-wrap">
+                                    <input type="number" class="wx-redpacket-form-input" id="wxRedPacketAmount" placeholder="0.00" step="0.01" min="0.01">
+                                    <span class="wx-redpacket-form-unit">元</span>
+                                </div>
+                            </div>
+                            <div class="wx-redpacket-form-row wx-redpacket-count-row" id="wxRedPacketCountRow">
+                                <span class="wx-redpacket-form-label">红包个数</span>
+                                <div class="wx-redpacket-form-input-wrap">
+                                    <input type="number" class="wx-redpacket-form-input" id="wxRedPacketCount" placeholder="1" min="1">
+                                    <span class="wx-redpacket-form-unit">个</span>
+                                </div>
+                            </div>
+                            <div class="wx-redpacket-form-row wx-redpacket-recipient-row" id="wxRedPacketRecipientRow" style="display:none;">
+                                <span class="wx-redpacket-form-label">领取人</span>
+                                <div class="wx-redpacket-form-value" id="wxRedPacketRecipientName" onclick="wxSelectRedPacketRecipient()">点击选择</div>
+                            </div>
+                            <div class="wx-redpacket-form-row wx-redpacket-form-msg-row">
+                                <input type="text" class="wx-redpacket-form-msg" id="wxRedPacketMessage" placeholder="恭喜发财，大吉大利" maxlength="25">
+                            </div>
+                        </div>
+                        <div class="wx-redpacket-footer">
+                            <div class="wx-redpacket-submit-btn" onclick="wxCreateRedPacket()">塞钱进红包</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 红包详情页面 -->
+                <div class="wx-page" id="wxPageRedPacketDetail">
+                    <div class="wx-nav-bar wx-nav-bar-redpacket-detail">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseRedPacketDetail()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title" style="color:#fff;">红包详情</div>
+                        <div class="wx-nav-right"></div>
+                    </div>
+                    <div class="wx-redpacket-detail-body" id="wxRedPacketDetailBody"></div>
+                </div>
+
+                <!-- 转账页面 -->
+                <div class="wx-page" id="wxPageTransfer">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseTransfer()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">转账</div>
+                        <div class="wx-nav-right"></div>
+                    </div>
+                    <div class="wx-transfer-body">
+                        <div class="wx-transfer-recipient" id="wxTransferRecipient" onclick="wxSelectTransferRecipient()">
+                            <div class="wx-transfer-recipient-avatar" id="wxTransferRecipientAvatar"></div>
+                            <div class="wx-transfer-recipient-info">
+                                <div class="wx-transfer-recipient-label">收款人</div>
+                                <div class="wx-transfer-recipient-name" id="wxTransferRecipientName">点击选择</div>
+                            </div>
+                        </div>
+                        <div class="wx-transfer-amount-wrap">
+                            <div class="wx-transfer-amount-label">转账金额</div>
+                            <div class="wx-transfer-amount-input-wrap">
+                                <span class="wx-transfer-amount-symbol">¥</span>
+                                <input type="number" class="wx-transfer-amount-input" id="wxTransferAmount" placeholder="0.00" step="0.01" min="0.01">
+                            </div>
+                        </div>
+                        <div class="wx-transfer-msg-wrap">
+                            <input type="text" class="wx-transfer-msg-input" id="wxTransferMessage" placeholder="添加转账留言" maxlength="25">
+                        </div>
+                        <div class="wx-transfer-footer">
+                            <div class="wx-transfer-submit-btn" onclick="wxCreateTransfer()">确认转账</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 发起投票页面 -->
+                <div class="wx-page" id="wxPageVote">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseVote()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">发起投票</div>
+                        <div class="wx-nav-right">
+                            <div class="wx-nav-btn" onclick="wxCreateVote()">
+                                <span style="font-size:16px;color:#07c160;font-weight:500;">发布</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-vote-body">
+                        <div class="wx-vote-topic-wrap">
+                            <input type="text" class="wx-vote-topic-input" id="wxVoteTopic" placeholder="请输入投票主题" maxlength="50">
+                        </div>
+                        <div class="wx-vote-options-title">投票选项（2-10个）</div>
+                        <div class="wx-vote-options" id="wxVoteOptions"></div>
+                        <div class="wx-vote-add-option" onclick="wxAddVoteOption()">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#07c160" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            <span>添加选项</span>
+                        </div>
+                        <div class="wx-vote-settings">
+                            <div class="wx-vote-setting-row">
+                                <span>多选投票</span>
+                                <div class="wx-vote-switch" id="wxVoteMultiSwitch" onclick="wxToggleVoteSwitch('multi', this)"></div>
+                            </div>
+                            <div class="wx-vote-setting-row">
+                                <span>匿名投票</span>
+                                <div class="wx-vote-switch" id="wxVoteAnonymousSwitch" onclick="wxToggleVoteSwitch('anonymous', this)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 发起接龙页面 -->
+                <div class="wx-page" id="wxPageSolitaire">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseSolitaire()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">发起接龙</div>
+                        <div class="wx-nav-right">
+                            <div class="wx-nav-btn" onclick="wxCreateSolitaire()">
+                                <span style="font-size:16px;color:#07c160;font-weight:500;">发起</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-solitaire-body">
+                        <div class="wx-solitaire-topic-wrap">
+                            <input type="text" class="wx-solitaire-topic-input" id="wxSolitaireTopic" placeholder="接龙主题，如：今日打卡" maxlength="50">
+                        </div>
+                        <div class="wx-solitaire-content-wrap">
+                            <textarea class="wx-solitaire-content-input" id="wxSolitaireContent" placeholder="第一句接龙内容" maxlength="100"></textarea>
+                        </div>
+                        <div class="wx-solitaire-tip">提示：发起后群成员可在群聊中追加接龙内容</div>
+                    </div>
+                </div>
+
+                <!-- 图片全屏预览 -->
+                <div class="wx-image-preview-overlay" id="wxImagePreviewOverlay">
+                    <div class="wx-image-preview-close" onclick="wxCloseImagePreview()">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fff" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </div>
+                    <img class="wx-image-preview-img" id="wxImagePreviewImg" alt="">
+                </div>
+
+                <!-- 通讯录群聊列表页面 -->
+                <div class="wx-page" id="wxPageGroupList">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxCloseGroupList()">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">群聊</div>
+                        <div class="wx-nav-right"></div>
+                    </div>
+                    <div class="wx-group-list-body" id="wxGroupListBody"></div>
+                </div>
+
+                <!-- 发布图文朋友圈页面 -->
+                <div class="wx-page" id="wxPagePostMoment">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxClosePostMoment()">
+                                <span style="font-size:16px;color:#000;">取消</span>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">发表文字</div>
+                        <div class="wx-nav-right">
+                            <div class="wx-nav-btn" onclick="wxSubmitPostMoment()">
+                                <span style="font-size:16px;color:#07c160;font-weight:500;">发表</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-post-moment-body">
+                        <textarea class="wx-post-moment-textarea" id="wxPostMomentText" placeholder="这一刻的想法..."></textarea>
+                        <div class="wx-post-moment-images" id="wxPostMomentImages">
+                            <div class="wx-post-moment-add-btn" onclick="wxTriggerMomentImageUpload()">
+                                <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#ccc" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            </div>
+                        </div>
+                        <input type="file" id="wxMomentImageFile" accept="image/*" multiple style="display:none;">
+                        <div class="wx-post-moment-options">
+                            <div class="wx-post-moment-option-row">
+                                <span class="wx-post-moment-option-label">所在位置</span>
+                                <div class="wx-post-moment-option-value">
+                                    <span>不显示位置</span>
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                            <div class="wx-post-moment-divider"></div>
+                            <div class="wx-post-moment-option-row">
+                                <span class="wx-post-moment-option-label">谁可以看</span>
+                                <div class="wx-post-moment-option-value">
+                                    <span>公开</span>
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                            <div class="wx-post-moment-divider"></div>
+                            <div class="wx-post-moment-option-row">
+                                <span class="wx-post-moment-option-label">提醒谁看</span>
+                                <div class="wx-post-moment-option-value">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 发布纯文字朋友圈页面 -->
+                <div class="wx-page" id="wxPagePostTextMoment">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxClosePostTextMoment()">
+                                <span style="font-size:16px;color:#000;">取消</span>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">发表文字</div>
+                        <div class="wx-nav-right">
+                            <div class="wx-nav-btn" onclick="wxSubmitPostTextMoment()">
+                                <span style="font-size:16px;color:#07c160;font-weight:500;">发表</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-post-text-moment-body">
+                        <textarea class="wx-post-text-moment-textarea" id="wxPostTextMomentText" placeholder="这一刻的想法..."></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <!-- 底部Tab栏 -->
+            <div class="wx-tab-bar">
+                <div class="wx-tab-item active" data-tab="chats" onclick="wxSwitchTab('chats')">
+                    <div class="wx-tab-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <div class="wx-tab-label">微信</div>
+                </div>
+                <div class="wx-tab-item" data-tab="contacts" onclick="wxSwitchTab('contacts')">
+                    <div class="wx-tab-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="wx-tab-label">通讯录</div>
+                </div>
+                <div class="wx-tab-item" data-tab="discover" onclick="wxSwitchTab('discover')">
+                    <div class="wx-tab-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                    </div>
+                    <div class="wx-tab-label">发现</div>
+                </div>
+                <div class="wx-tab-item" data-tab="me" onclick="wxSwitchTab('me')">
+                    <div class="wx-tab-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <div class="wx-tab-label">我</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- 原美团APP内容（已移除以上） -->
