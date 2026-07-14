@@ -13523,6 +13523,13 @@ function phoneInitLockscreen() {
     phoneLockState.isUnlocked = false;
     phoneLockState.currentInput = '';
 
+    // 确保锁屏显示
+    const lockscreen = document.getElementById('phoneLockscreen');
+    if (lockscreen) {
+        lockscreen.style.display = 'block';
+        lockscreen.classList.remove('hidden');
+    }
+
     // 更新时间
     phoneUpdateLockscreenTime();
     setInterval(phoneUpdateLockscreenTime, 1000);
@@ -13615,6 +13622,14 @@ function phoneBindLockscreenEvents() {
 function phoneShowPasswordPanel() {
     const panel = document.getElementById('phonePasswordPanel');
     if (!panel) return;
+    
+    // 同步锁屏背景到密码面板
+    const bg = document.getElementById('phoneLockscreenBg');
+    const pwdBg = document.getElementById('phonePasswordPanelBg');
+    if (bg && pwdBg) {
+        pwdBg.style.backgroundImage = bg.style.backgroundImage;
+    }
+    
     panel.classList.add('show');
     phoneLockState.currentInput = '';
     phoneUpdatePasswordDots(0);
