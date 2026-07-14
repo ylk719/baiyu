@@ -13488,7 +13488,6 @@ function phoneLoadLockState() {
         if (stored) {
             const parsed = JSON.parse(stored);
             phoneLockState.password = parsed.password || '1234';
-            phoneLockState.wallpaper = parsed.wallpaper || '';
         }
     } catch (e) {
         console.error('加载锁屏配置失败', e);
@@ -13499,30 +13498,20 @@ function phoneLoadLockState() {
 function phoneSaveLockState() {
     try {
         localStorage.setItem('phone_lock_state', JSON.stringify({
-            password: phoneLockState.password,
-            wallpaper: phoneLockState.wallpaper || ''
+            password: phoneLockState.password
         }));
     } catch (e) {
         console.error('保存锁屏配置失败', e);
     }
 }
 
-// 加载锁屏壁纸
+// 加载锁屏壁纸（每次都重置为默认）
 function phoneLoadLockWallpaper() {
-    try {
-        const stored = localStorage.getItem('phone_lock_state');
-        if (stored) {
-            const parsed = JSON.parse(stored);
-            if (parsed.wallpaper) {
-                const bg = document.getElementById('phoneLockscreenBg');
-                const pwdBg = document.getElementById('phonePasswordPanelBg');
-                if (bg) bg.style.backgroundImage = `url(${parsed.wallpaper})`;
-                if (pwdBg) pwdBg.style.backgroundImage = `url(${parsed.wallpaper})`;
-            }
-        }
-    } catch (e) {
-        console.error('加载锁屏壁纸失败', e);
-    }
+    phoneLockState.wallpaper = '';
+    const bg = document.getElementById('phoneLockscreenBg');
+    const pwdBg = document.getElementById('phonePasswordPanelBg');
+    if (bg) bg.style.backgroundImage = '';
+    if (pwdBg) pwdBg.style.backgroundImage = '';
 }
 
 // 初始化锁屏
@@ -13745,7 +13734,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initLockSettings() {
-    // 更改锁屏壁纸
+    // 更改锁屏壁纸（不保存，退出即消失）
     const lockBgBtn = document.getElementById('censyLockBgBtn');
     const lockBgFile = document.getElementById('censyLockBgFile');
     if (lockBgBtn && lockBgFile) {
@@ -13755,8 +13744,6 @@ function initLockSettings() {
             if (!f) return;
             const reader = new FileReader();
             reader.onload = (ev) => {
-                phoneLockState.wallpaper = ev.target.result;
-                phoneSaveLockState();
                 const bg = document.getElementById('phoneLockscreenBg');
                 const pwdBg = document.getElementById('phonePasswordPanelBg');
                 if (bg) bg.style.backgroundImage = `url(${ev.target.result})`;
