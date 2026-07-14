@@ -13744,7 +13744,6 @@ function phoneBindPasswordKeypad() {
 
 // 页面加载时初始化锁屏
 document.addEventListener('DOMContentLoaded', function() {
-    phoneInitLockscreen();
     initInsPanelAvatar();
     initVinylAvatar();
     initInsSocialUploads();

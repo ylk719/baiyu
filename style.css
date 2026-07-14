@@ -280,7 +280,7 @@ html, body {
 .censy-pages-container {
     display: flex; width: 100vw; height: 100dvh; overflow-x: scroll; overflow-y: hidden;
     scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch;
-    padding-top: env(safe-area-inset-top); padding-bottom: 0; box-sizing: border-box;
+    padding-top: 0; padding-bottom: 0; box-sizing: border-box;
     background: transparent;
 }
 .censy-pages-container::-webkit-scrollbar { display: none; }
@@ -288,12 +288,12 @@ html, body {
     width: 100vw; height: 100dvh; flex-shrink: 0; scroll-snap-align: start;
     display: flex; flex-direction: column; overflow-y: auto; scrollbar-width: none; position: relative;
     background: transparent;
-    padding-top: env(safe-area-inset-top);
+    padding-top: 0;
     padding-bottom: 0;
     box-sizing: border-box;
 }
 .censy-page::-webkit-scrollbar { display: none; }
-.censy-top-section, .censy-psp-wrapper, .censy-p3-top-wrapper { padding-top: 16px; display: flex; justify-content: center; flex-shrink: 0; width: 100%; }
+.censy-top-section, .censy-psp-wrapper, .censy-p3-top-wrapper { padding-top: 0; display: flex; justify-content: center; flex-shrink: 0; width: 100%; }
 .personal-info-card {
     width: auto;
     max-width: none;
@@ -1381,7 +1381,7 @@ html, body {
     filter: drop-shadow(0 1px 1px rgba(0,0,0,0.15));
 }
 .censy-top-section {
-    padding-top: 28px;
+    padding-top: 0;
 }
 .censy-photo-area { width: 100%; height: 130px; background: rgba(232,232,232,0.8); border-radius: 3px; position: relative; cursor: pointer; overflow: hidden; }
 .censy-photo-area img { width: 100%; height: 100%; object-fit: cover; display: none; }
@@ -1794,6 +1794,9 @@ html, body {
     gap: 2px; 
     z-index: 100; 
     pointer-events: none; 
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 .censy-page-indicators { display: flex; gap: 8px; pointer-events: auto; }
 .censy-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.12); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
