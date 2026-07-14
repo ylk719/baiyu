@@ -13488,6 +13488,7 @@ function phoneLoadLockState() {
         if (stored) {
             const parsed = JSON.parse(stored);
             phoneLockState.password = parsed.password || '1234';
+            phoneLockState.wallpaper = parsed.wallpaper || '';
         }
     } catch (e) {
         console.error('加载锁屏配置失败', e);
@@ -13498,20 +13499,25 @@ function phoneLoadLockState() {
 function phoneSaveLockState() {
     try {
         localStorage.setItem('phone_lock_state', JSON.stringify({
-            password: phoneLockState.password
+            password: phoneLockState.password,
+            wallpaper: phoneLockState.wallpaper || ''
         }));
     } catch (e) {
         console.error('保存锁屏配置失败', e);
     }
 }
 
-// 加载锁屏壁纸（每次都重置为默认）
+// 加载锁屏壁纸（从本地存储加载）
 function phoneLoadLockWallpaper() {
-    phoneLockState.wallpaper = '';
     const bg = document.getElementById('phoneLockscreenBg');
     const pwdBg = document.getElementById('phonePasswordPanelBg');
-    if (bg) bg.style.backgroundImage = '';
-    if (pwdBg) pwdBg.style.backgroundImage = '';
+    if (phoneLockState.wallpaper) {
+        if (bg) bg.style.backgroundImage = `url(${phoneLockState.wallpaper})`;
+        if (pwdBg) pwdBg.style.backgroundImage = `url(${phoneLockState.wallpaper})`;
+    } else {
+        if (bg) bg.style.backgroundImage = '';
+        if (pwdBg) pwdBg.style.backgroundImage = '';
+    }
 }
 
 // 初始化锁屏
@@ -13749,9 +13755,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initLockSettings() {
-    // 更改锁屏壁纸（不保存，退出即消失）
+    // 更改锁屏壁纸
     const lockBgBtn = document.getElementById('censyLockBgBtn');
     const lockBgFile = document.getElementById('censyLockBgFile');
+    const lockBgSaveBtn = document.getElementById('censyLockBgSaveBtn');
+    let tempLockWallpaper = '';
+    
     if (lockBgBtn && lockBgFile) {
         lockBgBtn.addEventListener('click', () => lockBgFile.click());
         lockBgFile.addEventListener('change', (e) => {
@@ -13759,12 +13768,32 @@ function initLockSettings() {
             if (!f) return;
             const reader = new FileReader();
             reader.onload = (ev) => {
+                tempLockWallpaper = ev.target.result;
                 const bg = document.getElementById('phoneLockscreenBg');
                 const pwdBg = document.getElementById('phonePasswordPanelBg');
-                if (bg) bg.style.backgroundImage = `url(${ev.target.result})`;
-                if (pwdBg) pwdBg.style.backgroundImage = `url(${ev.target.result})`;
+                if (bg) bg.style.backgroundImage = `url(${tempLockWallpaper})`;
+                if (pwdBg) pwdBg.style.backgroundImage = `url(${tempLockWallpaper})`;
             };
             reader.readAsDataURL(f);
+        });
+    }
+
+    // 保存锁屏壁纸
+    if (lockBgSaveBtn) {
+        lockBgSaveBtn.addEventListener('click', () => {
+            if (tempLockWallpaper) {
+                phoneLockState.wallpaper = tempLockWallpaper;
+                phoneSaveLockState();
+                lockBgSaveBtn.textContent = '已保存 ✓';
+                setTimeout(() => {
+                    lockBgSaveBtn.textContent = '保存锁屏壁纸';
+                }, 2000);
+            } else {
+                lockBgSaveBtn.textContent = '请先选择图片';
+                setTimeout(() => {
+                    lockBgSaveBtn.textContent = '保存锁屏壁纸';
+                }, 2000);
+            }
         });
     }
 
