@@ -7,7 +7,11 @@ html, body {
   width: 100%;
   min-height: 100dvh;
   overflow: hidden;
-  background: #fff;
+  /* 核心：壁纸完整显示，不放大、不裁切 */
+  background-size: contain !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-color: transparent;
 }
 body {
   padding-bottom: env(safe-area-inset-bottom);
@@ -1793,6 +1797,7 @@ body {
     text-align: center;
 }
 .censy-p3-bottom-apps { position: absolute; top: 175px; left: 24px; display: flex; justify-content: flex-start; gap: 24px; z-index: 25; }
+/* 底部导航外层容器，彻底移除黄色底色、透明无膜 */
 .censy-fixed-bottom {
   position: fixed;
   left: 0;
@@ -1800,55 +1805,60 @@ body {
   bottom: env(safe-area-inset-bottom);
   z-index: 999;
   display: flex;
-  flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
-  padding: 6px 12px;
+  padding: 14px 0;
+  background: transparent !important;
+  backdrop-filter: none !important;
 }
 .censy-dock-container {
   display: flex;
-  gap: 24px;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   width: 100%;
-  padding: 8px 0;
+  background: transparent !important;
+  backdrop-filter: none !important;
 }
 .censy-dock-item {
+  width: 80px;
+  height: 80px;
+  background: #ffffff;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 .censy-dock-icon {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
 }
+.censy-dock-text,
 .censy-dock-name {
-  font-size: 12px;
-  color: #333;
+  font-size: 13px;
+  color: #333333;
 }
 .censy-dock-bottom-blur {
-  position: fixed;
-  left: -10px;
-  right: -10px;
-  bottom: 0;
-  height: calc(env(safe-area-inset-bottom) + 70px);
-  background: rgba(255,255,0.6);
-  backdrop-filter: blur(10px);
-  z-index: -1;
+  display: none !important;
 }
+.censy-page-dots,
 .censy-page-indicators {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(env(safe-area-inset-bottom) + 110px);
   display: flex;
   gap: 8px;
-  margin-bottom: 6px;
 }
 .censy-dot {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: #ccc;
+  background: #dddddd;
 }
 .censy-dot.active {
-  background: #666;
+  background: #777777;
 }
 .censy-settings-panel {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(246,246,248,0.95); backdrop-filter: blur(20px);
@@ -20211,12 +20221,12 @@ html, body {
     background: transparent !important;
 }
 .censy-dock-container {
-    width: calc(100% - 24px) !important;
-    max-width: 420px !important;
-    border-radius: 32px !important;
-    padding: 10px 22px 10px !important;
+    width: 100% !important;
+    max-width: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
     margin-bottom: 0 !important;
-    background: rgba(255, 255, 255, 0.78) !important;
-    backdrop-filter: blur(28px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
