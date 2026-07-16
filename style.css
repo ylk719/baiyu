@@ -105,7 +105,7 @@ html, body {
   height: 100%;
   padding: 18px 22px;
   /* 底部空间 = Dock 高度 + 指示点高度 + 间距 */
-  padding-bottom: calc(82px + 7px + 6px + 10px); /* 105px */
+  padding-bottom: calc(88px + 7px + 6px + 10px); /* 111px */
   overflow: hidden;
 }
 
@@ -200,45 +200,43 @@ html, body {
   display: none;
 }
 
-/* ===== Dock 栏：底部固定、磨砂椭圆、不随页面移动 ===== */
+/* ===== Dock 栏：大椭圆磨砂底栏，紧贴屏幕最底边 ===== */
 .dock {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 100;
-  /* 增加基础高度并包含安全区 */
-  height: calc(92px + env(safe-area-inset-bottom));
-  pointer-events: auto;
+  pointer-events: none; /* 仅栏内元素可交互 */
   /* 适配刘海屏左右安全区 */
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
+  /* 紧贴最底边，仅留出 Home 安全区内部空间，底部不出现任何横线 */
+  padding-bottom: env(safe-area-inset-bottom);
+  display: flex;
+  justify-content: center;
 }
 
 .dock-inner {
   position: relative;
-  width: calc(100% - 38px);
-  max-width: 390px;
-  height: 100%;
+  width: calc(100% - 24px);
+  max-width: 420px;
+  /* 大椭圆磨砂底栏：整体高度贴合 iOS Dock（约 88px），内部留出安全区 */
+  height: calc(88px + env(safe-area-inset-bottom));
   margin: 0 auto;
-  /* 增加圆角以匹配更高的高度 */
-  border-radius: 36px 36px 0 0;
-  overflow: hidden;
-  /* 在内部创建空间，将图标从底部安全区推上来 */
-  padding-bottom: env(safe-area-inset-bottom);
-  box-sizing: border-box; /* 确保 padding 正确计算 */
-}
-
-.dock-blur {
-  position: absolute;
-  inset: 0;
+  /* 大椭圆：上下全圆角，呈完整胶囊/椭圆形状，紧贴屏幕底边 */
+  border-radius: 999px;
+  /* 磨砂底栏 */
   background: rgba(255,255,255,0.22);
-  backdrop-filter: blur(22px) saturate(160%);
-  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  backdrop-filter: blur(26px) saturate(170%);
+  -webkit-backdrop-filter: blur(26px) saturate(170%);
   box-shadow:
-    0 10px 30px rgba(0,0,0,0.18),
-    inset 0 1px 0 rgba(255,255,255,0.25);
-  z-index: 0;
+    0 12px 34px rgba(0,0,0,0.20),
+    inset 0 1px 0 rgba(255,255,255,0.28);
+  box-sizing: border-box;
+  /* 给底部安全区预留内部空间，但栏体仍紧贴最底边 */
+  padding-bottom: env(safe-area-inset-bottom);
+  pointer-events: auto;
 }
 
 .dock-icons {
@@ -246,20 +244,22 @@ html, body {
   z-index: 1;
   height: 100%;
   display: flex;
-  /* 在可用空间内垂直居中对齐图标 */
+  /* 四个图标横向均匀平分椭圆栏内部空间 */
   align-items: center;
-  justify-content: space-around;
-  padding: 0 14px;
+  justify-content: space-evenly;
+  padding: 0 10px;
+  /* 内部上移，避免被底部安全区挤压 */
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .dock-app {
-  width: 64px;
+  flex: 1 1 0;
+  max-width: 84px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* 在 flex item 内部也居中 */
   justify-content: center;
-  gap: 4px; /* 稍微增加图标和文字的间距 */
+  gap: 4px;
 }
 
 .dock-app .app-icon {
