@@ -1,18 +1,36 @@
 // 自制手机桌面交互脚本
-// 桌面端鼠标拖拽横向滑动（手机端原生触摸滑动由 CSS scroll-snap 处理）
+// 滑动同步切换圆点激活状态 + 桌面端鼠标拖拽/滚轮横向滑动
 (function () {
     var wrap = document.querySelector('.slide-wrap');
     if (!wrap) return;
 
+    var dots = document.querySelectorAll('.dot');
+
+    // 圆点高亮随滚动切换（注意：元素用 scrollLeft，不是 window 的 scrollX）
+    function updateDots() {
+        var pageIndex = Math.round(wrap.scrollLeft / wrap.clientWidth);
+        dots.forEach(function (dot, idx) {
+            dot.classList.toggle('active', idx === pageIndex);
+        });
+    }
+    wrap.addEventListener('scroll', updateDots);
+
+    // 点击圆点跳转到对应页
+    dots.forEach(function (dot) {
+        dot.addEventListener('click', function () {
+            var page = parseInt(dot.getAttribute('data-page'), 10);
+            wrap.scrollTo({ left: page * wrap.clientWidth, behavior: 'smooth' });
+        });
+    });
+
+    // ===== 桌面端鼠标拖拽横向滑动（手机端原生触摸滑动由 CSS scroll-snap 处理）=====
     var isDown = false;        // 鼠标是否按下
     var startX = 0;            // 按下时的鼠标 X 坐标
     var startScroll = 0;       // 按下时的滚动位置
     var moved = false;         // 本次是否发生拖动（用于区分点击）
 
-    // 鼠标按下：记录起点（在容器上按下）
     wrap.addEventListener('mousedown', function (e) {
-        // 只响应主键（左键）
-        if (e.button !== 0) return;
+        if (e.button !== 0) return; // 只响应左键
         isDown = true;
         moved = false;
         startX = e.pageX;
@@ -50,34 +68,11 @@
         }
     }, true);
 
-    // 鼠标悬停时提示可拖拽
-    wrap.style.cursor = 'grab';
-
-    // 桌面端滚轮横向滑动支持（仅把垂直滚轮转成横向，水平滚轮交给原生处理）
+    // 桌面端滚轮横向滑动支持（仅把垂直滚轮转成横向）
     wrap.addEventListener('wheel', function (e) {
         if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
             e.preventDefault();
             wrap.scrollLeft += e.deltaY;
         }
     }, { passive: false });
-
-    // ===== 分页指示器小圆圈 =====
-    var dots = document.querySelectorAll('.page-dot');
-
-    // 滚动时更新当前页圆圈高亮
-    function updateDots() {
-        var pageIndex = Math.round(wrap.scrollLeft / wrap.clientWidth);
-        dots.forEach(function (dot, i) {
-            dot.classList.toggle('active', i === pageIndex);
-        });
-    }
-    wrap.addEventListener('scroll', updateDots);
-
-    // 点击圆圈跳转到对应页
-    dots.forEach(function (dot) {
-        dot.addEventListener('click', function () {
-            var page = parseInt(dot.getAttribute('data-page'), 10);
-            wrap.scrollTo({ left: page * wrap.clientWidth, behavior: 'smooth' });
-        });
-    });
 })();

@@ -1,4 +1,3 @@
-/* 全局重置，消除所有默认留白白边 */
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +10,7 @@ html, body {
     -webkit-user-select: none;
     user-select: none;
 }
-/* 横向滑动总容器 */
+/* 滑动容器 */
 .slide-wrap {
     width: 200vw;
     height: 100dvh;
@@ -21,12 +20,13 @@ html, body {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-x;   /* 仅允许横向平移，保障手机端触摸滑动 */
+    cursor: grab;
 }
 /* 隐藏滚动条 */
 .slide-wrap::-webkit-scrollbar {
     display: none;
 }
-/* 单页全屏容器，两页共用壁纸 */
+/* 单页面全屏，壁纸全覆盖无白边 */
 .page-item {
     width: 100vw;
     height: 100dvh;
@@ -35,9 +35,32 @@ html, body {
     position: relative;
     background: #000 url('https://img.51shazhu.com/autoupload/dQ9wwcb4RzLs60mFc5GYO9iO_OyvX7mIgxFBfDMDErs/20260227/jqjF/1276X1588/IMG_20260227_202004.jpg') center/cover no-repeat;
 }
-/* 底部 Dock 栏：紧贴屏幕最底端，适配ios安全区，两页通用 */
+/* 分页小圆点指示器（页面中间靠下，Dock上方） */
+.page-dots {
+    position: fixed;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 15;
+}
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    transition: 0.3s;
+    cursor: pointer;
+}
+.dot.active {
+    background: #fff;
+    width: 16px;
+    border-radius: 4px;
+}
+/* Dock栏强制贴屏幕最底端，最低位置 */
 .cen-direct-dock-wrap {
-    position: absolute;
+    position: fixed;
     bottom: env(safe-area-inset-bottom);
     left: 50%;
     transform: translateX(-50%);
@@ -51,11 +74,10 @@ html, body {
     justify-content: space-evenly;
     align-items: center;
     padding: 0 8px;
-    box-sizing: border-box;
     border: 0.5px solid rgba(255,255,255,0.3);
-    z-index: 10;
+    z-index: 20;
 }
-/* 四个苹果样式的应用图标，保留原有全部样式 */
+/* 图标样式完全保留原图苹果样式 */
 .cen-direct-icon {
     width: 58px;
     height: 58px;
@@ -75,28 +97,3 @@ html, body {
 .cen-direct-icon.msg { background: linear-gradient(180deg, #2ecc71, #27ae60); }
 .cen-direct-icon.safari { background: #ffffff; }
 .cen-direct-icon.music { background: linear-gradient(180deg, #ff4757, #ff6b81); }
-
-/* 分页指示器小圆圈 */
-.page-dots {
-    position: fixed;
-    bottom: calc(env(safe-area-inset-bottom) + 110px);
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 8px;
-    z-index: 20;
-    pointer-events: auto;
-}
-.page-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.4);
-    cursor: pointer;
-    transition: all 0.25s ease;
-}
-.page-dot.active {
-    background: #ffffff;
-    width: 8px;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-}

@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<!-- ios主屏幕全屏配置 -->
+<!-- 苹果全屏强制配置，杜绝顶部/底部浏览器栏 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -10,32 +10,28 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<!-- 分页圆点指示器 -->
+<div class="page-dots">
+    <div class="dot active" data-page="0"></div>
+    <div class="dot" data-page="1"></div>
+</div>
+<!-- 滑动页面容器 -->
 <div class="slide-wrap">
     <!-- 第一页 -->
     <div class="page-item">
-        <!-- 在此粘贴第一页所有组件 -->
-        <div class="cen-direct-dock-wrap">
-            <div class="cen-direct-icon phone">📞</div>
-            <div class="cen-direct-icon msg">💬</div>
-            <div class="cen-direct-icon safari">🌐</div>
-            <div class="cen-direct-icon music">🎵</div>
-        </div>
+        <!-- 此处粘贴你第一页所有组件内容 -->
     </div>
-    <!-- 第二页，底部同样配有Dock图标栏 -->
+    <!-- 第二页 -->
     <div class="page-item">
-        <!-- 在此粘贴第二页所有组件 -->
-        <div class="cen-direct-dock-wrap">
-            <div class="cen-direct-icon phone">📞</div>
-            <div class="cen-direct-icon msg">💬</div>
-            <div class="cen-direct-icon safari">🌐</div>
-            <div class="cen-direct-icon music">🎵</div>
-        </div>
+        <!-- 此处粘贴你第二页所有组件内容 -->
     </div>
 </div>
-<!-- 分页指示器小圆圈 -->
-<div class="page-dots">
-    <span class="page-dot active" data-page="0"></span>
-    <span class="page-dot" data-page="1"></span>
+<!-- 底部固定Dock栏，两页共用，永远贴最底部 -->
+<div class="cen-direct-dock-wrap">
+    <div class="cen-direct-icon phone">📞</div>
+    <div class="cen-direct-icon msg">💬</div>
+    <div class="cen-direct-icon safari">🌐</div>
+    <div class="cen-direct-icon music">🎵</div>
 </div>
 <script src="script.js"></script>
 </body>
