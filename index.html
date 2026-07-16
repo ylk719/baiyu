@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<!-- iOS全屏强制配置，一条都不能少 -->
+<!-- iOS全屏强制配置，确保安全区变量生效 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -19,18 +19,26 @@
 
 <!-- 双页滑动容器 -->
 <div class="slide-container" id="slider">
-    <!-- 第一页 -->
     <div class="page page-1"></div>
-    <!-- 第二页 -->
     <div class="page page-2"></div>
 </div>
 
-<!-- 底部固定Dock栏，两页共用 -->
+<!-- 底部Dock栏：贴死屏幕最底端 -->
 <div class="dock">
     <div class="app-icon icon-phone">📞</div>
     <div class="app-icon icon-message">💬</div>
     <div class="app-icon icon-safari">🌐</div>
-    <div class="app-icon icon-music">🎵</div>
+    <div class="app-icon icon-settings" id="settingsBtn">⚙️</div>
+</div>
+
+<!-- 更换壁纸设置面板 -->
+<div class="settings-panel" id="settingsPanel">
+    <div class="panel-close" id="closePanel">✕</div>
+    <div class="panel-title">更换壁纸</div>
+    <label for="wallpaper-input" class="panel-btn">从相册选择照片</label>
+    <input type="file" id="wallpaper-input" accept="image/*">
+    <button class="panel-btn primary" id="saveBtn">保存并应用</button>
+    <div class="tip-text">保存后永久生效，下次打开自动保留</div>
 </div>
 
 <script src="script.js"></script>
