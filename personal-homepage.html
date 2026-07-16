@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Homepage Component</title>
+    <link rel="stylesheet" href="personal-homepage.css">
+</head>
+<body>
+    <div class="homepage-container">
+        <div class="banner-upload-area">
+            <input type="file" id="bannerUpload" accept="image/*" style="display: none;">
+            <label for="bannerUpload" class="banner-placeholder">
+                <img id="bannerImage" src="https://via.placeholder.com/800x200/F0F2F5/808080?text=Click+to+change+banner" alt="Banner">
+            </label>
+        </div>
+        <div class="profile-header">
+            <div class="avatar-upload-area">
+                <input type="file" id="avatarUpload" accept="image/*" style="display: none;">
+                <label for="avatarUpload" class="avatar-placeholder">
+                    <img id="avatarImage" src="https://via.placeholder.com/120/F0F2F5/808080?text=Avatar" alt="Avatar">
+                </label>
+            </div>
+            <h1 id="username" class="editable-text">Your Username</h1>
+            <p id="account" class="editable-text">@your_account</p>
+            <p id="signature" class="editable-text">Your personalized signature goes here.</p>
+            <p id="location" class="editable-text">📍 Location, Country</p>
+        </div>
+    </div>
+    <script src="personal-homepage.js"></script>
+</body>
+</html>
