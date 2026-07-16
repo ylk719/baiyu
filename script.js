@@ -1,78 +1,107 @@
-// 自制手机桌面交互脚本
-// 滑动同步切换圆点激活状态 + 桌面端鼠标拖拽/滚轮横向滑动
-(function () {
-    var wrap = document.querySelector('.slide-wrap');
-    if (!wrap) return;
+const pagesWrapper = document.getElementById('pagesWrapper');
+const indicators = document.querySelectorAll('.indicator');
+let currentPage = 0;
+let startX = 0;
+let currentX = 0;
+let isDragging = false;
+let pageWidth = window.innerWidth;
 
-    var dots = document.querySelectorAll('.dot');
+function goToPage(pageIndex) {
+    if (pageIndex < 0 || pageIndex > 1) return;
+    currentPage = pageIndex;
+    pagesWrapper.classList.remove('no-transition');
+    pagesWrapper.style.transform = `translateX(-${currentPage * 50}%)`;
+    indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === currentPage);
+    });
+}
 
-    // 圆点高亮随滚动切换（注意：元素用 scrollLeft，不是 window 的 scrollX）
-    function updateDots() {
-        var pageIndex = Math.round(wrap.scrollLeft / wrap.clientWidth);
-        dots.forEach(function (dot, idx) {
-            dot.classList.toggle('active', idx === pageIndex);
-        });
+function handleTouchStart(e) {
+    startX = e.touches[0].clientX;
+    currentX = startX;
+    isDragging = true;
+    pagesWrapper.classList.add('no-transition');
+}
+
+function handleTouchMove(e) {
+    if (!isDragging) return;
+    currentX = e.touches[0].clientX;
+    const diff = currentX - startX;
+    const offsetPercent = (diff / pageWidth) * 50;
+    const baseOffset = -currentPage * 50;
+    pagesWrapper.style.transform = `translateX(${baseOffset + offsetPercent}%)`;
+}
+
+function handleTouchEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    const diff = currentX - startX;
+    const threshold = pageWidth * 0.2;
+
+    if (diff > threshold && currentPage > 0) {
+        goToPage(currentPage - 1);
+    } else if (diff < -threshold && currentPage < 1) {
+        goToPage(currentPage + 1);
+    } else {
+        goToPage(currentPage);
     }
-    wrap.addEventListener('scroll', updateDots);
+}
 
-    // 点击圆点跳转到对应页
-    dots.forEach(function (dot) {
-        dot.addEventListener('click', function () {
-            var page = parseInt(dot.getAttribute('data-page'), 10);
-            wrap.scrollTo({ left: page * wrap.clientWidth, behavior: 'smooth' });
-        });
+pagesWrapper.addEventListener('touchstart', handleTouchStart, { passive: true });
+pagesWrapper.addEventListener('touchmove', handleTouchMove, { passive: true });
+pagesWrapper.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+let mouseStartX = 0;
+let mouseCurrentX = 0;
+let isMouseDown = false;
+
+pagesWrapper.addEventListener('mousedown', (e) => {
+    mouseStartX = e.clientX;
+    mouseCurrentX = mouseStartX;
+    isMouseDown = true;
+    pagesWrapper.classList.add('no-transition');
+    e.preventDefault();
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (!isMouseDown) return;
+    mouseCurrentX = e.clientX;
+    const diff = mouseCurrentX - mouseStartX;
+    const offsetPercent = (diff / pageWidth) * 50;
+    const baseOffset = -currentPage * 50;
+    pagesWrapper.style.transform = `translateX(${baseOffset + offsetPercent}%)`;
+});
+
+document.addEventListener('mouseup', () => {
+    if (!isMouseDown) return;
+    isMouseDown = false;
+    const diff = mouseCurrentX - mouseStartX;
+    const threshold = pageWidth * 0.2;
+
+    if (diff > threshold && currentPage > 0) {
+        goToPage(currentPage - 1);
+    } else if (diff < -threshold && currentPage < 1) {
+        goToPage(currentPage + 1);
+    } else {
+        goToPage(currentPage);
+    }
+});
+
+indicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
+        goToPage(index);
     });
+});
 
-    // ===== 桌面端鼠标拖拽横向滑动（手机端原生触摸滑动由 CSS scroll-snap 处理）=====
-    var isDown = false;        // 鼠标是否按下
-    var startX = 0;            // 按下时的鼠标 X 坐标
-    var startScroll = 0;       // 按下时的滚动位置
-    var moved = false;         // 本次是否发生拖动（用于区分点击）
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+        goToPage(currentPage - 1);
+    } else if (e.key === 'ArrowRight') {
+        goToPage(currentPage + 1);
+    }
+});
 
-    wrap.addEventListener('mousedown', function (e) {
-        if (e.button !== 0) return; // 只响应左键
-        isDown = true;
-        moved = false;
-        startX = e.pageX;
-        startScroll = wrap.scrollLeft;
-        wrap.style.cursor = 'grabbing';
-        wrap.style.scrollSnapType = 'none'; // 拖拽过程中关闭吸附，避免抖动
-    });
-
-    // 移动监听放到 document，避免鼠标移出容器时拖动中断
-    document.addEventListener('mousemove', function (e) {
-        if (!isDown) return;
-        var dx = e.pageX - startX;
-        if (Math.abs(dx) > 5) moved = true;
-        wrap.scrollLeft = startScroll - dx;
-    });
-
-    // 抬起监听放到 document，确保在容器外松开也能正常结束
-    document.addEventListener('mouseup', function () {
-        if (!isDown) return;
-        isDown = false;
-        wrap.style.cursor = 'grab';
-        wrap.style.scrollSnapType = 'x mandatory';
-
-        var pageWidth = wrap.clientWidth;
-        var pageIndex = Math.round(wrap.scrollLeft / pageWidth);
-        wrap.scrollTo({ left: pageIndex * pageWidth, behavior: 'smooth' });
-    });
-
-    // 拖动时阻止图标点击事件（避免误触发 app）
-    wrap.addEventListener('click', function (e) {
-        if (moved) {
-            e.preventDefault();
-            e.stopPropagation();
-            moved = false;
-        }
-    }, true);
-
-    // 桌面端滚轮横向滑动支持（仅把垂直滚轮转成横向）
-    wrap.addEventListener('wheel', function (e) {
-        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-            e.preventDefault();
-            wrap.scrollLeft += e.deltaY;
-        }
-    }, { passive: false });
-})();
+window.addEventListener('resize', () => {
+    pageWidth = window.innerWidth;
+    goToPage(currentPage);
+});

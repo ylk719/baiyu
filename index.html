@@ -1,913 +1,358 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="桌面">
-<meta name="format-detection" content="telephone=no">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#ffffff">
-<title>少女风手机桌面编辑器</title>
-<style>
-/* design by censy */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select: none;
-}
-html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-[contenteditable="true"] {
-    -webkit-user-select: text;
-    user-select: text;
-}
-.censy-phone-wrapper {
-    width: 100%;
-    height: 100dvh;
-    min-height: 812px;
-    margin: 0 auto;
-    background: #ffffff; 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    overflow: hidden;
-    position: relative;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    transition: background 0.3s ease;
-}
-.censy-pages-container {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: calc(140px + env(safe-area-inset-bottom)); 
-    box-sizing: border-box;
-}
-.censy-pages-container::-webkit-scrollbar {display: none;}
-.censy-page {
-    width: 100%;
-    height: 100%;
-    flex-shrink: 0;
-    scroll-snap-align: start;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto; 
-    scrollbar-width: none;
-    position: relative;
-}
-.censy-page::-webkit-scrollbar {display: none;}
-.censy-top-section, .censy-psp-wrapper, .censy-p3-top-wrapper {
-    padding-top: 15px; 
-    display: flex;
-    justify-content: center;
-    flex-shrink: 0;
-    width: 100%;
-}
-.censy-mini-card {
-    width: 280px;
-    background: rgba(255,255,255,0.85);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-    padding-bottom: 24px;
-    position: relative;
-}
-.censy-card-cover {
-    width: 100%; height: 120px;
-    background: url('https://picsum.photos/300/150') center/cover no-repeat;
-    cursor: pointer;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
-}
-.censy-card-avatar {
-    width: 86px; height: 86px;
-    border-radius: 50%; border: 4px solid #fff;
-    background: #f8f8f8;
-    position: absolute; left: 50%; top: 120px;
-    transform: translate(-50%, -50%);
-    cursor: pointer; overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; color: #a0a0a0;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08); z-index: 10;
-}
-.censy-card-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.censy-card-texts { margin-top: 52px; text-align: center; padding: 0 12px; }
-.censy-card-texts div { outline: none; margin: 8px 0; color: #555; font-size: 12px; letter-spacing: 0.5px; }
-.censy-mid-section {
-    flex: 1; display: flex; flex-direction: row;
-    justify-content: center; align-items: center; 
-    gap: 20px; padding: 20px 16px 30px 16px; box-sizing: border-box; width: 100%;
-}
-.censy-polaroid-card {
-    width: 155px; background: rgba(255,255,255,0.9); border-radius: 6px;
-    padding: 10px 10px 16px; box-shadow: 0 6px 16px rgba(0,0,0,0.06);
-    position: relative; transform: rotate(3deg) translateY(-10px); flex-shrink: 0;
-}
-.censy-polaroid-card::before {
-    content: ''; position: absolute; top: -14px; left: 50%;
-    transform: translateX(-50%); width: 68px; height: 18px;
-    background: rgba(230,230,230,0.8); border-radius: 2px; z-index: 1;
-}
-.censy-photo-area {
-    width: 100%; height: 130px; background: rgba(232,232,232,0.8);
-    border-radius: 3px; position: relative; cursor: pointer; overflow: hidden;
-}
-.censy-photo-area img { width: 100%; height: 100%; object-fit: cover; display: none; }
-.censy-placeholder {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%) scale(0.5); width: 200px; height: 180px;
-}
-.censy-polaroid-text-area { margin-top: 10px; text-align: center; }
-.censy-polaroid-desc { font-size: 11px; color: #666; margin-bottom: 4px; outline: none; }
-.censy-polaroid-label { font-size: 14px; color: #333; font-family: serif; outline: none; }
-.censy-app-item {
-    display: flex; flex-direction: column; align-items: center; gap: 6px;
-    cursor: pointer; position: relative; z-index: 20;
-}
-.censy-app-icon {
-    width: 54px; height: 54px; border-radius: 16px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(247,247,247,0.8));
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06), inset 0 1px 1px #fff;
-    display: flex; align-items: center; justify-content: center;
-    transition: transform 0.2s; flex-shrink: 0; backdrop-filter: blur(5px);
-}
-.censy-app-icon:active { transform: scale(0.92); }
-.censy-app-icon svg {
-    width: 26px; height: 26px; fill: none; stroke: #666;
-    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
-}
-.censy-app-name { font-size: 11px; color: #666; font-weight: 500; letter-spacing: 0.5px; text-align: center; white-space: nowrap; text-shadow: 0 1px 2px rgba(255,255,255,0.8); }
-.censy-apps-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr);
-    gap: 16px 14px; flex-shrink: 0; width: auto;
-}
-.app-small .censy-app-icon { width: 46px; height: 46px; border-radius: 14px; }
-.app-small .censy-app-icon svg { width: 22px; height: 22px; }
-.app-small .censy-app-name { font-size: 10px; }
-.censy-p2-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; }
-.censy-psp-scale-box { transform: scale(0.7); transform-origin: top center; }
-.psp-machine {
-    width: 460px; height: 240px; border-radius: 65px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(238,240,244,0.8) 100%);
-    backdrop-filter: blur(10px);
-    position: relative; box-shadow: 0 20px 45px rgba(170,150,165,0.25), 0 6px 12px rgba(0,0,0,0.06), inset 0 4px 10px rgba(255,255,255,0.85), inset 0 -4px 10px rgba(0,0,0,0.04);
-}
-.psp-machine::before {
-    content: ''; position: absolute; top: 14px; left: 50%;
-    transform: translateX(-50%); width: 72%; height: 4px;
-    background: linear-gradient(90deg, transparent, #dde0e6, transparent); border-radius: 20px; opacity: 0.7;
-}
-.left-group { position: absolute; left: 28px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center; gap: 20px; }
-.dpad-full { width: 66px; height: 66px; position: relative; }
-.dpad-full > span { position: absolute; background: linear-gradient(145deg, #f5f5f7, #e1e1e6); border-radius: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.12), inset 0 1px 3px #fff; }
-.d-up { width: 22px; height: 20px; top: 0; left: 50%; transform: translateX(-50%); }
-.d-down { width: 22px; height: 20px; bottom: 0; left: 50%; transform: translateX(-50%); }
-.d-left { width: 20px; height: 22px; left: 0; top: 50%; transform: translateY(-50%); }
-.d-right { width: 20px; height: 22px; right: 0; top: 50%; transform: translateY(-50%); }
-.speaker-grid { display: grid; grid-template-columns: repeat(3, 5px); grid-template-rows: repeat(3, 5px); gap: 4px; }
-.speaker-grid span { width: 5px; height: 5px; background: #b0b0b8; border-radius: 50%; box-shadow: inset 0 1px 2px rgba(0,0,0,0.25); }
-.paw-joystick {
-    width: 46px; height: 46px; border-radius: 50%;
-    background: linear-gradient(145deg, #f3f3f5, #dcdce2); box-shadow: 0 6px 14px rgba(0,0,0,0.15), inset 0 2px 6px #fff; position: relative;
-}
-.paw-joystick::after { content: ''; position: absolute; width: 20px; height: 20px; background: #ffc4d8; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
-.right-group { position: absolute; right: 28px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center; gap: 20px; }
-.action-buttons { display: grid; grid-template-columns: repeat(2, 26px); grid-template-rows: repeat(2, 26px); gap: 6px; }
-.action-btn { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(145deg, #f3f3f5, #dcdce2); box-shadow: 0 4px 8px rgba(0,0,0,0.12), inset 0 1px 3px #fff; }
-.center-screen {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 230px; height: 155px;
-    background: #1a1a24; border-radius: 16px; border: 9px solid rgba(238,240,244,0.9); box-shadow: inset 0 0 20px rgba(0,0,0,0.7), 0 10px 25px rgba(0,0,0,0.18); overflow: hidden; cursor: pointer;
-}
-.center-screen img { width: 100%; height: 100%; object-fit: cover; display: none; }
-.screen-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #888; font-size: 13px; white-space: nowrap; }
-.censy-p2-bottom-section { display: flex; flex-direction: row; justify-content: center; gap: 24px; width: 100%; padding: 0 16px; margin-top: -10px; box-sizing: border-box; }
-.censy-p2-col { display: flex; flex-direction: column; align-items: center; width: 150px; gap: 18px; }
-.censy-iscreen-wrapper { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; }
-.censy-iscreen-frame-large, .censy-iscreen-frame {
-    border-radius: 20px; background: rgba(244,244,244,0.85); backdrop-filter: blur(5px); position: relative; cursor: pointer; overflow: hidden;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; color: #a0a0a0; font-size: 12px;
-}
-.censy-iscreen-frame-large { width: 165px; height: 165px; }
-.censy-iscreen-frame { width: 150px; height: 150px; }
-.censy-iscreen-frame-large img, .censy-iscreen-frame img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
-.censy-iscreen-label { font-size: 15px; color: #444; font-weight: 500; outline: none; font-family: -apple-system, sans-serif; text-shadow: 0 1px 2px rgba(255,255,255,0.8); }
-.censy-apps-grid-small { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 20px; width: 100%; justify-items: center; }
-.censy-p3-wrapper { width: 100%; height: 100%; position: relative; display: flex; flex-direction: column; align-items: center; }
-.censy-p3-scale-box { transform: scale(0.5); transform-origin: top center; position: relative; z-index: 5; }
-.censy-p3-container { position: relative; width: 500px; height: 550px; }
-.censy-p3-polaroid { position: absolute; background: rgba(255,255,255,0.9); padding: 12px 12px 35px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer; backdrop-filter: blur(5px); }
-.censy-p3-photo {
-    width: 100%; background: rgba(248,244,246,0.8); border-radius: 2px; margin-bottom: 12px; overflow: hidden;
-    position: relative; display: flex; justify-content: center; align-items: center; color: #ccc; font-size: 18px; 
-}
-.censy-p3-photo img { width: 100%; height: 100%; object-fit: cover; display: none; position: absolute; top: 0; left: 0; }
-.censy-p3-caption { text-align: center; font-size: 20px; color: #f8a8c0; outline: none; font-family: sans-serif; }
-.censy-p3-card1 { width: 300px; height: 380px; top: 0; left: 0; transform: rotate(-5deg); }
-.censy-p3-card1 .censy-p3-photo { height: 280px; }
-.censy-p3-card2 { width: 180px; height: 240px; top: 20px; right: 20px; transform: rotate(3deg); }
-.censy-p3-card2 .censy-p3-photo { height: 170px; }
-.censy-p3-card3 { width: 240px; height: 320px; bottom: 0; right: 0; transform: rotate(5deg); }
-.censy-p3-card3 .censy-p3-photo { height: 230px; }
-.censy-p3-bottom-apps {
-    position: absolute; top: 339px; left: 24px; display: flex; justify-content: flex-start; gap: 24px; z-index: 25;
-}
-.censy-fixed-bottom {
-    position: absolute; 
-    bottom: calc(2px + env(safe-area-inset-bottom)); 
-    left: 0; width: 100%;
-    display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 100; pointer-events: none;
-}
-.censy-page-indicators { display: flex; gap: 8px; pointer-events: auto; }
-.censy-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.12); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-.censy-dot.active { background: rgba(0,0,0,0.5); width: 16px; border-radius: 3px; }
-.censy-dock-container {
-    background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.9);
-    border-radius: 30px; padding: 16px 14px; display: flex; justify-content: space-around; align-items: flex-start;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.08); width: 90%; pointer-events: auto;
-}
-.censy-dock-item { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 64px; cursor: pointer; }
-.censy-dock-icon {
-    width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(247,247,247,0.8)); box-shadow: 0 4px 10px rgba(0,0,0,0.06), inset 0 1px 1px #fff; transition: transform 0.2s; overflow: hidden;
-}
-.censy-dock-icon:active { transform: scale(0.92); }
-.censy-dock-icon svg { width: 24px; height: 24px; stroke: #555; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.censy-dock-name { font-size: 10px; color: #666; white-space: nowrap; font-weight: 500; text-shadow: 0 1px 2px rgba(255,255,255,0.8); }
-.censy-settings-panel {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(246,246,248,0.95); backdrop-filter: blur(20px);
-    z-index: 200; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    display: flex; flex-direction: column; opacity: 0; pointer-events: none;
-}
-.censy-settings-panel.show { transform: translateY(0); opacity: 1; pointer-events: auto; }
-.censy-settings-header {
-    padding: calc(50px + env(safe-area-inset-top)) 24px 20px; display: flex; justify-content: space-between; align-items: center;
-    background: rgba(255,255,255,0.8); font-size: 20px; font-weight: 600; color: #333;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.03); backdrop-filter: blur(10px);
-}
-.censy-close-btn {
-    width: 32px; height: 32px; background: #e8e8ed; border-radius: 50%; display: flex;
-    align-items: center; justify-content: center; cursor: pointer; font-size: 14px; color: #555; transition: background 0.2s;
-}
-.censy-close-btn:active { background: #d0d0d5; }
-.censy-settings-body { padding: 24px 20px; flex: 1; overflow-y: auto; scrollbar-width: none; }
-.censy-settings-body::-webkit-scrollbar { display: none; }
-.censy-settings-block { background: #fff; border-radius: 16px; padding: 18px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
-.censy-settings-title { font-size: 15px; color: #a0a0a8; margin-bottom: 16px; font-weight: 600; letter-spacing: 0.5px; }
-.censy-bg-upload-btn {
-    background: #f0edf6; color: #6a5a8a; padding: 14px; border-radius: 12px;
-    text-align: center; cursor: pointer; font-size: 15px; font-weight: 500; transition: background 0.2s;
-}
-.censy-bg-upload-btn:active { background: #e2dde9; }
-.censy-settings-details { margin: 0; }
-.censy-settings-summary {
-    display: flex; justify-content: space-between; align-items: center;
-    cursor: pointer; list-style: none; outline: none; padding-bottom: 4px;
-}
-.censy-settings-summary::-webkit-details-marker { display: none; }
-.censy-details-arrow {
-    font-size: 12px; color: #a0a0a8; transition: transform 0.3s ease;
-}
-.censy-settings-details[open] .censy-details-arrow { transform: rotate(180deg); }
-.censy-details-content { margin-top: 10px; }
-.censy-settings-app-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid #f2f2f4; }
-.censy-settings-app-item:last-child { border-bottom: none; padding-bottom: 0; }
-.censy-settings-app-item span { font-size: 16px; color: #444; font-weight: 500; }
-.censy-settings-app-item button {
-    background: #f0edf6; border: none; padding: 8px 16px; border-radius: 8px;
-    color: #6a5a8a; font-size: 13px; font-weight: 500; cursor: pointer; outline: none; transition: background 0.2s;
-}
-.censy-settings-app-item button:active { background: #e2dde9; }
-input[type=file]{display:none;}
-
-.censy-icon-upload-hint {
-    font-size: 13px; color: #888; margin-bottom: 12px; line-height: 1.5;
-}
-.censy-reset-btn {
-    background: #ffe8e8; color: #e05656; padding: 14px; border-radius: 12px;
-    text-align: center; cursor: pointer; font-size: 15px; font-weight: 500; transition: background 0.2s;
-    margin-top: 12px;
-}
-.censy-reset-btn:active { background: #ffd0d0; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>手机桌面</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="censy-phone-wrapper" id="censyPhoneMain">
-    <input type="file" id="censyFileCover" accept="image/*">
-    <input type="file" id="censyFileAvatar" accept="image/*">
-    <input type="file" id="censyPhotoFile" accept="image/*">
-    <input type="file" id="censyPspUpload" accept="image/*">
-    <input type="file" id="censyIscreenUpload" accept="image/*">
-    <input type="file" id="censyIscreenUpload2" accept="image/*">
-    <input type="file" id="censyP3Up1" accept="image/*">
-    <input type="file" id="censyP3Up2" accept="image/*">
-    <input type="file" id="censyP3Up3" accept="image/*">
-    <input type="file" id="censyGlobalBgUpload" accept="image/*">
-    <input type="file" id="censyGlobalIconUpload" accept="image/*">
+    <div class="phone-container">
+        <div class="pages-wrapper" id="pagesWrapper">
+            <!-- 第一页 -->
+            <div class="page page-1">
+                <!-- 顶部卡片 -->
+                <div class="top-card">
+                    <div class="card-image">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=vintage%20classic%20car%20sepia%20tone%20street%20photography&image_size=landscape_16_9" alt="" class="uploadable" data-upload-id="page1-top">
+                    </div>
+                    <div class="card-content">
+                        <div class="change-btn" data-upload-id="page1-top">换图</div>
+                        <div class="card-title">❄️❄️ - 初雪 -</div>
+                        <div class="card-subtitle">°♡. Meet you in white December ∂° + 、</div>
+                        <div class="card-desc">- 在白色12月 遇见你 -</div>
+                    </div>
+                </div>
 
-    <div class="censy-pages-container" id="censyPagesContainer">
-        <!-- 第1页 -->
-        <div class="censy-page">
-          <div class="censy-top-section">
-          <div class="censy-mini-card">
-          <div class="censy-card-cover" id="censyCoverUpload"></div>
-          <div class="censy-card-avatar" id="censyAvatarUpload">换图</div>
-          <div class="censy-card-texts">
-          <div contenteditable="true">❄️❄️ - 初雪 -</div>
-          <div contenteditable="true">˚♡. Meet you in white December ʚ˚ + ˛</div>
-          <div contenteditable="true">- 在白色12月 遇见你 -</div>
-          </div>
-          </div>
-          </div>
-          <div class="censy-mid-section">
-          <div class="censy-polaroid-card">
-          <div class="censy-photo-area" id="censyPhotoBox">
-          <div class="censy-placeholder">
-          <svg width="200" height="180" viewBox="0 0 200 180">
-          <path d="M 30 140 L 70 50 L 130 50 L 160 70 L 160 140 L 30 140 Z" fill="#d8d8d8" stroke="#999" stroke-width="3"/>
-          <path d="M 30 140 L 60 110 L 90 140 Z" fill="#d8d8d8" stroke="#999" stroke-width="2"/>
-          <text x="60" y="130" font-size="18" fill="#999" text-anchor="middle">!</text>
-          <rect x="165" y="70" width="30" height="70" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="4 3"/>
-          <path d="M 70 50 L 70 20 L 90 20 L 100 30 L 110 20 L 130 20 L 130 50 Z" fill="#fff" stroke="#999" stroke-width="2"/>
-          <line x1="80" y1="30" x2="90" y2="35" stroke="#999" stroke-width="2"/>
-          <line x1="110" y1="30" x2="100" y2="35" stroke="#999" stroke-width="2"/>
-          <circle cx="100" cy="40" r="3" fill="#999"/>
-          <circle cx="150" cy="30" r="20" fill="none" stroke="#999" stroke-width="2"/>
-          <text x="150" y="38" font-size="16" fill="#999" text-anchor="middle">嗝</text>
-          <path d="M 130 30 L 140 35 L 130 40" stroke="#999" stroke-width="2" fill="none"/>
-          </svg>
-          </div>
-          <img id="censyPhotoImg" src="" alt="照片">
-          </div>
-          <div class="censy-polaroid-text-area">
-          <div class="censy-polaroid-desc" contenteditable="true">图片已被小猫吃掉</div>
-          <div class="censy-polaroid-label" contenteditable="true">Polaroid</div>
-          </div>
-          </div>
-          <div class="censy-apps-grid">
-          <div class="censy-app-item">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-          <div class="censy-app-name">微信</div>
-          </div>
-          <div class="censy-app-item">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-          <div class="censy-app-name">名册</div>
-          </div>
-          <div class="censy-app-item">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="censy-app-name">世界书</div>
-          </div>
-          <div class="censy-app-item">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
-          <div class="censy-app-name">邀约</div>
-          </div>
-          </div>
-          </div>
+                <!-- 中间内容 -->
+                <div class="middle-section">
+                    <div class="polaroid-card">
+                        <div class="tape"></div>
+                        <div class="polaroid-image uploadable" data-upload-id="page1-polaroid">
+                            <div class="placeholder-cat">
+                                <svg viewBox="0 0 200 200" fill="none" stroke="#bbb" stroke-width="1.5">
+                                    <polygon points="40,160 100,70 170,160" fill="#eaeaea" stroke="#ccc"/>
+                                    <rect x="55" y="35" width="90" height="50" rx="8" fill="#eaeaea" stroke="#ccc"/>
+                                    <circle cx="80" cy="55" r="6" fill="#ccc"/>
+                                    <circle cx="120" cy="55" r="6" fill="#ccc"/>
+                                    <path d="M90 72 L110 72" stroke="#ccc" stroke-width="2"/>
+                                    <rect x="135" y="70" width="35" height="70" rx="3" fill="none" stroke-dasharray="5,4" stroke="#ccc"/>
+                                    <circle cx="145" cy="85" r="15" fill="#eaeaea" stroke="#ccc"/>
+                                    <text x="145" y="90" text-anchor="middle" fill="#aaa" font-size="14">嗝</text>
+                                    <polygon points="60,135 70,115 80,135" fill="none" stroke="#ccc"/>
+                                    <text x="70" y="128" text-anchor="middle" fill="#aaa" font-size="16">!</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="polaroid-text">图片已被小猫吃掉</div>
+                        <div class="polaroid-title">Polaroid</div>
+                    </div>
+
+                    <div class="icon-grid-2x2">
+                        <div class="app-icon">
+                            <div class="icon-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                                </svg>
+                            </div>
+                            <span>微信</span>
+                        </div>
+                        <div class="app-icon">
+                            <div class="icon-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                            </div>
+                            <span>名册</span>
+                        </div>
+                        <div class="app-icon">
+                            <div class="icon-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                                </svg>
+                            </div>
+                            <span>世界书</span>
+                        </div>
+                        <div class="app-icon">
+                            <div class="icon-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="3" y="5" width="18" height="14" rx="2"/>
+                                    <polyline points="3 7 12 13 21 7"/>
+                                </svg>
+                            </div>
+                            <span>邀约</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page-bottom-spacer"></div>
+            </div>
+
+            <!-- 第二页 -->
+            <div class="page page-2">
+                <!-- 顶部游戏机卡片 -->
+                <div class="game-card">
+                    <div class="game-top-bar"></div>
+                    <div class="game-body">
+                        <div class="game-left">
+                            <div class="d-pad">
+                                <div class="dpad-up"></div>
+                                <div class="dpad-left"></div>
+                                <div class="dpad-center"></div>
+                                <div class="dpad-right"></div>
+                                <div class="dpad-down"></div>
+                            </div>
+                            <div class="dots-grid">
+                                <div></div><div></div><div></div>
+                                <div></div><div></div><div></div>
+                                <div></div><div></div><div></div>
+                            </div>
+                            <div class="joystick joystick-left">
+                                <div class="joystick-inner"></div>
+                            </div>
+                        </div>
+                        <div class="game-screen uploadable" data-upload-id="page2-game">
+                            <span class="upload-hint">点击更换图片</span>
+                        </div>
+                        <div class="game-right">
+                            <div class="action-buttons">
+                                <div class="action-btn"></div>
+                                <div class="action-btn"></div>
+                                <div class="action-btn"></div>
+                                <div class="action-btn"></div>
+                            </div>
+                            <div class="joystick joystick-right">
+                                <div class="joystick-inner"></div>
+                            </div>
+                            <div class="dots-grid">
+                                <div></div><div></div><div></div>
+                                <div></div><div></div><div></div>
+                                <div></div><div></div><div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 中间内容区 -->
+                <div class="page2-content">
+                    <div class="page2-col-left">
+                        <div class="big-widget uploadable" data-upload-id="page2-iscreen">
+                            <span class="upload-hint">点击上传</span>
+                        </div>
+                        <div class="widget-label">iScreen</div>
+                        <div class="icon-grid-2x2 small">
+                            <div class="app-icon">
+                                <div class="icon-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                        <line x1="16" y1="2" x2="16" y2="6"/>
+                                        <line x1="8" y1="2" x2="8" y2="6"/>
+                                        <line x1="3" y1="10" x2="21" y2="10"/>
+                                    </svg>
+                                </div>
+                                <span>日程</span>
+                            </div>
+                            <div class="app-icon">
+                                <div class="icon-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                        <line x1="16" y1="2" x2="16" y2="6"/>
+                                        <line x1="8" y1="2" x2="8" y2="6"/>
+                                        <line x1="3" y1="10" x2="21" y2="10"/>
+                                        <text x="7" y="17" font-size="6" fill="currentColor" stroke="none">•</text>
+                                        <text x="10" y="17" font-size="6" fill="currentColor" stroke="none">•</text>
+                                        <text x="13" y="17" font-size="6" fill="currentColor" stroke="none">•</text>
+                                        <text x="16" y="17" font-size="6" fill="currentColor" stroke="none">•</text>
+                                    </svg>
+                                </div>
+                                <span>日历</span>
+                            </div>
+                            <div class="app-icon">
+                                <div class="icon-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <rect x="6" y="10" width="12" height="10" rx="2"/>
+                                        <path d="M9 10V7a3 3 0 0 1 6 0v3"/>
+                                        <path d="M11 15h.01M13 15h.01"/>
+                                    </svg>
+                                </div>
+                                <span>游戏</span>
+                            </div>
+                            <div class="app-icon">
+                                <div class="icon-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                                        <line x1="12" y1="18" x2="12.01" y2="18"/>
+                                    </svg>
+                                </div>
+                                <span>查手机</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page2-col-right">
+                        <div class="icon-grid-2x2">
+                            <div class="app-icon">
+                                <div class="icon-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                        <line x1="3" y1="6" x2="21" y2="6"/>
+                                        <path d="M16 10a4 4 0 0 1-8 0"/>
+                                        <path d="M9 10h.01M15 10h.01"/>
+                                    </svg>
+                                </div>
+                                <span>商城</span>
+                            </div>
+                            <div class="app-icon">
+                                <div class="icon-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                                        <line x1="9" y1="9" x2="9.01" y2="9"/>
+                                        <line x1="15" y1="9" x2="15.01" y2="9"/>
+                                    </svg>
+                                </div>
+                                <span>美团</span>
+                            </div>
+                            <div class="app-icon">
+                                <div class="icon-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                                    </svg>
+                                </div>
+                                <span>隐秘时刻</span>
+                            </div>
+                            <div class="app-icon">
+                                <div class="icon-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                                    </svg>
+                                </div>
+                                <span>记忆库</span>
+                            </div>
+                        </div>
+                        <div class="big-widget uploadable" data-upload-id="page2-widget">
+                            <span class="upload-hint">点击上传</span>
+                        </div>
+                        <div class="widget-label">Widget</div>
+                    </div>
+                </div>
+
+                <div class="page-bottom-spacer"></div>
+            </div>
+
+            <!-- 第三页 -->
+            <div class="page page-3">
+                <!-- 顶部照片堆叠 -->
+                <div class="photo-stack">
+                    <div class="floating-photo photo-1">
+                        <div class="photo-inner uploadable" data-upload-id="page3-photo1">
+                            <span class="upload-hint">点击上传</span>
+                        </div>
+                        <div class="photo-caption pink">your puppy 😊</div>
+                    </div>
+                    <div class="floating-photo photo-2">
+                        <div class="photo-inner uploadable" data-upload-id="page3-photo2">
+                            <span class="upload-hint">点击上传</span>
+                        </div>
+                        <div class="photo-caption"></div>
+                    </div>
+                    <div class="floating-photo photo-3">
+                        <div class="photo-inner uploadable" data-upload-id="page3-photo3">
+                            <span class="upload-hint">点击上传</span>
+                        </div>
+                        <div class="photo-caption pink">🐰YEAH!🐾</div>
+                    </div>
+                </div>
+
+                <!-- 中间图标 -->
+                <div class="page3-icons">
+                    <div class="app-icon large">
+                        <div class="icon-btn large">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                            </svg>
+                        </div>
+                        <span>闹钟</span>
+                    </div>
+                    <div class="app-icon large">
+                        <div class="icon-btn large">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <polyline points="9 17 4 12 9 7"/>
+                                <path d="M20 5v14"/>
+                                <path d="M4 12h13"/>
+                            </svg>
+                        </div>
+                        <span>外出</span>
+                    </div>
+                </div>
+
+                <div class="page-bottom-spacer"></div>
+            </div>
         </div>
-        <!-- 第2页 -->
-        <div class="censy-page">
-          <div class="censy-p2-wrapper">
-          <div class="censy-psp-wrapper">
-          <div class="censy-psp-scale-box">
-          <div class="psp-machine">
-          <div class="left-group">
-          <div class="dpad-full"><span class="d-up"></span><span class="d-down"></span><span class="d-left"></span><span class="d-right"></span></div>
-          <div class="speaker-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-          <div class="paw-joystick"></div>
-          </div>
-          <div class="center-screen" id="censyPspScreenWrap">
-          <div class="screen-text">点击更换图片</div>
-          <img id="censyPspShowImg">
-          </div>
-          <div class="right-group">
-          <div class="action-buttons"><div class="action-btn"></div><div class="action-btn"></div><div class="action-btn"></div><div class="action-btn"></div></div>
-          <div class="paw-joystick"></div>
-          <div class="speaker-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-          </div>
-          </div>
-          </div>
-          </div>
-          <div class="censy-p2-bottom-section">
-          <div class="censy-p2-col">
-          <div class="censy-iscreen-wrapper">
-          <div class="censy-iscreen-frame-large" id="censyIscreenBox">
-          <span class="censy-iscreen-placeholder">点击上传</span>
-          <img id="censyIscreenImg" src="">
-          </div>
-          <div class="censy-iscreen-label" contenteditable="true">iScreen</div>
-          </div>
-          <div class="censy-apps-grid-small">
-          <div class="censy-app-item app-small">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-          <div class="censy-app-name">日程</div>
-          </div>
-          <div class="censy-app-item app-small">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg></div>
-          <div class="censy-app-name">日历</div>
-          </div>
-          <div class="censy-app-item app-small">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4"/><path d="M8 10v4"/><circle cx="15" cy="13" r="1"/><circle cx="18" cy="11" r="1"/></svg></div>
-          <div class="censy-app-name">游戏</div>
-          </div>
-          <div class="censy-app-item app-small">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/></svg></div>
-          <div class="censy-app-name">查手机</div>
-          </div>
-          </div>
-          </div>
-          <div class="censy-p2-col">
-          <div class="censy-apps-grid">
-          <div class="censy-app-item">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
-          <div class="censy-app-name">商城</div>
-          </div>
-          <div class="censy-app-item">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
-          <div class="censy-app-name">美团</div>
-          </div>
-          <div class="censy-app-item">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div>
-          <div class="censy-app-name">隐秘时刻</div>
-          </div>
-          <div class="censy-app-item">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div>
-          <div class="censy-app-name">记忆库</div>
-          </div>
-          </div>
-          <div class="censy-iscreen-wrapper">
-          <div class="censy-iscreen-frame" id="censyIscreenBox2">
-          <span class="censy-iscreen-placeholder">点击上传</span>
-          <img id="censyIscreenImg2" src="">
-          </div>
-          <div class="censy-iscreen-label" contenteditable="true">Widget</div>
-          </div>
-          </div>
-          </div>
-          </div>
+
+        <!-- 页面指示器 -->
+        <div class="page-indicator">
+            <span class="dot active" data-page="0"></span>
+            <span class="dot" data-page="1"></span>
+            <span class="dot" data-page="2"></span>
         </div>
-        <!-- 第3页 -->
-        <div class="censy-page">
-          <div class="censy-p3-wrapper">
-          <div class="censy-p3-top-wrapper">
-          <div class="censy-p3-scale-box">
-          <div class="censy-p3-container">
-          <div class="censy-p3-polaroid censy-p3-card1" id="censyP3Card1">
-          <div class="censy-p3-photo">
-          <span>点击上传</span>
-          <img id="censyP3Img1" src="">
-          </div>
-          <div class="censy-p3-caption" contenteditable="true">your puppy 😊</div>
-          </div>
-          <div class="censy-p3-polaroid censy-p3-card2" id="censyP3Card2">
-          <div class="censy-p3-photo">
-          <span>点击上传</span>
-          <img id="censyP3Img2" src="">
-          </div>
-          <div class="censy-p3-caption" contenteditable="true">Every day !/</div>
-          </div>
-          <div class="censy-p3-polaroid censy-p3-card3" id="censyP3Card3">
-          <div class="censy-p3-photo">
-          <span>点击上传</span>
-          <img id="censyP3Img3" src="">
-          </div>
-          <div class="censy-p3-caption" contenteditable="true">🐇 YEAH! 🐾</div>
-          </div>
-          </div>
-          </div>
-          </div>
-          <div class="censy-p3-bottom-apps">
-          <div class="censy-app-item">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3 2 6"/><path d="m22 6-3-3"/><path d="M6.38 18.7 4 21"/><path d="M17.64 18.67 20 21"/></svg></div>
-          <div class="censy-app-name">闹钟</div>
-          </div>
-          <div class="censy-app-item">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14L21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></div>
-          <div class="censy-app-name">外出</div>
-          </div>
-          </div>
-          </div>
+
+        <!-- 底部导航栏 -->
+        <div class="bottom-nav">
+            <div class="nav-item">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M18 2L16 4M14 6l-2 2M10 10l-2 2M6 14L4 16"/>
+                        <circle cx="18" cy="6" r="2"/>
+                        <path d="M21 3L3 21"/>
+                    </svg>
+                </div>
+                <span>外观</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                </div>
+                <span>论坛</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </div>
+                <span>情侣空间</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                    </svg>
+                </div>
+                <span>设置</span>
+            </div>
+        </div>
+
+        <!-- 底部安全区 -->
+        <div class="safe-area-bottom">
+            <div class="home-indicator"></div>
         </div>
     </div>
-    <!-- 底部Dock栏 -->
-    <div class="censy-fixed-bottom">
-        <div class="censy-page-indicators" id="censyPageDots">
-          <span class="censy-dot active"></span>
-          <span class="censy-dot"></span>
-          <span class="censy-dot"></span>
-        </div>
-        <div class="censy-dock-container">
-          <div class="censy-dock-item">
-          <div class="censy-dock-icon">
-          <svg viewBox="0 0 24 24"><path d="M4 19l5.5-5.5"/><path d="M14.5 8.5L20 3"/><path d="M8 21l-5-5 9-9 5 5-9 9z"/><path d="M13 6l5 5"/></svg>
-          </div>
-          <div class="censy-dock-name">外观</div>
-          </div>
-          <div class="censy-dock-item">
-          <div class="censy-dock-icon">
-          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg>
-          </div>
-          <div class="censy-dock-name">论坛</div>
-          </div>
-          <div class="censy-dock-item">
-          <div class="censy-dock-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 21s-6.5-4.35-8.5-7.12C1.5 11.1 2.2 7.4 5.4 5.5c2.1-1.25 4.55-.73 6.1.94 1.55-1.67 4-2.19 6.1-.94 3.2 1.9 3.9 5.6 1.9 8.38C18.5 16.65 12 21 12 21z"/></svg>
-          </div>
-          <div class="censy-dock-name">情侣空间</div>
-          </div>
-          <div class="censy-dock-item" id="censySettingsDockBtn">
-          <div class="censy-dock-icon">
-          <svg viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-          </div>
-          <div class="censy-dock-name">设置</div>
-          </div>
-        </div>
-    </div>
-    <!-- 设置面板 -->
-    <div class="censy-settings-panel" id="censySettingsPanel">
-        <div class="censy-settings-header">
-          <span>⚙️ 定制偏好设置</span>
-          <div class="censy-close-btn" id="censyCloseSettings">✕</div>
-        </div>
-        <div class="censy-settings-body">
-          <div class="censy-settings-block">
-          <div class="censy-settings-title">全局呈现</div>
-          <div class="censy-bg-upload-btn" id="censyBgBtn">🖼️ 更改聊天背景壁纸</div>
-          </div>
-          <div class="censy-settings-block">
-          <details class="censy-settings-details">
-          <summary class="censy-settings-summary">
-          <div class="censy-settings-title" style="margin-bottom:0;">应用与功能区图标调整</div>
-          <span class="censy-details-arrow">▼</span>
-          </summary>
-          <div class="censy-details-content">
-          <div class="censy-icon-upload-hint">选择一张图片作为所有应用图标的统一背景图案</div>
-          <div class="censy-bg-upload-btn" id="censyIconBtn">🎨 自定义图标背景</div>
-          <div class="censy-settings-app-item">
-          <span>恢复默认图标</span>
-          <button id="censyResetIconBtn">重置</button>
-          </div>
-          </div>
-          </details>
-          </div>
-          <div class="censy-settings-block">
-          <details class="censy-settings-details">
-          <summary class="censy-settings-summary">
-          <div class="censy-settings-title" style="margin-bottom:0;">文字内容编辑</div>
-          <span class="censy-details-arrow">▼</span>
-          </summary>
-          <div class="censy-details-content">
-          <div class="censy-icon-upload-hint">
-          直接点击桌面上的文字即可编辑修改。<br>
-          所有修改会自动保存到本地。
-          </div>
-          </div>
-          </details>
-          </div>
-          <div class="censy-settings-block">
-          <div class="censy-settings-title">数据管理</div>
-          <div class="censy-reset-btn" id="censyResetAllBtn">🗑️ 清除所有自定义数据</div>
-          </div>
-        </div>
-    </div>
-</div>
 
-<script>
-(function() {
-    'use strict';
+    <!-- 隐藏的文件输入 -->
+    <input type="file" id="fileInput" accept="image/*" style="display: none;">
 
-    const pagesContainer = document.getElementById('censyPagesContainer');
-    const pageDots = document.querySelectorAll('#censyPageDots .censy-dot');
-    const settingsPanel = document.getElementById('censySettingsPanel');
-    const settingsDockBtn = document.getElementById('censySettingsDockBtn');
-    const closeSettingsBtn = document.getElementById('censyCloseSettings');
-    const phoneWrapper = document.getElementById('censyPhoneMain');
-
-    const STORAGE_PREFIX = 'censy_desk_';
-
-    function saveData(key, value) {
-        try {
-            localStorage.setItem(STORAGE_PREFIX + key, value);
-        } catch (e) {
-            console.warn('保存失败:', e);
-        }
-    }
-
-    function loadData(key) {
-        try {
-            return localStorage.getItem(STORAGE_PREFIX + key);
-        } catch (e) {
-            return null;
-        }
-    }
-
-    function removeData(key) {
-        try {
-            localStorage.removeItem(STORAGE_PREFIX + key);
-        } catch (e) {}
-    }
-
-    function updatePageDots() {
-        const scrollLeft = pagesContainer.scrollLeft;
-        const pageWidth = pagesContainer.clientWidth;
-        const currentPage = Math.round(scrollLeft / pageWidth);
-        pageDots.forEach(function(dot, i) {
-            if (i === currentPage) {
-                dot.classList.add('active');
-            } else {
-                dot.classList.remove('active');
-            }
-        });
-    }
-
-    pagesContainer.addEventListener('scroll', function() {
-        requestAnimationFrame(updatePageDots);
-    });
-
-    function setupImageUpload(triggerId, fileInputId, imgId, storageKey, applyFn) {
-        const trigger = document.getElementById(triggerId);
-        const fileInput = document.getElementById(fileInputId);
-        const img = document.getElementById(imgId);
-
-        if (!trigger || !fileInput) return;
-
-        trigger.addEventListener('click', function(e) {
-            e.stopPropagation();
-            fileInput.value = '';
-            fileInput.click();
-        });
-
-        fileInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const dataUrl = event.target.result;
-                if (applyFn) {
-                    applyFn(dataUrl, img, trigger);
-                } else if (img) {
-                    img.src = dataUrl;
-                    img.style.display = 'block';
-                }
-                saveData(storageKey, dataUrl);
-            };
-            reader.readAsDataURL(file);
-        });
-
-        const saved = loadData(storageKey);
-        if (saved) {
-            if (applyFn) {
-                applyFn(saved, img, trigger);
-            } else if (img) {
-                img.src = saved;
-                img.style.display = 'block';
-            }
-        }
-    }
-
-    setupImageUpload('censyCoverUpload', 'censyFileCover', null, 'cover', function(url, img, trigger) {
-        trigger.style.backgroundImage = "url('" + url + "')";
-    });
-
-    setupImageUpload('censyAvatarUpload', 'censyFileAvatar', null, 'avatar', function(url, img, trigger) {
-        trigger.innerHTML = '<img src="' + url + '" alt="头像">';
-    });
-
-    setupImageUpload('censyPhotoBox', 'censyPhotoFile', 'censyPhotoImg', 'photo', function(url, img) {
-        img.src = url;
-        img.style.display = 'block';
-        const placeholder = document.querySelector('.censy-placeholder');
-        if (placeholder) placeholder.style.display = 'none';
-    });
-
-    setupImageUpload('censyPspScreenWrap', 'censyPspUpload', 'censyPspShowImg', 'psp_screen', function(url, img) {
-        img.src = url;
-        img.style.display = 'block';
-        const text = document.querySelector('.screen-text');
-        if (text) text.style.display = 'none';
-    });
-
-    setupImageUpload('censyIscreenBox', 'censyIscreenUpload', 'censyIscreenImg', 'iscreen1', function(url, img) {
-        img.src = url;
-        img.style.display = 'block';
-        const ph = document.querySelector('#censyIscreenBox .censy-iscreen-placeholder');
-        if (ph) ph.style.display = 'none';
-    });
-
-    setupImageUpload('censyIscreenBox2', 'censyIscreenUpload2', 'censyIscreenImg2', 'iscreen2', function(url, img) {
-        img.src = url;
-        img.style.display = 'block';
-        const ph = document.querySelector('#censyIscreenBox2 .censy-iscreen-placeholder');
-        if (ph) ph.style.display = 'none';
-    });
-
-    setupImageUpload('censyP3Card1', 'censyP3Up1', 'censyP3Img1', 'p3_1', function(url, img, trigger) {
-        img.src = url;
-        img.style.display = 'block';
-        const span = trigger.querySelector('.censy-p3-photo > span');
-        if (span) span.style.display = 'none';
-    });
-
-    setupImageUpload('censyP3Card2', 'censyP3Up2', 'censyP3Img2', 'p3_2', function(url, img, trigger) {
-        img.src = url;
-        img.style.display = 'block';
-        const span = trigger.querySelector('.censy-p3-photo > span');
-        if (span) span.style.display = 'none';
-    });
-
-    setupImageUpload('censyP3Card3', 'censyP3Up3', 'censyP3Img3', 'p3_3', function(url, img, trigger) {
-        img.src = url;
-        img.style.display = 'block';
-        const span = trigger.querySelector('.censy-p3-photo > span');
-        if (span) span.style.display = 'none';
-    });
-
-    const bgBtn = document.getElementById('censyBgBtn');
-    const bgFileInput = document.getElementById('censyGlobalBgUpload');
-
-    bgBtn.addEventListener('click', function() {
-        bgFileInput.value = '';
-        bgFileInput.click();
-    });
-
-    bgFileInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const url = event.target.result;
-            phoneWrapper.style.backgroundImage = "url('" + url + "')";
-            saveData('background', url);
-        };
-        reader.readAsDataURL(file);
-    });
-
-    const savedBg = loadData('background');
-    if (savedBg) {
-        phoneWrapper.style.backgroundImage = "url('" + savedBg + "')";
-    }
-
-    const iconBtn = document.getElementById('censyIconBtn');
-    const iconFileInput = document.getElementById('censyGlobalIconUpload');
-
-    iconBtn.addEventListener('click', function() {
-        iconFileInput.value = '';
-        iconFileInput.click();
-    });
-
-    iconFileInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const url = event.target.result;
-            applyIconBackground(url);
-            saveData('icon_bg', url);
-        };
-        reader.readAsDataURL(file);
-    });
-
-    function applyIconBackground(url) {
-        const icons = document.querySelectorAll('.censy-app-icon, .censy-dock-icon');
-        icons.forEach(function(icon) {
-            icon.style.background = "url('" + url + "') center/cover no-repeat";
-            const svg = icon.querySelector('svg');
-            if (svg) {
-                svg.style.display = 'none';
-            }
-        });
-    }
-
-    const savedIconBg = loadData('icon_bg');
-    if (savedIconBg) {
-        applyIconBackground(savedIconBg);
-    }
-
-    const resetIconBtn = document.getElementById('censyResetIconBtn');
-    resetIconBtn.addEventListener('click', function() {
-        const icons = document.querySelectorAll('.censy-app-icon, .censy-dock-icon');
-        icons.forEach(function(icon) {
-            icon.style.background = '';
-            const svg = icon.querySelector('svg');
-            if (svg) {
-                svg.style.display = '';
-            }
-        });
-        removeData('icon_bg');
-    });
-
-    settingsDockBtn.addEventListener('click', function() {
-        settingsPanel.classList.add('show');
-    });
-
-    closeSettingsBtn.addEventListener('click', function() {
-        settingsPanel.classList.remove('show');
-    });
-
-    const editableEls = document.querySelectorAll('[contenteditable="true"]');
-    editableEls.forEach(function(el, index) {
-        const storageKey = 'text_' + index;
-        const savedText = loadData(storageKey);
-        if (savedText !== null && savedText !== undefined) {
-            el.innerText = savedText;
-        }
-        el.addEventListener('blur', function() {
-            saveData(storageKey, el.innerText);
-        });
-        el.addEventListener('focus', function() {
-            el.classList.add('editing');
-        });
-        el.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                el.blur();
-            }
-        });
-    });
-
-    const resetAllBtn = document.getElementById('censyResetAllBtn');
-    resetAllBtn.addEventListener('click', function() {
-        if (!confirm('确定要清除所有自定义数据吗？此操作不可撤销。')) return;
-        try {
-            const keys = [];
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (key && key.indexOf(STORAGE_PREFIX) === 0) {
-                    keys.push(key);
-                }
-            }
-            keys.forEach(function(k) {
-                localStorage.removeItem(k);
-            });
-        } catch (e) {}
-        location.reload();
-    });
-
-    function preventDefaultGestures() {
-        document.addEventListener('gesturestart', function(e) {
-            e.preventDefault();
-        });
-        document.addEventListener('dblclick', function(e) {
-            e.preventDefault();
-        }, { passive: false });
-    }
-
-    function checkUrlReset() {
-        try {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('reset') === '1') {
-                const keys = [];
-                for (let i = 0; i < localStorage.length; i++) {
-                    const key = localStorage.key(i);
-                    if (key && key.indexOf(STORAGE_PREFIX) === 0) {
-                        keys.push(key);
-                    }
-                }
-                keys.forEach(function(k) {
-                    localStorage.removeItem(k);
-                });
-                urlParams.delete('reset');
-                const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '');
-                window.history.replaceState({}, document.title, newUrl);
-                location.reload();
-            }
-        } catch (e) {}
-    }
-
-    function init() {
-        checkUrlReset();
-        preventDefaultGestures();
-        updatePageDots();
-
-        pagesContainer.scrollLeft = 0;
-
-        if (window.scrollTo) {
-            window.scrollTo(0, 1);
-        }
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-})();
-</script>
+    <script src="main.js"></script>
 </body>
 </html>
