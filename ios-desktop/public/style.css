@@ -1,0 +1,175 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100dvh;
+    overflow: hidden;
+    /* 壁纸固定在底层，滑动不跟随 */
+    background: #000 url('`https://img.51shazhu.com/autoupload/dQ9wwcb4RzLs60mFc5GYO9iO_OyvX7mIgxFBfDMDErs/20260227/jqjF/1276X1588/IMG_20260227_202004.jpg`') center/cover no-repeat fixed;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* 滑动容器：和屏幕同宽，内部超宽形成滚动空间 */
+.slide-container {
+    width: 100vw;
+    height: 100dvh;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    cursor: grab;
+}
+.slide-container:active { cursor: grabbing; }
+
+.slide-container::-webkit-scrollbar { display: none; }
+.slide-container {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.page {
+    flex: 0 0 100vw;
+    width: 100vw;
+    height: 100%;
+    scroll-snap-align: start;
+    position: relative;
+}
+
+/* 分页小圆点：紧贴Dock正上方 */
+.page-dots {
+    position: fixed;
+    bottom: calc(90px + env(safe-area-inset-bottom) + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 99;
+}
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    transition: all 0.2s ease;
+}
+.dot.active { background: #fff; }
+
+/* ========== 核心修复：Dock贴死屏幕最底端 ========== */
+.dock {
+    position: fixed;
+    bottom: 0; /* 直接顶到屏幕最底端，零空隙 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92%;
+    height: 90px;
+    /* 底部内边距自动避开Home条，图标不被遮挡 */
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+    box-sizing: content-box;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-radius: 30px 30px 0 0; /* 底部平贴屏幕，顶部保留圆角 */
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 0.5px solid rgba(255,255,255,0.25);
+    border-bottom: none;
+    z-index: 100;
+}
+
+.app-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 34px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.15s ease;
+}
+.app-icon:active { transform: scale(0.9); }
+
+.icon-phone { background: linear-gradient(180deg, #34d85c, #2ab84d); }
+.icon-message { background: linear-gradient(180deg, #34d85c, #2ab84d); }
+.icon-safari { background: #fff; }
+.icon-settings { background: linear-gradient(180deg, #8e8e93, #636366); }
+
+/* 设置面板：底部弹出 */
+.settings-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 320px;
+    background: rgba(30,30,30,0.6);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border-radius: 24px 24px 0 0;
+    z-index: 200;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    padding: 20px 24px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    box-sizing: border-box;
+    color: #fff;
+}
+.settings-panel.show {
+    transform: translateY(0);
+}
+.panel-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    font-size: 22px;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+}
+.panel-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 36px;
+    padding-top: 4px;
+}
+.panel-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.12);
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 14px;
+    transition: background 0.2s;
+}
+.panel-btn:active {
+    background: rgba(255,255,255,0.2);
+}
+.panel-btn.primary {
+    background: #007aff;
+    font-weight: 500;
+}
+.panel-btn.primary:active {
+    background: #0066d6;
+}
+#wallpaper-input {
+    display: none;
+}
+.tip-text {
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 8px;
+}
