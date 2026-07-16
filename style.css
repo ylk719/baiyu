@@ -69,7 +69,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 22px 0;
+  padding: calc(6px + env(safe-area-inset-top)) calc(22px + env(safe-area-inset-right)) 0 calc(22px + env(safe-area-inset-left));
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.2px;
@@ -104,7 +104,8 @@ html, body {
   width: 50%; /* 即 100vw */
   height: 100%;
   padding: 18px 22px;
-  padding-bottom: 120px;
+  /* 底部空间 = Dock 高度 + 指示点高度 + 间距 */
+  padding-bottom: calc(82px + 7px + 6px + 10px); /* 105px */
   overflow: hidden;
 }
 
@@ -194,14 +195,9 @@ html, body {
   transform: scale(1.15);
 }
 
-/* ===== Home 指示条 ===== */
+/* ===== Home 指示条 (已禁用) ===== */
 .home-indicator {
-  width: 134px;
-  height: 5px;
-  border-radius: 3px;
-  background: rgba(255,255,255,0.85);
-  margin: 0 auto 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  display: none;
 }
 
 /* ===== Dock 栏：底部固定、磨砂椭圆、不随页面移动 ===== */
@@ -211,8 +207,12 @@ html, body {
   right: 0;
   bottom: 0;
   z-index: 100;
-  height: 82px;
+  /* 高度包含安全区 */
+  height: calc(82px + env(safe-area-inset-bottom));
   pointer-events: auto;
+  /* 适配刘海屏左右安全区 */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 .dock-inner {
@@ -242,19 +242,21 @@ html, body {
   z-index: 1;
   height: 100%;
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: space-around;
-  padding: 0 14px;
+  /* 从顶部开始布局，并为图标和文字留出呼吸空间 */
+  padding: 12px 14px 0;
 }
 
 .dock-app {
   width: 64px;
-  height: 100%;
+  /* 高度不再是 100%，让内容自然撑开 */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  gap: 1px;
+  /* 内容从顶部开始，而不是底部 */
+  justify-content: flex-start;
+  gap: 4px; /* 稍微增加图标和文字的间距 */
 }
 
 .dock-app .app-icon {
