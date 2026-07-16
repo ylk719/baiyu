@@ -207,8 +207,8 @@ html, body {
   right: 0;
   bottom: 0;
   z-index: 100;
-  /* 高度包含安全区 */
-  height: calc(82px + env(safe-area-inset-bottom));
+  /* 增加基础高度并包含安全区 */
+  height: calc(92px + env(safe-area-inset-bottom));
   pointer-events: auto;
   /* 适配刘海屏左右安全区 */
   padding-left: env(safe-area-inset-left);
@@ -221,8 +221,12 @@ html, body {
   max-width: 390px;
   height: 100%;
   margin: 0 auto;
-  border-radius: 32px 32px 0 0;
+  /* 增加圆角以匹配更高的高度 */
+  border-radius: 36px 36px 0 0;
   overflow: hidden;
+  /* 在内部创建空间，将图标从底部安全区推上来 */
+  padding-bottom: env(safe-area-inset-bottom);
+  box-sizing: border-box; /* 确保 padding 正确计算 */
 }
 
 .dock-blur {
@@ -242,20 +246,19 @@ html, body {
   z-index: 1;
   height: 100%;
   display: flex;
-  align-items: flex-start;
+  /* 在可用空间内垂直居中对齐图标 */
+  align-items: center;
   justify-content: space-around;
-  /* 从顶部开始布局，并为图标和文字留出呼吸空间 */
-  padding: 12px 14px 0;
+  padding: 0 14px;
 }
 
 .dock-app {
   width: 64px;
-  /* 高度不再是 100%，让内容自然撑开 */
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* 内容从顶部开始，而不是底部 */
-  justify-content: flex-start;
+  /* 在 flex item 内部也居中 */
+  justify-content: center;
   gap: 4px; /* 稍微增加图标和文字的间距 */
 }
 
