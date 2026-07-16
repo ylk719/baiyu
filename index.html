@@ -2,28 +2,208 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<!-- iOS全屏强制配置，确保安全区变量生效 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="桌面">
-<link rel="stylesheet" href="style.css">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+html, body {
+    width: 100vw;
+    height: 100dvh;
+    overflow: hidden;
+    background-color: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+#wallpaper-layer {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100dvh;
+    background-image: url('https://img.51shazhu.com/autoupload/dQ9wwcb4RzLs60mFc5GYO9iO_OyvX7mIgxFBfDMDErs/20260227/jqjF/1276X1588/IMG_20260715_045544.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 0;
+}
+
+#slider {
+    position: relative;
+    z-index: 1;
+    width: 100vw;
+    height: 100dvh;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+}
+
+#slider::-webkit-scrollbar {
+    display: none;
+}
+#slider {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.page {
+    flex: 0 0 100vw;
+    width: 100vw;
+    height: 100dvh;
+    scroll-snap-align: start;
+}
+.page-dots {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(env(safe-area-inset-bottom) + 110px);
+    display: flex;
+    gap: 8px;
+    z-index: 99;
+}
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+}
+.dot.active {
+    background: #fff;
+}
+.dock {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: env(safe-area-inset-bottom);
+    width: 91%;
+    height: 92px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 0 12px;
+    border-radius: 46px;
+    background: rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 0.5px solid rgba(255,255,255,0.25);
+    z-index: 100;
+}
+
+.app-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 34px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.15s ease;
+}
+.app-icon:active {
+    transform: scale(0.9);
+}
+
+.icon-phone {
+    background: linear-gradient(180deg, #34d85c, #2ab84d);
+}
+.icon-message {
+    background: linear-gradient(180deg, #34d85c, #2ab84d);
+}
+.icon-safari {
+    background: #ffffff;
+}
+.icon-settings {
+    background: linear-gradient(180deg, #8e8e93, #636366);
+}
+.settings-panel {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 340px;
+    padding: 20px 24px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    border-radius: 24px 24px 0 0;
+    background: rgba(30,30,30,0.65);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    color: #fff;
+    z-index: 200;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.settings-panel.show {
+    transform: translateY(0);
+}
+.panel-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    font-size: 22px;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+}
+.panel-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 36px;
+}
+.panel-btn {
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 14px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.12);
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+}
+.panel-btn:active {
+    background: rgba(255,255,255,0.2);
+}
+.panel-btn.primary {
+    background: #007aff;
+}
+.panel-btn.primary:active {
+    background: #0066d6;
+}
+#wallpaper-input {
+    display: none;
+}
+.tip-text {
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 8px;
+}
+</style>
 </head>
 <body>
+<div id="wallpaper-layer"></div>
 
-<!-- 分页小圆点 -->
 <div class="page-dots">
     <div class="dot active"></div>
     <div class="dot"></div>
 </div>
 
-<!-- 双页滑动容器 -->
-<div class="slide-container" id="slider">
-    <div class="page page-1"></div>
-    <div class="page page-2"></div>
+<div id="slider">
+    <div class="page"></div>
+    <div class="page"></div>
 </div>
 
-<!-- 底部Dock栏：贴死屏幕最底端 -->
 <div class="dock">
     <div class="app-icon icon-phone">📞</div>
     <div class="app-icon icon-message">💬</div>
@@ -31,7 +211,6 @@
     <div class="app-icon icon-settings" id="settingsBtn">⚙️</div>
 </div>
 
-<!-- 更换壁纸设置面板 -->
 <div class="settings-panel" id="settingsPanel">
     <div class="panel-close" id="closePanel">✕</div>
     <div class="panel-title">更换壁纸</div>
@@ -41,7 +220,86 @@
     <div class="tip-text">保存后永久生效，下次打开自动保留</div>
 </div>
 
-<script src="script.js"></script>
+<script>
+const slider = document.getElementById('slider');
+const dots = document.querySelectorAll('.dot');
+const settingsBtn = document.getElementById('settingsBtn');
+const settingsPanel = document.getElementById('settingsPanel');
+const closePanel = document.getElementById('closePanel');
+const wallpaperInput = document.getElementById('wallpaper-input');
+const saveBtn = document.getElementById('saveBtn');
+const wallpaperLayer = document.getElementById('wallpaper-layer');
 
+let pageWidth = window.innerWidth;
+let tempWallpaper = '';
+
+slider.addEventListener('scroll', () => {
+    const index = Math.round(slider.scrollLeft / pageWidth);
+    dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+    });
+});
+
+let isDown = false;
+let startX = 0;
+let scrollLeft = 0;
+
+slider.addEventListener('mousedown', (e) => {
+    isDown = true;
+    startX = e.clientX;
+    scrollLeft = slider.scrollLeft;
+});
+slider.addEventListener('mouseleave', () => isDown = false);
+slider.addEventListener('mouseup', () => isDown = false);
+slider.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const walk = (e.clientX - startX) * 1.2;
+    slider.scrollLeft = scrollLeft - walk;
+});
+slider.addEventListener('wheel', e => {
+    e.preventDefault();
+    slider.scrollBy({left: e.deltaY > 0 ? pageWidth : -pageWidth, behavior: 'smooth'});
+});
+document.addEventListener('keydown', e => {
+    if(e.key === 'ArrowRight') slider.scrollBy({left: pageWidth, behavior: 'smooth'});
+    if(e.key === 'ArrowLeft') slider.scrollBy({left: -pageWidth, behavior: 'smooth'});
+});
+window.addEventListener('resize', () => pageWidth = window.innerWidth);
+
+settingsBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    settingsPanel.classList.add('show');
+});
+closePanel.addEventListener('click', () => settingsPanel.classList.remove('show'));
+document.addEventListener('click', (e) => {
+    if (!settingsPanel.contains(e.target) && e.target !== settingsBtn) settingsPanel.classList.remove('show');
+});
+
+wallpaperInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+        tempWallpaper = ev.target.result;
+        wallpaperLayer.style.backgroundImage = `url('${tempWallpaper}')`;
+    };
+    reader.readAsDataURL(file);
+});
+
+saveBtn.addEventListener('click', () => {
+    if (!tempWallpaper) return alert('请先选择一张照片');
+    localStorage.setItem('custom_wallpaper', tempWallpaper);
+    settingsPanel.classList.remove('show');
+});
+
+window.addEventListener('load', () => {
+    const savedWallpaper = localStorage.getItem('custom_wallpaper');
+    if(savedWallpaper){
+        wallpaperLayer.style.backgroundImage = `url('${savedWallpaper}')`;
+        tempWallpaper = savedWallpaper;
+    }
+});
+</script>
 </body>
 </html>
