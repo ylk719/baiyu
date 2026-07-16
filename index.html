@@ -1,125 +1,59 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#000000">
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22180%22%20height%3D%22180%22%20viewBox%3D%220%200%20180%20180%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23007aff%22%2F%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%235856d6%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22180%22%20height%3D%22180%22%20rx%3D%2240%22%20fill%3D%22url(%23g)%22%2F%3E%3C%2Fsvg%3E">
-  <link rel="apple-touch-startup-image" href="https://picsum.photos/seed/iosstart/1170/2532">
-  <title>iPhone 桌面</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Phone OS</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- 壁纸层：固定铺满全屏，无遮罩、无磨砂 -->
-  <div class="wallpaper-layer" id="wallpaperLayer">
-    <img id="wallpaperImg" src="https://picsum.photos/seed/pinksky/1170/2532" alt="wallpaper">
-  </div>
-
-  <!-- 主屏 -->点开之后，就是要全屏。全屏下面不要有任何白条纹、黑条纹，它就是全屏的状态，然后4个软件就在页面的最底端，知道吗？就是苹果手机页面什么样，这里面就什么样，苹果手机页面下面是全屏的，没有横条，你这里也要没有横条
-  <div class="home-screen" id="homeScreen">
-    <!-- 状态栏 -->
-    <div class="status-bar">
-      <span class="status-time" id="statusTime">12:00</span>
-      <div class="status-icons">
-        <span class="signal">●●●●●</span>
-        <span class="wifi">Wi-Fi</span>
-        <span class="battery">100%</span>
-      </div>
+    <div id="loading-screen" class="loading-screen">
+        <div class="spinner"></div>
+        <p>Loading Mini OS...</p>
     </div>
 
-    <!-- 页面视口 -->
-    <div class="pages-viewport" id="pagesViewport">
-      <div class="pages-track" id="pagesTrack">
-        <!-- 第一页 -->
-        <div class="page" data-page="0">
-          <div class="app-grid">
-            <div class="app-item no-action"><div class="app-icon" style="background:linear-gradient(135deg,#34c759,#30b350)"></div><span>电话</span></div>
-            <div class="app-item no-action"><div class="app-icon" style="background:linear-gradient(135deg,#007aff,#0051d5)"></div><span>信息</span></div>
-            <div class="app-item no-action"><div class="app-icon" style="background:linear-gradient(135deg,#ff3b30,#d70015)"></div><span>日历</span></div>
-            <div class="app-item no-action"><div class="app-icon" style="background:linear-gradient(135deg,#ff9500,#c93400)"></div><span>照片</span></div>
-            <div class="app-item no-action"><div class="app-icon" style="background:linear-gradient(135deg,#5856d6,#3634a3)"></div><span>相机</span></div>
-            <div class="app-item no-action"><div class="app-icon" style="background:linear-gradient(135deg,#af52de,#8944ab)"></div><span>地图</span></div>
-            <div class="app-item no-action"><div class="app-icon" style="background:linear-gradient(135deg,#ff2d55,#c6002a)"></div><span>天气</span></div>
-            <div class="app-item no-action"><div class="app-icon" style="background:linear-gradient(135deg,#5ac8fa,#007aff)"></div><span>提醒</span></div>
-          </div>
+    <div id="main-screen" class="main-screen hidden">
+        <div class="status-bar">
+            <span class="time" id="status-bar-time"></span>
+            <div class="status-icons">
+                <span>Wi-Fi</span>
+                <span>🔋</span>
+            </div>
         </div>
-        <!-- 第二页 -->
-        <div class="page" data-page="1">
-          <div class="app-grid">
-            <div class="app-item no-action"><div class="app-icon" style="background:linear-gradient(135deg,#ffcc00,#ff9f0a)"></div><span>备忘录</span></div>
-            <div class="app-item no-action"><div class="app-icon" style="background:linear-gradient(135deg,#64d2ff,#0a84ff)"></div><span>App Store</span></div>
-            <div class="app-item no-action"><div class="app-icon" style="background:linear-gradient(135deg,#bf5af2,#9d46c3)"></div><span>健康</span></div>
-            <div class="app-item no-action"><div class="app-icon" style="background:linear-gradient(135deg,#ff375f,#d80047)"></div><span>音乐</span></div>
-          </div>
+
+        <div class="widgets">
+            <div class="widget time-widget">
+                <span id="widget-time"></span>
+                <span id="widget-date"></span>
+            </div>
+            <div class="widget weather-widget">
+                <span>☀️</span>
+                <span>28°C</span>
+                <span>Sunny</span>
+            </div>
         </div>
-      </div>
+
+        <div class="app-grid">
+            <div class="app-icon">
+                <img src="https://via.placeholder.com/60/07C160/FFFFFF?text=Chat" alt="Chat App">
+                <span>Chat</span>
+            </div>
+            <div class="app-icon">
+                <img src="https://via.placeholder.com/60/07C160/FFFFFF?text=Contacts" alt="Contacts App">
+                <span>Contacts</span>
+            </div>
+            <div class="app-icon">
+                <img src="https://via.placeholder.com/60/07C160/FFFFFF?text=Settings" alt="Settings App">
+                <span>Settings</span>
+            </div>
+            <div class="app-icon">
+                <img src="https://via.placeholder.com/60/07C160/FFFFFF?text=Browser" alt="Browser App">
+                <span>Browser</span>
+            </div>
+            <!-- More app placeholders can be added here -->
+        </div>
     </div>
 
-    <!-- 页面指示点 -->
-    <div class="page-dots" id="pageDots">
-      <span class="dot active"></span>
-      <span class="dot"></span>
-    </div>
-  </div>
-
-  <!-- Dock 栏：固定在底部，不随页面滑动 -->
-  <div class="dock" id="dock">
-    <div class="dock-inner">
-      <div class="dock-icons">
-        <div class="dock-app no-action" data-index="0">
-          <div class="app-icon" style="background:linear-gradient(135deg,#34c759,#248a3d)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          </div>
-          <span>电话</span>
-        </div>
-        <div class="dock-app no-action" data-index="1">
-          <div class="app-icon" style="background:linear-gradient(135deg,#007aff,#0051d5)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-          </div>
-          <span>邮件</span>
-        </div>
-        <div class="dock-app settings-app" data-index="2">
-          <div class="app-icon" style="background:linear-gradient(135deg,#8e8e93,#636366)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-          </div>
-          <span>设置</span>
-        </div>
-        <div class="dock-app no-action" data-index="3">
-          <div class="app-icon" style="background:linear-gradient(135deg,#ff2d55,#c6002a)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-          </div>
-          <span>音乐</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 设置 - 壁纸选择弹窗 -->
-  <div class="settings-modal" id="settingsModal" aria-hidden="true">
-    <div class="modal-backdrop" id="modalBackdrop"></div>
-    <div class="modal-sheet">
-      <div class="modal-handle"></div>
-      <h2>选择新墙纸</h2>
-      <div class="wallpaper-grid" id="wallpaperGrid">
-        <!-- 预设壁纸由 JS 注入 -->
-      </div>
-      <div class="custom-row">
-        <label class="custom-upload" for="customWallpaper">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          <span>从相册选取</span>
-        </label>
-        <input type="file" id="customWallpaper" accept="image/*" hidden>
-      </div>
-      <div class="modal-actions">
-        <button class="btn-save" id="btnSave">保存并应用</button>
-        <button class="btn-cancel" id="btnCancel">取消</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="app.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

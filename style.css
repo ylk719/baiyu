@@ -1,428 +1,184 @@
-/* ===== 重置与全屏根基 ===== */
-*, *::before, *::after {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+:root {
+    --brand-color: #07C160;
+    --text-color-light: #333;
+    --text-color-dark: #eee;
+    --background-color-light: #f0f0f0;
+    --background-color-dark: #1c1c1e;
+    --card-background-light: #fff;
+    --card-background-dark: #2c2c2e;
+    --border-color-light: #ddd;
+    --border-color-dark: #444;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: #000;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
-  color: #fff;
-  /* 禁止 Safari 橡皮筋回弹与双指缩放 */
-  overscroll-behavior: none;
-  touch-action: none;
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    transition: background-color 0.3s ease;
 }
 
-/* ===== 壁纸层：铺满全屏，无遮罩、无磨砂、适配安全区 ===== */
-.wallpaper-layer {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  background: #000;
+/* Light mode (default) */
+body {
+    color: var(--text-color-light);
+    background-color: var(--background-color-light);
 }
 
-.wallpaper-layer img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  /* 禁止图片被浏览器自动缩放/高亮 */
-  -webkit-user-drag: none;
-  user-select: none;
-  pointer-events: none;
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    body {
+        color: var(--text-color-dark);
+        background-color: var(--background-color-dark);
+    }
 }
 
-/* 确保没有任何伪元素遮罩/磨砂 */
-.wallpaper-layer::before,
-.wallpaper-layer::after {
-  content: none;
+.loading-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: inherit;
+    z-index: 1000;
 }
 
-/* ===== 主屏容器 ===== */
-.home-screen {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  /* 放弃安全区适配，内容自然铺满全屏 */
-  padding: 0;
-  pointer-events: none; /* 由子元素自行开启交互 */
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid var(--brand-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
 }
 
-/* ===== 状态栏 ===== */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.hidden {
+    display: none !important;
+}
+
+.main-screen {
+    width: 100%;
+    max-width: 400px; /* Typical phone width */
+    height: 800px; /* Typical phone height */
+    border: 8px solid var(--card-background-light);
+    border-radius: 40px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: inherit;
+    position: relative;
+}
+
+@media (prefers-color-scheme: dark) {
+    .main-screen {
+        border-color: var(--card-background-dark);
+    }
+}
+
 .status-bar {
-  pointer-events: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: calc(6px + env(safe-area-inset-top)) calc(22px + env(safe-area-inset-right)) 0 calc(22px + env(safe-area-inset-left));
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.2px;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
-.status-icons {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 12px;
+@media (prefers-color-scheme: dark) {
+    .status-bar {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
 }
 
-/* ===== 页面视口与双页滑动 ===== */
-.pages-viewport {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  pointer-events: auto;
+.widgets {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 15px;
 }
 
-.pages-track {
-  display: flex;
-  width: 200%;
-  height: 100%;
-  will-change: transform;
-  touch-action: pan-y; /* 仅允许垂直默认手势，水平滑动由 JS 接管 */
+.widget {
+    background-color: var(--card-background-light);
+    border-radius: 15px;
+    padding: 15px 20px;
+    width: calc(100% - 40px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-.page {
-  width: 50%; /* 即 100vw */
-  height: 100%;
-  padding: 18px 22px;
-  /* 底部空间 = Dock 高度 + 指示点高度 + 间距 */
-  padding-bottom: calc(88px + 7px + 6px + 10px); /* 111px */
-  overflow: hidden;
+@media (prefers-color-scheme: dark) {
+    .widget {
+        background-color: var(--card-background-dark);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+}
+
+.time-widget #widget-time {
+    font-size: 4em;
+    font-weight: bold;
+    display: block;
+}
+
+.time-widget #widget-date {
+    font-size: 1.2em;
+    display: block;
+    margin-top: 5px;
+}
+
+.weather-widget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.2em;
+}
+
+.weather-widget span:first-child {
+    font-size: 2em;
+    margin-bottom: 5px;
 }
 
 .app-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px 12px;
-  align-content: start;
-  justify-items: center;
-}
-
-/* ===== 应用图标通用样式 ===== */
-.app-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  width: 64px;
-}
-
-.app-item span,
-.dock-app span {
-  font-size: 11px;
-  font-weight: 500;
-  color: #fff;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.45);
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    padding: 20px;
+    flex-grow: 1;
+    align-content: flex-start;
 }
 
 .app-icon {
-  width: 58px;
-  height: 58px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow:
-    0 4px 10px rgba(0,0,0,0.25),
-    inset 0 1px 0 rgba(255,255,255,0.18);
-  transition: transform 0.08s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 0.8em;
 }
 
-.app-icon svg {
-  width: 28px;
-  height: 28px;
+.app-icon img {
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+    margin-bottom: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* 点击非设置图标无视觉反馈 */
-.no-action {
-  pointer-events: none;
-}
-
-.settings-app {
-  pointer-events: auto;
-  cursor: pointer;
-}
-
-.settings-app:active .app-icon {
-  transform: scale(0.92);
-  filter: brightness(0.92);
-}
-
-/* ===== 页面指示点 ===== */
-.page-dots {
-  pointer-events: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
-}
-
-.dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.45);
-  transition: background 0.25s ease, transform 0.25s ease;
-}
-
-.dot.active {
-  background: rgba(255,255,255,0.95);
-  transform: scale(1.15);
-}
-
-/* ===== Home 指示条 (已禁用) ===== */
-.home-indicator {
-  display: none;
-}
-
-/* ===== Dock 栏：大椭圆磨砂底栏，紧贴屏幕最底边 ===== */
-.dock {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 100;
-  pointer-events: none; /* 仅栏内元素可交互 */
-  /* 适配刘海屏左右安全区 */
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
-  /* 紧贴最底边，仅留出 Home 安全区内部空间，底部不出现任何横线 */
-  padding-bottom: env(safe-area-inset-bottom);
-  display: flex;
-  justify-content: center;
-}
-
-.dock-inner {
-  position: relative;
-  width: calc(100% - 24px);
-  max-width: 420px;
-  /* 大椭圆磨砂底栏：整体高度贴合 iOS Dock（约 88px），内部留出安全区 */
-  height: calc(88px + env(safe-area-inset-bottom));
-  margin: 0 auto;
-  /* 大椭圆：上下全圆角，呈完整胶囊/椭圆形状，紧贴屏幕底边 */
-  border-radius: 999px;
-  /* 磨砂底栏 */
-  background: rgba(255,255,255,0.22);
-  backdrop-filter: blur(26px) saturate(170%);
-  -webkit-backdrop-filter: blur(26px) saturate(170%);
-  box-shadow:
-    0 12px 34px rgba(0,0,0,0.20),
-    inset 0 1px 0 rgba(255,255,255,0.28);
-  box-sizing: border-box;
-  /* 给底部安全区预留内部空间，但栏体仍紧贴最底边 */
-  padding-bottom: env(safe-area-inset-bottom);
-  pointer-events: auto;
-}
-
-.dock-icons {
-  position: relative;
-  z-index: 1;
-  height: 100%;
-  display: flex;
-  /* 四个图标横向均匀平分椭圆栏内部空间 */
-  align-items: center;
-  justify-content: space-evenly;
-  padding: 0 10px;
-  /* 内部上移，避免被底部安全区挤压 */
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-.dock-app {
-  flex: 1 1 0;
-  max-width: 84px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-}
-
-.dock-app .app-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 13px;
-}
-
-/* ===== 设置壁纸弹窗 ===== */
-.settings-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: none;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.settings-modal.open {
-  display: flex;
-}
-
-.modal-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.35);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-
-.settings-modal.open .modal-backdrop {
-  opacity: 1;
-}
-
-.modal-sheet {
-  position: relative;
-  width: 100%;
-  max-height: 78vh;
-  background: rgba(30,30,30,0.92);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border-radius: 26px 26px 0 0;
-  padding: 14px 18px 18px;
-  transform: translateY(100%);
-  transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
-  overflow-y: auto;
-  pointer-events: auto;
-}
-
-.settings-modal.open .modal-sheet {
-  transform: translateY(0);
-}
-
-.modal-handle {
-  width: 36px;
-  height: 5px;
-  border-radius: 3px;
-  background: rgba(255,255,255,0.35);
-  margin: 0 auto 14px;
-}
-
-.modal-sheet h2 {
-  margin: 0 0 14px;
-  font-size: 18px;
-  font-weight: 700;
-  text-align: center;
-}
-
-.wallpaper-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.wallpaper-option {
-  position: relative;
-  aspect-ratio: 9 / 19.5;
-  border-radius: 14px;
-  overflow: hidden;
-  border: 3px solid transparent;
-  background: #222;
-  cursor: pointer;
-  transition: border-color 0.15s ease, transform 0.1s ease;
-}
-
-.wallpaper-option img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.wallpaper-option.selected {
-  border-color: #0a84ff;
-  transform: scale(0.98);
-}
-
-.custom-row {
-  margin-bottom: 16px;
-}
-
-.custom-upload {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  padding: 14px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.12);
-  color: #0a84ff;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-
-.custom-upload svg {
-  width: 20px;
-  height: 20px;
-}
-
-.custom-upload:active {
-  background: rgba(255,255,255,0.2);
-}
-
-.modal-actions {
-  display: flex;
-  gap: 12px;
-}
-
-.modal-actions button {
-  flex: 1;
-  padding: 14px;
-  border: none;
-  border-radius: 14px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: filter 0.15s ease, transform 0.08s ease;
-}
-
-.btn-save {
-  background: #0a84ff;
-  color: #fff;
-}
-
-.btn-cancel {
-  background: rgba(255,255,255,0.16);
-  color: #fff;
-}
-
-.modal-actions button:active {
-  filter: brightness(0.9);
-  transform: scale(0.97);
-}
-
-/* ===== 针对主屏幕 Web Clip 全屏模式的兜底 ===== */
-@media (display-mode: standalone) {
-  .home-screen {
-    /* 放弃安全区适配，自然铺满全屏 */
-    padding: 0;
-  }
+@media (prefers-color-scheme: dark) {
+    .app-icon img {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
 }
