@@ -1004,10 +1004,34 @@
         restoreSavedModelsUI();
     }
 
+    // === 正方形图片上传 ===
+    function initSquarePhotoUpload() {
+        const uploadBox = document.getElementById('squarePhotoUpload');
+        const fileInput = document.getElementById('squarePhotoFile');
+        const imgEl = document.getElementById('squarePhotoImg');
+
+        if (!uploadBox || !fileInput || !imgEl) return;
+
+        uploadBox.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => {
+            const f = e.target.files[0];
+            if (!f) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                imgEl.src = ev.target.result;
+            };
+            reader.readAsDataURL(f);
+        });
+    }
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initApiSettings);
+        document.addEventListener('DOMContentLoaded', () => {
+            initApiSettings();
+            initSquarePhotoUpload();
+        });
     } else {
         initApiSettings();
+        initSquarePhotoUpload();
     }
 })();
 
@@ -13751,7 +13775,95 @@ document.addEventListener('DOMContentLoaded', function() {
     initCapsuleAvatars();
     initAnimalAvatars();
     initLockSettings();
+    initProfileUploads();
+    initKoreanCardUploads();
 });
+
+function initProfileUploads() {
+    const bannerWrap = document.getElementById('profileBannerWrap');
+    const bannerFile = document.getElementById('profileBannerFile');
+    const bannerImg = document.getElementById('profileBannerImg');
+    if (bannerWrap && bannerFile && bannerImg) {
+        bannerWrap.addEventListener('click', () => bannerFile.click());
+        bannerFile.addEventListener('change', (e) => {
+            const f = e.target.files[0];
+            if (!f) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => { bannerImg.src = ev.target.result; };
+            reader.readAsDataURL(f);
+        });
+    }
+    const avatarWrap = document.getElementById('profileAvatarWrap');
+    const avatarFile = document.getElementById('profileAvatarFile');
+    const avatarImg = document.getElementById('profileAvatarImg');
+    if (avatarWrap && avatarFile && avatarImg) {
+        avatarWrap.addEventListener('click', () => avatarFile.click());
+        avatarFile.addEventListener('change', (e) => {
+            const f = e.target.files[0];
+            if (!f) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => { avatarImg.src = ev.target.result; };
+            reader.readAsDataURL(f);
+        });
+    }
+    initSnowflakes();
+}
+
+function initSnowflakes() {
+    const container = document.getElementById('profileSnow');
+    if (!container) return;
+    const snowChars = ['❄', '❅', '❆', '✧', '❉', '✦'];
+    const count = 28;
+    for (let i = 0; i < count; i++) {
+        const flake = document.createElement('span');
+        flake.className = 'snowflake';
+        flake.textContent = snowChars[Math.floor(Math.random() * snowChars.length)];
+        flake.style.left = (Math.random() * 100) + '%';
+        flake.style.fontSize = (8 + Math.random() * 10) + 'px';
+        flake.style.animationDuration = (6 + Math.random() * 6) + 's';
+        flake.style.animationDelay = (Math.random() * 8) + 's';
+        flake.style.opacity = 0.5 + Math.random() * 0.5;
+        const drift = (Math.random() * 60 - 30);
+        flake.style.animationName = 'none';
+        flake.offsetHeight;
+        flake.style.animationName = 'snowfall';
+        flake.style.setProperty('--drift', drift + 'px');
+        container.appendChild(flake);
+    }
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes snowfall {
+            0% { transform: translateY(-20px) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.9; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(420px) translateX(var(--drift, 30px)) rotate(360deg); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+function initKoreanCardUploads() {
+    for (let i = 1; i <= 2; i++) {
+        const wrap = document.getElementById('koreanCardImg' + i + 'Wrap');
+        const file = document.getElementById('koreanCardImg' + i + 'File');
+        const img = document.getElementById('koreanCardImg' + i);
+        const plus = wrap ? wrap.querySelector('.korean-card-plus') : null;
+        if (wrap && file && img) {
+            wrap.addEventListener('click', () => file.click());
+            file.addEventListener('change', (e) => {
+                const f = e.target.files[0];
+                if (!f) return;
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    img.src = ev.target.result;
+                    img.style.display = 'block';
+                    if (plus) plus.style.display = 'none';
+                };
+                reader.readAsDataURL(f);
+            });
+        }
+    }
+}
 
 function initLockSettings() {
     // 更改锁屏壁纸
@@ -13921,12 +14033,12 @@ function initAnimalAvatars() {
 }
 
 function initVinylAvatar() {
-    const centerImg = document.getElementById('vinylCenterImg');
+    const circleImg = document.getElementById('circleUploadImg');
     const fileInput = document.getElementById('vinylAvatarFile');
-    const disc = document.getElementById('vinylDisc');
-    if (!centerImg || !fileInput || !disc) return;
+    const circleBtn = document.getElementById('circleUploadBtn');
+    if (!circleImg || !fileInput || !circleBtn) return;
     
-    centerImg.addEventListener('click', (e) => {
+    circleBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         fileInput.click();
     });
@@ -13936,7 +14048,7 @@ function initVinylAvatar() {
         if (!f) return;
         const reader = new FileReader();
         reader.onload = (ev) => {
-            centerImg.src = ev.target.result;
+            circleImg.src = ev.target.result;
         };
         reader.readAsDataURL(f);
     });

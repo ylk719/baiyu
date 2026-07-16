@@ -46,6 +46,10 @@
     <input type="file" id="insSocialImg3File" accept="image/*" style="display:none;">
     <input type="file" id="catCardAvatarFile" accept="image/*" style="display:none;">
     <input type="file" id="catCardContentFile" accept="image/*" style="display:none;">
+    <input type="file" id="profileBannerFile" accept="image/*" style="display:none;">
+    <input type="file" id="profileAvatarFile" accept="image/*" style="display:none;">
+    <input type="file" id="koreanCardImg1File" accept="image/*" style="display:none;">
+    <input type="file" id="koreanCardImg2File" accept="image/*" style="display:none;">
 
     <input type="file" id="capsuleAvatarFile1" accept="image/*" style="display:none;">
     <input type="file" id="capsuleAvatarFile2" accept="image/*" style="display:none;">
@@ -58,99 +62,57 @@
     <div class="censy-pages-container" id="censyPagesContainer">
         <!-- 第1页 -->
         <div class="censy-page">
-          <div class="censy-top-section">
-          <div class="personal-info-card">
-            <div class="ins-social-card">
-              <div class="ins-social-top-bar">
-                <div class="ins-social-avatar-wrap" id="insSocialAvatarWrap" style="cursor:pointer;">
-                  <div class="ins-social-avatar">
-                    <img id="insSocialAvatarImg" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=young%20asian%20woman%20wearing%20light%20gray%20coat%20pink%20scarf%20hands%20forming%20heart%20shape%20above%20head%20soft%20dreamy%20white%20background%20high%20key%20lighting&image_size=square" alt="avatar">
-                  </div>
-                  <div class="ins-social-camera-icon">
-                    <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="#999" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="12" cy="12" r="5"/><path d="M17 7l-5 5-5-5"/></svg>
-                  </div>
-                </div>
-                <div class="ins-social-time-bubble">
-                  <span contenteditable="true">17:47</span>
-                  <div class="ins-social-time-bubble-tail"></div>
-                </div>
-                <div class="ins-social-user-info">
-                  <div class="ins-social-username" contenteditable="true">Susoon♡༘⋆…˚?♡</div>
-                  <div class="ins-social-subtitle" contenteditable="true">★< The heartbeat has an ensemble "</div>
-                </div>
-              </div>
-              <div class="ins-social-title-bar">
-                <span class="ins-social-title-text" contenteditable="true">「plog ° ✧ ༘ 8つ ～ ✧!!♫」</span>
-                <span class="ins-social-title-arrow">></span>
-              </div>
-              <div class="ins-social-images-row">
-                <div class="ins-social-image-item" style="cursor:pointer;" id="insSocialImg1Wrap">
-                  <img id="insSocialImg1" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pink%20knit%20fabric%20background%20with%20large%20matte%20pink%20ribbon%20bows%20gold%20rim%20oval%20hand%20mirror%20with%20gold%20hearts%20pearl%20chain%20white%20snowflakes%20small%20white%20flowers%20soft%20dreamy%20pink%20aesthetic&image_size=square" alt="img1">
-                </div>
-                <div class="ins-social-image-item" style="cursor:pointer;" id="insSocialImg2Wrap">
-                  <img id="insSocialImg2" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=indoor%20floor%20to%20ceiling%20window%20with%20pink%20lace%20curtains%20soft%20blue%20sky%20outside%20green%20vines%20trees%20misty%20mountains%20dreamy%20overexposed%20soft%20light&image_size=square" alt="img2">
-                </div>
-                <div class="ins-social-image-item" style="cursor:pointer;" id="insSocialImg3Wrap">
-                  <img id="insSocialImg3" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20cat%20shaped%20cream%20dessert%20on%20white%20plate%20pink%20bow%20on%20head%20brown%20dot%20eyes%20smile%20mouth%20cream%20white%20color%20soft%20blurry%20dreamy%20food%20photography&image_size=square" alt="img3">
-                </div>
-              </div>
-              <div class="ins-social-anniversary-row">
-                <div class="ins-social-anniversary-left">
-                  <span class="ins-social-heart-icon">♥</span>
-                  <span class="ins-social-anniversary-text" contenteditable="true">•• × • 距离我们的纪念日 还有</span>
-                </div>
-                <div class="ins-social-anniversary-right" contenteditable="true">446 days</div>
-              </div>
-              <div class="ins-social-text-box">
-                <span contenteditable="true">无论世界如何喧嚣，你永远是我的偏爱……</span>
+          <div class="page1-layout">
+          <div class="profile-card">
+            <div class="profile-snow" id="profileSnow"></div>
+            <div class="profile-banner" id="profileBannerWrap" style="cursor:pointer;">
+              <img id="profileBannerImg" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=warm%20sunlight%20through%20window%20blinds%20shadow%20aesthetic%20cozy%20room%20minimal&image_size=landscape_16_9" alt="banner">
+            </div>
+            <div class="profile-avatar" id="profileAvatarWrap" style="cursor:pointer;">
+              <img id="profileAvatarImg" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=elegant%20woman%20wearing%20silk%20blouse%20aesthetic%20portrait%20soft%20warm%20light&image_size=square" alt="avatar">
+            </div>
+            <div class="profile-username" contenteditable="true">Angela_cheung</div>
+            <div class="profile-handle" contenteditable="true">@Angela_cheung</div>
+            <div class="profile-gradient">
+              <div class="profile-bio" contenteditable="true">"我是懒人，懒人出没 /ᐠ｡ꞈ｡ᐟ\"</div>
+              <div class="profile-location">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#999" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span contenteditable="true">广州</span>
               </div>
             </div>
           </div>
-          </div>
-          <div class="censy-mid-section">
-          <div class="censy-polaroid-card cat-info-card">
-            <div class="cat-card-wrapper">
-              <div class="cat-card-bg"></div>
-              <div class="cat-card-inner">
-                <div class="cat-card-header">
-                  <div class="cat-card-avatar" id="catCardAvatarWrap" style="cursor:pointer;">
-                    <img id="catCardAvatarImg" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20white%20cat%20wearing%20pink%20chef%20hat%20holding%20dessert%20plate%20soft%20pink%20aesthetic%20kawaii&image_size=square" alt="cat avatar">
-                  </div>
-                  <div class="cat-card-id-section">
-                    <div class="cat-card-id-label">ID:</div>
-                    <div class="cat-card-id-tag"><span contenteditable="true">L.KIMJE</span></div>
-                  </div>
-                </div>
-                <div class="cat-card-content">
-                  <div class="cat-card-content-img" id="catCardContentWrap" style="cursor:pointer;">
-                    <img id="catCardContentImg" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pink%20aesthetic%20bow%20pattern%20soft%20pastel%20pink%20ribbon%20decorative&image_size=square" alt="content">
-                  </div>
-                  <div class="cat-card-content-text">
-                    <div class="cat-card-title" contenteditable="true"><span class="pink-star">☆</span> Hello Bunny <span class="pink-star">☆</span></div>
-                    <div class="cat-card-line1" contenteditable="true"><span class="pink-dot">✩</span> 9ℌ-- 其实小猫很爱你</div>
-                    <div class="cat-card-line2" contenteditable="true"><span class="pink-dot">✩.*˚</span> 但小猫开口后会变成喵喵(^･ω･^)</div>
-                  </div>
-                </div>
+          <div class="page1-bottom-row">
+            <div class="page1-apps-grid">
+              <div class="censy-app-item">
+                <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+                <div class="censy-app-name">微信</div>
+              </div>
+              <div class="censy-app-item">
+                <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+                <div class="censy-app-name">世界书</div>
+              </div>
+              <div class="censy-app-item">
+                <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+                <div class="censy-app-name">手帐</div>
+              </div>
+              <div class="censy-app-item">
+                <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+                <div class="censy-app-name">情侣空间</div>
               </div>
             </div>
-          </div>
-          <div class="censy-apps-grid">
-          <div class="censy-app-item" id="censyWechatEntry">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-          <div class="censy-app-name">微信</div>
-          </div>
-          <div class="censy-app-item">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-          <div class="censy-app-name">手帐</div>
-          </div>
-          <div class="censy-app-item">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-          <div class="censy-app-name">世界书</div>
-          </div>
-          <div class="censy-app-item">
-          <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
-          <div class="censy-app-name">邀约</div>
-          </div>
+            <div class="korean-card">
+              <div class="korean-card-title" contenteditable="true">선택해 주십시오.</div>
+              <div class="korean-card-imgs">
+                <div class="korean-card-img-box" id="koreanCardImg1Wrap" style="cursor:pointer;">
+                  <img id="koreanCardImg1" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=purple%20milk%20tea%20drink%20aesthetic%20korean%20cafe%20ice%20latte&image_size=square" alt="img1">
+                </div>
+                <div class="korean-card-img-box korean-card-add-box" id="koreanCardImg2Wrap" style="cursor:pointer;">
+                  <span class="korean-card-plus">+</span>
+                  <img id="koreanCardImg2" src="" alt="img2" style="display:none;">
+                </div>
+              </div>
+              <button class="korean-card-btn" contenteditable="true">사용</button>
+            </div>
           </div>
           </div>
         </div>
@@ -189,26 +151,11 @@
             </div>
             <div class="censy-p2-bottom-section">
               <div class="censy-p2-col">
-                <div class="censy-iscreen-wrapper">
-                  <div class="vinyl-card-wrapper" id="vinylCardWrap">
-                    <input type="file" id="vinylAvatarFile" accept="image/*" style="display:none;">
-                    <div class="vinyl-disc" id="vinylDisc">
-                      <div class="vinyl-groove vinyl-groove-1"></div>
-                      <div class="vinyl-groove vinyl-groove-2"></div>
-                      <div class="vinyl-groove vinyl-groove-3"></div>
-                      <div class="vinyl-groove vinyl-groove-4"></div>
-                      <div class="vinyl-center">
-                        <img id="vinylCenterImg" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20kawaii%20anime%20girl%20pastel%20pink%20soft%20dreamy%20aesthetic%20portrait&image_size=square" alt="vinyl center">
-                      </div>
-                      <div class="vinyl-center-hole"></div>
-                    </div>
-                    <div class="vinyl-tonearm">
-                      <div class="vinyl-tonearm-base"></div>
-                      <div class="vinyl-tonearm-arm"></div>
-                      <div class="vinyl-tonearm-head"></div>
-                    </div>
+                <div class="square-photo-upload" id="squarePhotoUpload">
+                  <input type="file" id="squarePhotoFile" accept="image/*" style="display:none;">
+                  <div class="spu-img-wrap">
+                    <img id="squarePhotoImg" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=soft%20pink%20aesthetic%20cute%20kawaii%20pastel%20illustration&image_size=square" alt="photo">
                   </div>
-                  <div class="censy-iscreen-label" contenteditable="true">Vinyl</div>
                 </div>
                 <div class="censy-apps-grid-small">
                   <div class="censy-app-item app-small">
@@ -224,9 +171,9 @@
                     <div class="censy-app-name">日程</div>
                   </div>
                   <div class="censy-app-item app-small">
-                    <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/><path d="M8 6h8"/></svg></div>
-                    <div class="censy-app-name">查手机</div>
-                  </div>
+                      <div class="censy-app-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+                      <div class="censy-app-name">侦查</div>
+                    </div>
                 </div>
               </div>
               <div class="censy-p2-col">
@@ -303,7 +250,7 @@
 
     <div class="bottom-nav">
         <div class="censy-page-indicators" id="censyPageDots"><span class="censy-dot active"></span><span class="censy-dot"></span></div>
-        <div class="censy-dock-container"><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></div><div class="censy-dock-name">外观</div></div><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0 0-9h-1.8A7 7 0 1 0 4 15.3"/><path d="M2 19h20"/></svg></div><div class="censy-dock-name">天气</div></div><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="censy-dock-name">情侣空间</div></div><div class="censy-dock-item" id="censySettingsDockBtn"><div class="censy-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><div class="censy-dock-name">设置</div></div></div>
+        <div class="censy-dock-container"><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></div><div class="censy-dock-name">外观</div></div><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0 0-9h-1.8A7 7 0 1 0 4 15.3"/><path d="M2 19h20"/></svg></div><div class="censy-dock-name">天气</div></div><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1 0-4h12v4"/><path d="M4 6v12a2 2 0 0 0 2 2h14v-4"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg></div><div class="censy-dock-name">钱包</div></div><div class="censy-dock-item" id="censySettingsDockBtn"><div class="censy-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><div class="censy-dock-name">设置</div></div></div>
         <div class="censy-dock-bottom-blur"></div>
     </div>
     
