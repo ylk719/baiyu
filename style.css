@@ -20250,3 +20250,15 @@ body{
   padding-bottom: 0;
   margin-bottom: 0;
 }
+
+
+/* === User customization: no wallpaper zoom, no frosted overlay, dock icons match WeChat === */
+.phone-lockscreen-bg, .phone-password-panel-bg { background-size: 100% 100% !important; background-position: center center !important; background-repeat: no-repeat !important; }
+.phone-lockscreen-bg::before { display: none !important; background: transparent !important; }
+.censy-dock-container { background: transparent !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; border: none !important; box-shadow: none !important; }
+.censy-dock-item { width: auto !important; gap: 6px !important; }
+.censy-dock-icon { width: 54px !important; height: 54px !important; border-radius: 16px !important; background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(247,247,247,0.8)) !important; box-shadow: 0 4px 12px rgba(0,0,0,0.06), inset 0 1px 1px #fff !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+.censy-dock-icon svg { width: 26px !important; height: 26px !important; stroke: #666 !important; }
+.censy-dock-name { font-size: 11px !important; color: #666 !important; font-weight: 500 !important; letter-spacing: 0.5px !important; text-shadow: 0 1px 2px rgba(255,255,255,0.8) !important; }
+.censy-app-icon { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+
