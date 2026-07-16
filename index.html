@@ -2,10 +2,15 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="小手机">
+    <meta name="apple-mobile-web-app-title" content="小手机">
+    <meta name="format-detection" content="telephone=no">
     <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20kawaii%20phone%20icon%20pink%20aesthetic%20minimal&image_size=square" type="image/png">
     <link rel="apple-touch-icon" href="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20kawaii%20phone%20icon%20pink%20aesthetic%20minimal&image_size=square">
     <link rel="apple-touch-startup-image" href="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=soft%20pink%20aesthetic%20mobile%20app%20startup%20screen%20minimal&image_size=portrait_16_9">
     <title>小手机</title>
@@ -296,7 +301,7 @@
         <!-- 第3页已删除 -->
     </div>
 
-    <div class="censy-fixed-bottom">
+    <div class="bottom-nav">
         <div class="censy-page-indicators" id="censyPageDots"><span class="censy-dot active"></span><span class="censy-dot"></span></div>
         <div class="censy-dock-container"><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></div><div class="censy-dock-name">外观</div></div><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0 0-9h-1.8A7 7 0 1 0 4 15.3"/><path d="M2 19h20"/></svg></div><div class="censy-dock-name">天气</div></div><div class="censy-dock-item"><div class="censy-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="censy-dock-name">情侣空间</div></div><div class="censy-dock-item" id="censySettingsDockBtn"><div class="censy-dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#7a6f9a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><div class="censy-dock-name">设置</div></div></div>
         <div class="censy-dock-bottom-blur"></div>
@@ -3463,6 +3468,27 @@
     </div>
 
 <script src="script.js"></script>
+
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./service-worker.js')
+        .then(function(registration) {
+            registration.addEventListener('updatefound', function() {
+                var newWorker = registration.installing;
+                newWorker.addEventListener('statechange', function() {
+                    if (newWorker.state === 'installed') {
+                        if (navigator.serviceWorker.controller) {
+                            window.location.reload();
+                        }
+                    }
+                });
+            });
+        })
+        .catch(function(err) {
+            console.log('Service Worker registration failed: ', err);
+        });
+}
+</script>
 
 </body>
 </html>
