@@ -58,9 +58,8 @@ html, body {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  /* 适配刘海、灵动岛与底部 Home 指示条安全区 */
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
+  /* 放弃安全区适配，内容自然铺满全屏 */
+  padding: 0;
   pointer-events: none; /* 由子元素自行开启交互 */
 }
 
@@ -105,8 +104,8 @@ html, body {
   width: 50%; /* 即 100vw */
   height: 100%;
   padding: 18px 22px;
-  /* 底部留出 Dock + Home 指示条 + 安全区空间，避免内容被遮挡 */
-  padding-bottom: calc(env(safe-area-inset-bottom) + 132px);
+  /* 底部留出 Dock + Home 指示条空间，避免内容被遮挡 */
+  padding-bottom: 132px;
   overflow: hidden;
 }
 
@@ -211,8 +210,8 @@ html, body {
 .dock {
   position: fixed;
   left: 50%;
-  /* 紧贴安全区上方，最大限度下沉，避免底部留空 */
-  bottom: calc(env(safe-area-inset-bottom) + 4px);
+  /* 紧贴屏幕底边，自然铺满，不做安全区偏移 */
+  bottom: 8px;
   transform: translateX(-50%);
   z-index: 100;
   width: calc(100% - 38px);
@@ -291,7 +290,7 @@ html, body {
   backdrop-filter: blur(28px) saturate(180%);
   -webkit-backdrop-filter: blur(28px) saturate(180%);
   border-radius: 26px 26px 0 0;
-  padding: 14px 18px calc(env(safe-area-inset-bottom) + 18px);
+  padding: 14px 18px 18px;
   transform: translateY(100%);
   transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
   overflow-y: auto;
@@ -409,7 +408,7 @@ html, body {
 /* ===== 针对主屏幕 Web Clip 全屏模式的兜底 ===== */
 @media (display-mode: standalone) {
   .home-screen {
-    /* 在 standalone 模式下仍保持安全区处理，彻底消除底部白条 */
-    padding-bottom: env(safe-area-inset-bottom);
+    /* 放弃安全区适配，自然铺满全屏 */
+    padding: 0;
   }
 }
