@@ -7278,14 +7278,21 @@ function mtUnmountReactApp() {
                 avatar: '',
                 nickname: '我',
                 wxid: 'wxid_' + Math.random().toString(36).substr(2, 10),
-                persona: '',
-                cover: '',
+                bio: '',
+                banner: '',
                 signature: ''
             };
             if (oldUserStr) {
                 try {
                     const oldUser = JSON.parse(oldUserStr);
-                    defaultUser = { ...defaultUser, ...oldUser, id: 'me' };
+                    defaultUser = {
+                        ...defaultUser,
+                        ...oldUser,
+                        id: 'me',
+                        bio: oldUser.bio || oldUser.signature || oldUser.persona || '',
+                        banner: oldUser.banner || oldUser.cover || '',
+                        signature: oldUser.signature || oldUser.bio || oldUser.persona || ''
+                    };
                 } catch (e) {}
             }
             localStorage.setItem('wx_accounts', JSON.stringify([defaultUser]));
@@ -7325,6 +7332,45 @@ function mtUnmountReactApp() {
         } catch (e) {
             chats = [];
         }
+
+        let groups = [];
+        try {
+            groups = JSON.parse(localStorage.getItem('wx_groups') || '[]');
+        } catch (e) {
+            groups = [];
+        }
+
+        const chatIds = new Set(chats.map(c => c.id));
+        groups.forEach(group => {
+            if (!chatIds.has(group.id)) {
+                chats.unshift({
+                    id: group.id,
+                    name: group.name,
+                    avatar: group.avatar,
+                    lastMessage: group.members ? (group.members.length + (group.includeUser !== 'no' ? 1 : 0)) + '人' : '',
+                    time: '',
+                    unread: 0,
+                    bg: '',
+                    type: 'group',
+                    groupType: group.groupType || 'members',
+                    includeUser: group.includeUser || 'yes',
+                    pinned: false
+                });
+            } else {
+                const idx = chats.findIndex(c => c.id === group.id);
+                if (idx > -1) {
+                    chats[idx].type = 'group';
+                    chats[idx].groupType = group.groupType || chats[idx].groupType || 'members';
+                    chats[idx].includeUser = group.includeUser || chats[idx].includeUser || 'yes';
+                    if (!chats[idx].avatar && group.avatar) {
+                        chats[idx].avatar = group.avatar;
+                    }
+                    if (!chats[idx].name || chats[idx].name === '未命名') {
+                        chats[idx].name = group.name;
+                    }
+                }
+            }
+        });
 
         let contacts = [];
         try {
@@ -8482,7 +8528,11 @@ function mtUnmountReactApp() {
         let moments = [];
         try { moments = JSON.parse(localStorage.getItem('wx_moments') || '[]'); } catch (e) {}
         moments.unshift(moment);
-        try { localStorage.setItem('wx_moments', JSON.stringify(moments)); } catch (e) {}
+        if (!wxSafeSave('wx_moments', moments)) {
+            wxShowToast('内容过大，保存失败');
+            return false;
+        }
+        return true;
     }
 
     // ========== AI代发朋友圈（全新） ==========
@@ -8911,11 +8961,16 @@ function mtUnmountReactApp() {
             const avatarHtml = group.avatar
                 ? `<img src="${group.avatar}" alt="">`
                 : `<div class="wx-chat-avatar-placeholder">${firstChar}</div>`;
+            const groupTypeTag = (group.includeUser === 'no')
+                ? '<span class="wx-chat-empty-group-tag">不含用户</span>'
+                : (group.groupType === 'members' || group.groupType === 'empty')
+                    ? '<span class="wx-chat-members-group-tag">成员群聊</span>'
+                    : '';
             return `
                 <div class="wx-chat-item" onclick="wxOpenGroupChat('${group.id}')">
                     <div class="wx-chat-avatar">${avatarHtml}<div class="wx-chat-group-tag"></div></div>
                     <div class="wx-chat-info">
-                        <div class="wx-chat-name">${groupName}</div>
+                        <div class="wx-chat-name">${groupName}${groupTypeTag}</div>
                         <div class="wx-chat-preview">${count}人</div>
                     </div>
                     <div class="wx-chat-meta"></div>
@@ -9027,64 +9082,95 @@ function mtUnmountReactApp() {
 
     // 保存新角色
     window.wxSaveNewContact = function() {
-        const nickname = document.getElementById('wxAddNickname').value.trim();
-        const constellation = document.getElementById('wxAddConstellation').value;
-        const persona = document.getElementById('wxAddPersona').value.trim();
-        
-        if (!nickname) {
-            wxShowToast('请输入昵称');
-            return;
+        try {
+            const nicknameEl = document.getElementById('wxAddNickname');
+            const constellationEl = document.getElementById('wxAddConstellation');
+            const personaEl = document.getElementById('wxAddPersona');
+            
+            if (!nicknameEl) {
+                if (typeof wxShowToast === 'function') wxShowToast('页面加载异常，请重试');
+                return;
+            }
+            
+            const nickname = nicknameEl.value.trim();
+            const constellation = constellationEl ? constellationEl.value : '';
+            const persona = personaEl ? personaEl.value.trim() : '';
+            
+            if (!nickname) {
+                if (typeof wxShowToast === 'function') wxShowToast('请输入昵称');
+                return;
+            }
+            
+            const contactId = 'contact_' + Date.now();
+            const now = new Date();
+            const timeStr = (now.getHours() < 10 ? '0' + now.getHours() : now.getHours()) + ':' + (now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes());
+            
+            // 保存到联系人
+            let contacts = [];
+            try {
+                contacts = JSON.parse(localStorage.getItem('wx_contacts') || '[]');
+            } catch (e) {
+                contacts = [];
+            }
+            contacts.unshift({
+                id: contactId,
+                name: nickname,
+                avatar: wxAddContactAvatar,
+                constellation: constellation,
+                persona: persona,
+                bg: wxAddContactBg,
+                starred: false
+            });
+            try {
+                localStorage.setItem('wx_contacts', JSON.stringify(contacts));
+            } catch (e) {
+                if (typeof wxShowToast === 'function') wxShowToast('保存失败，请清理存储空间');
+                return;
+            }
+            
+            // 保存到聊天列表
+            let chats = [];
+            try {
+                chats = JSON.parse(localStorage.getItem('wx_chats') || '[]');
+            } catch (e) {
+                chats = [];
+            }
+            chats.unshift({
+                id: contactId,
+                name: nickname,
+                avatar: wxAddContactAvatar,
+                lastMessage: persona ? persona.substring(0, 30) : '',
+                time: timeStr,
+                unread: 0,
+                bg: wxAddContactBg
+            });
+            try {
+                localStorage.setItem('wx_chats', JSON.stringify(chats));
+            } catch (e) {}
+            
+            // 初始化消息记录
+            let messages = {};
+            try {
+                messages = JSON.parse(localStorage.getItem('wx_messages') || '{}');
+            } catch (e) {
+                messages = {};
+            }
+            if (!messages[contactId]) {
+                messages[contactId] = [];
+            }
+            try {
+                localStorage.setItem('wx_messages', JSON.stringify(messages));
+            } catch (e) {}
+            
+            if (typeof wxShowToast === 'function') wxShowToast('添加成功');
+            if (typeof wxCloseAddContact === 'function') wxCloseAddContact();
+            if (typeof debounceRenderChatList === 'function') debounceRenderChatList();
+        } catch (e) {
+            console.error('保存联系人失败:', e);
+            if (typeof wxShowToast === 'function') {
+                wxShowToast('保存失败：' + (e.message || '未知错误'));
+            }
         }
-        
-        const contactId = 'contact_' + Date.now();
-        const now = new Date();
-        const timeStr = (now.getHours() < 10 ? '0' + now.getHours() : now.getHours()) + ':' + (now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes());
-        
-        // 保存到联系人
-        let contacts = [];
-        try {
-            contacts = JSON.parse(localStorage.getItem('wx_contacts') || '[]');
-        } catch (e) {}
-        contacts.unshift({
-            id: contactId,
-            name: nickname,
-            avatar: wxAddContactAvatar,
-            constellation: constellation,
-            persona: persona,
-            bg: wxAddContactBg,
-            starred: false
-        });
-        localStorage.setItem('wx_contacts', JSON.stringify(contacts));
-        
-        // 保存到聊天列表
-        let chats = [];
-        try {
-            chats = JSON.parse(localStorage.getItem('wx_chats') || '[]');
-        } catch (e) {}
-        chats.unshift({
-            id: contactId,
-            name: nickname,
-            avatar: wxAddContactAvatar,
-            lastMessage: persona ? persona.substring(0, 30) : '',
-            time: timeStr,
-            unread: 0,
-            bg: wxAddContactBg
-        });
-        localStorage.setItem('wx_chats', JSON.stringify(chats));
-        
-        // 初始化消息记录
-        let messages = {};
-        try {
-            messages = JSON.parse(localStorage.getItem('wx_messages') || '{}');
-        } catch (e) {}
-        if (!messages[contactId]) {
-            messages[contactId] = [];
-        }
-        localStorage.setItem('wx_messages', JSON.stringify(messages));
-        
-        wxShowToast('添加成功');
-        wxCloseAddContact();
-        debounceRenderChatList();
     };
 
     // 打开聊天页面
@@ -10054,6 +10140,122 @@ function mtUnmountReactApp() {
     }
 
     // Toast提示
+    // 安全保存到localStorage，自动处理空间不足
+    function wxSafeSave(key, value) {
+        try {
+            localStorage.setItem(key, JSON.stringify(value));
+            return true;
+        } catch (e) {
+            // 第一次清理：删除30天前的朋友圈数据
+            try {
+                let moments = JSON.parse(localStorage.getItem('wx_moments') || '[]');
+                const beforeLen = moments.length;
+                const now = Date.now();
+                const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
+                moments = moments.filter(m => {
+                    const ts = m.timestamp || (m.id ? parseInt(m.id.replace(/\D/g, '')) : 0);
+                    return now - ts < THIRTY_DAYS;
+                });
+                if (moments.length < beforeLen) {
+                    localStorage.setItem('wx_moments', JSON.stringify(moments));
+                }
+                // 再次尝试保存
+                localStorage.setItem(key, JSON.stringify(value));
+                return true;
+            } catch (e2) {
+                // 第二次清理：删除旧草稿
+                try {
+                    let drafts = JSON.parse(localStorage.getItem('wx_moment_drafts') || '[]');
+                    if (drafts.length > 5) {
+                        drafts = drafts.slice(0, 5);
+                        localStorage.setItem('wx_moment_drafts', JSON.stringify(drafts));
+                    }
+                    localStorage.setItem(key, JSON.stringify(value));
+                    return true;
+                } catch (e3) {
+                    // 第三次清理：只保留最近20条朋友圈
+                    try {
+                        let moments = JSON.parse(localStorage.getItem('wx_moments') || '[]');
+                        if (moments.length > 20) {
+                            moments = moments.slice(0, 20);
+                            localStorage.setItem('wx_moments', JSON.stringify(moments));
+                        }
+                        localStorage.setItem(key, JSON.stringify(value));
+                        return true;
+                    } catch (e4) {
+                        // 最后尝试：压缩现有图片
+                        try {
+                            wxCompressAllMomentsImages().then(function() {
+                                try {
+                                    localStorage.setItem(key, JSON.stringify(value));
+                                } catch (e5) {
+                                    console.error('wxSafeSave failed after all attempts:', e5);
+                                }
+                            });
+                        } catch (e5) {}
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
+    // 批量压缩朋友圈图片（异步）
+    function wxCompressAllMomentsImages() {
+        return new Promise(function(resolve) {
+            try {
+                let moments = JSON.parse(localStorage.getItem('wx_moments') || '[]');
+                let changed = false;
+                let compressed = 0;
+
+                function compressNext() {
+                    if (compressed >= moments.length || compressed >= 10) {
+                        if (changed) {
+                            try { localStorage.setItem('wx_moments', JSON.stringify(moments)); } catch (e) {}
+                        }
+                        resolve();
+                        return;
+                    }
+                    const m = moments[compressed];
+                    if (m.images && m.images.length > 0) {
+                        let imgsDone = 0;
+                        m.images.forEach(function(img, idx) {
+                            if (img && img.length > 80000) {
+                                wxCompressBase64(img, 600, 600, 0.4).then(function(comp) {
+                                    m.images[idx] = comp;
+                                    changed = true;
+                                    imgsDone++;
+                                    if (imgsDone === m.images.length) {
+                                        compressed++;
+                                        compressNext();
+                                    }
+                                }).catch(function() {
+                                    imgsDone++;
+                                    if (imgsDone === m.images.length) {
+                                        compressed++;
+                                        compressNext();
+                                    }
+                                });
+                            } else {
+                                imgsDone++;
+                                if (imgsDone === m.images.length) {
+                                    compressed++;
+                                    compressNext();
+                                }
+                            }
+                        });
+                    } else {
+                        compressed++;
+                        compressNext();
+                    }
+                }
+                compressNext();
+            } catch (e) {
+                resolve();
+            }
+        });
+    }
+
     window.wxShowToast = function(msg) {
         let toast = document.getElementById('wxToast');
         if (!toast) {
@@ -10882,6 +11084,34 @@ function mtUnmountReactApp() {
             localStorage.setItem('wx_chats', JSON.stringify(newChats));
         } catch (e) {}
 
+        // 删除消息记录
+        let messages = {};
+        try {
+            messages = JSON.parse(localStorage.getItem('wx_messages') || '{}');
+        } catch (e) {}
+        delete messages[wxCurrentContactId];
+        try {
+            localStorage.setItem('wx_messages', JSON.stringify(messages));
+        } catch (e) {}
+
+        // 从所有群聊中移除该联系人
+        let groups = [];
+        try {
+            groups = JSON.parse(localStorage.getItem('wx_groups') || '[]');
+        } catch (e) {}
+        let groupsChanged = false;
+        groups.forEach(group => {
+            if (group.members && group.members.indexOf(wxCurrentContactId) > -1) {
+                group.members = group.members.filter(id => id !== wxCurrentContactId);
+                groupsChanged = true;
+            }
+        });
+        if (groupsChanged) {
+            try {
+                localStorage.setItem('wx_groups', JSON.stringify(groups));
+            } catch (e) {}
+        }
+
         wxCloseContactMenu();
         wxCloseContactDetail();
 
@@ -10890,6 +11120,7 @@ function mtUnmountReactApp() {
             wxRenderContacts();
         }
 
+        debounceRenderChatList();
         wxShowToast('已删除联系人');
     };
 
@@ -11633,6 +11864,24 @@ function mtUnmountReactApp() {
         try {
             localStorage.setItem('wx_messages', JSON.stringify(messages));
         } catch (e) {}
+
+        // 从所有群聊中移除该联系人
+        let groups = [];
+        try {
+            groups = JSON.parse(localStorage.getItem('wx_groups') || '[]');
+        } catch (e) {}
+        let groupsChanged = false;
+        groups.forEach(group => {
+            if (group.members && group.members.indexOf(wxCurrentChatId) > -1) {
+                group.members = group.members.filter(id => id !== wxCurrentChatId);
+                groupsChanged = true;
+            }
+        });
+        if (groupsChanged) {
+            try {
+                localStorage.setItem('wx_groups', JSON.stringify(groups));
+            } catch (e) {}
+        }
 
         wxCloseChat();
         debounceRenderChatList();
@@ -12449,12 +12698,11 @@ function mtUnmountReactApp() {
             drafts.unshift(draftData);
         }
         
-        try {
-            localStorage.setItem('wx_moment_drafts', JSON.stringify(drafts));
+        if (wxSafeSave('wx_moment_drafts', drafts)) {
             wxShowToast('已保存到草稿');
             wxClosePostMoment();
             wxRenderDiscoverPage();
-        } catch (e) {
+        } else {
             wxShowToast('草稿内容过大，保存失败');
         }
     };
@@ -12489,10 +12737,13 @@ function mtUnmountReactApp() {
         });
         
         try {
-            localStorage.setItem('wx_moment_drafts', JSON.stringify(drafts));
-            wxShowToast('已保存到草稿');
-            wxClosePostTextMoment();
-            wxRenderDiscoverPage();
+            if (wxSafeSave('wx_moment_drafts', drafts)) {
+                wxShowToast('已保存到草稿');
+                wxClosePostTextMoment();
+                wxRenderDiscoverPage();
+            } else {
+                wxShowToast('保存失败');
+            }
         } catch (e) {
             wxShowToast('保存失败');
         }
@@ -12566,9 +12817,7 @@ function mtUnmountReactApp() {
         }
 
         moments.unshift(newMoment);
-        try {
-            localStorage.setItem('wx_moments', JSON.stringify(moments));
-        } catch (e) {
+        if (!wxSafeSave('wx_moments', moments)) {
             wxShowToast('内容过大，保存失败');
             return;
         }
@@ -12760,9 +13009,7 @@ function mtUnmountReactApp() {
         } catch (e) {}
 
         moments.unshift(newMoment);
-        try {
-            localStorage.setItem('wx_moments', JSON.stringify(moments));
-        } catch (e) {
+        if (!wxSafeSave('wx_moments', moments)) {
             wxShowToast('内容过大，保存失败');
             return;
         }
@@ -12867,12 +13114,11 @@ function mtUnmountReactApp() {
             mention: wxPostMomentMention.slice()
         });
         
-        try {
-            localStorage.setItem('wx_moment_drafts', JSON.stringify(drafts));
+        if (wxSafeSave('wx_moment_drafts', drafts)) {
             wxShowToast('已保存到草稿');
             wxClosePostImageMoment();
             wxRenderDiscoverPage();
-        } catch (e) {
+        } else {
             wxShowToast('草稿内容过大，保存失败');
         }
     };
@@ -12909,9 +13155,7 @@ function mtUnmountReactApp() {
         } catch (e) {}
 
         moments.unshift(newMoment);
-        try {
-            localStorage.setItem('wx_moments', JSON.stringify(moments));
-        } catch (e) {
+        if (!wxSafeSave('wx_moments', moments)) {
             wxShowToast('内容过大，保存失败');
             return;
         }
@@ -13095,11 +13339,28 @@ function mtUnmountReactApp() {
 
                 let loaded = 0;
                 toAdd.forEach(file => {
-                    wxCompressImage(file, 800, 800, 0.5).then(function(compressed) {
-                        wxPostMomentImages.push(compressed);
-                        loaded++;
-                        if (loaded === toAdd.length) {
-                            wxRenderPostMomentImages();
+                    wxCompressImage(file, 600, 600, 0.4).then(function(compressed) {
+                        // 如果还是太大，再压缩一次
+                        if (compressed.length > 100000) {
+                            wxCompressBase64(compressed, 400, 400, 0.3).then(function(compressed2) {
+                                wxPostMomentImages.push(compressed2);
+                                loaded++;
+                                if (loaded === toAdd.length) {
+                                    wxRenderPostMomentImages();
+                                }
+                            }).catch(function() {
+                                wxPostMomentImages.push(compressed);
+                                loaded++;
+                                if (loaded === toAdd.length) {
+                                    wxRenderPostMomentImages();
+                                }
+                            });
+                        } else {
+                            wxPostMomentImages.push(compressed);
+                            loaded++;
+                            if (loaded === toAdd.length) {
+                                wxRenderPostMomentImages();
+                            }
                         }
                     }).catch(function() {
                         loaded++;
@@ -13123,11 +13384,27 @@ function mtUnmountReactApp() {
 
                 let loaded = 0;
                 toAdd.forEach(file => {
-                    wxCompressImage(file, 800, 800, 0.5).then(function(compressed) {
-                        wxPostImageMomentImages.push(compressed);
-                        loaded++;
-                        if (loaded === toAdd.length) {
-                            wxRenderPostImageMomentImages();
+                    wxCompressImage(file, 600, 600, 0.4).then(function(compressed) {
+                        if (compressed.length > 100000) {
+                            wxCompressBase64(compressed, 400, 400, 0.3).then(function(compressed2) {
+                                wxPostImageMomentImages.push(compressed2);
+                                loaded++;
+                                if (loaded === toAdd.length) {
+                                    wxRenderPostImageMomentImages();
+                                }
+                            }).catch(function() {
+                                wxPostImageMomentImages.push(compressed);
+                                loaded++;
+                                if (loaded === toAdd.length) {
+                                    wxRenderPostImageMomentImages();
+                                }
+                            });
+                        } else {
+                            wxPostImageMomentImages.push(compressed);
+                            loaded++;
+                            if (loaded === toAdd.length) {
+                                wxRenderPostImageMomentImages();
+                            }
                         }
                     }).catch(function() {
                         loaded++;
@@ -13179,7 +13456,11 @@ function mtUnmountReactApp() {
         try {
             const accounts = JSON.parse(localStorage.getItem('wx_accounts') || '[]');
             const activeId = localStorage.getItem('wx_active_account_id') || 'me';
-            const user = accounts.find(a => a.id === activeId);
+            let user = accounts.find(a => a.id === activeId);
+            if (!user && accounts.length > 0) {
+                user = accounts[0];
+                localStorage.setItem('wx_active_account_id', user.id || activeId);
+            }
             return user || {};
         } catch (e) {
             return {};
@@ -13190,12 +13471,20 @@ function mtUnmountReactApp() {
         try {
             const accounts = JSON.parse(localStorage.getItem('wx_accounts') || '[]');
             const activeId = localStorage.getItem('wx_active_account_id') || 'me';
-            const idx = accounts.findIndex(a => a.id === activeId);
+            let idx = accounts.findIndex(a => a.id === activeId);
+            if (idx === -1) {
+                idx = accounts.findIndex(a => a.wxid && user.wxid && a.wxid === user.wxid);
+            }
             if (idx !== -1) {
                 accounts[idx] = { ...accounts[idx], ...user };
-                localStorage.setItem('wx_accounts', JSON.stringify(accounts));
+                if (!accounts[idx].id) {
+                    accounts[idx].id = activeId;
+                }
+                wxSafeSave('wx_accounts', accounts);
             } else {
-                localStorage.setItem('wx_user', JSON.stringify(user));
+                const newUser = { ...user, id: activeId };
+                accounts.unshift(newUser);
+                wxSafeSave('wx_accounts', accounts);
             }
         } catch (e) {}
     }
@@ -13210,11 +13499,43 @@ function mtUnmountReactApp() {
 
     function wxSaveAccounts(accounts) {
         try {
-            localStorage.setItem('wx_accounts', JSON.stringify(accounts));
+            wxSafeSave('wx_accounts', accounts);
         } catch (e) {}
     }
 
+    function wxEnsureCurrentAccountInList() {
+        try {
+            const accounts = wxGetAccounts();
+            const user = wxGetUser();
+            const activeId = localStorage.getItem('wx_active_account_id') || 'me';
+            const hasCurrent = accounts.some(a =>
+                (a.id && a.id === activeId) ||
+                (user.wxid && a.wxid === user.wxid)
+            );
+            if (!hasCurrent && user.wxid) {
+                const bio = user.signature || user.bio || user.persona || '';
+                const banner = user.banner || user.cover || '';
+                accounts.unshift({
+                    id: user.id || activeId,
+                    nickname: user.nickname || '我',
+                    wxid: user.wxid,
+                    avatar: user.avatar || '',
+                    bio: bio,
+                    banner: banner,
+                    signature: bio,
+                    persona: bio,
+                    cover: banner
+                });
+                wxSaveAccounts(accounts);
+            }
+            return accounts;
+        } catch (e) {
+            return wxGetAccounts();
+        }
+    }
+
     window.wxOpenAccountManager = function() {
+        wxEnsureCurrentAccountInList();
         const page = document.getElementById('wxPageAccountManager');
         if (page) page.classList.add('wx-page-show');
         wxRenderAccountList();
@@ -13229,6 +13550,7 @@ function mtUnmountReactApp() {
         const listEl = document.getElementById('wxAccountList');
         if (!listEl) return;
         const accounts = wxGetAccounts();
+        const user = wxGetUser();
         const activeId = localStorage.getItem('wx_active_account_id') || 'me';
 
         if (accounts.length === 0) {
@@ -13236,24 +13558,69 @@ function mtUnmountReactApp() {
             return;
         }
 
-        listEl.innerHTML = accounts.map(account => `
-            <div class="wx-account-item ${account.id === activeId ? 'active' : ''}" onclick="wxSwitchAccount('${account.id}')">
-                <div class="wx-account-avatar">
-                    ${account.avatar ? `<img src="${account.avatar}" alt="">` : `<span>${(account.nickname || '我').charAt(0)}</span>`}
+        const banners = [
+            'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            'linear-gradient(135deg, #f09433 0%, #dc2743 100%)',
+            'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+            'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+            'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+        ];
+
+        const userWxid = user.wxid;
+        listEl.innerHTML = accounts.map((account, idx) => {
+            const isCurrent = (account.id && account.id === activeId) || (userWxid && account.wxid === userWxid);
+            const banner = account.banner || account.cover || '';
+            const bannerBg = banner ? `url(${banner})` : banners[idx % banners.length];
+            const bannerStyle = banner
+                ? `background-image:${bannerBg};background-size:cover;background-position:center;`
+                : `background:${bannerBg};`;
+            const avatarHtml = account.avatar
+                ? `<img src="${account.avatar}" alt="">`
+                : `<span>${(account.nickname || '我').charAt(0)}</span>`;
+            return `
+                <div class="wx-account-item ${isCurrent ? 'active' : ''}">
+                    <div class="wx-account-item-banner" style="${bannerStyle}" onclick="wxChangeAccountBanner(${idx})">
+                        <span class="wx-account-banner-hint">点击更换封面</span>
+                    </div>
+                    ${isCurrent ? '<div class="wx-account-active-tag">当前账号</div>' : ''}
+                    <div class="wx-account-avatar">${avatarHtml}</div>
+                    <div class="wx-account-nickname">${account.nickname || '我'}</div>
+                    <div class="wx-account-wxid">${account.wxid || 'wxid_xxxx'}</div>
+                    <div class="wx-account-item-actions">
+                        ${isCurrent
+                            ? '<div class="wx-account-item-btn" onclick="wxShowToast(\'当前已在使用此账号\')">当前使用</div>'
+                            : `<div class="wx-account-item-btn wx-account-item-btn-dark" onclick="wxSwitchAccount(${idx})">切换账号</div>`}
+                    </div>
                 </div>
-                <div class="wx-account-nickname">${account.nickname || '我'}</div>
-                <div class="wx-account-wxid">${account.wxid || 'wxid_xxxx'}</div>
-                ${account.id === activeId ? '<div class="wx-account-active-tag">当前账号</div>' : ''}
-            </div>
-        `).join('');
+            `;
+        }).join('');
     }
 
-    window.wxSwitchAccount = function(accountId) {
+    window.wxSwitchAccount = function(idx) {
         const accounts = wxGetAccounts();
-        const account = accounts.find(a => a.id === accountId);
+        const account = accounts[idx];
         if (!account) return;
 
-        localStorage.setItem('wx_active_account_id', accountId);
+        localStorage.setItem('wx_active_account_id', account.id);
+        
+        // 保存 wx_user 以兼容旧代码
+        try {
+            const user = wxGetUser();
+            const newUser = {
+                id: account.id,
+                nickname: account.nickname,
+                wxid: account.wxid,
+                avatar: account.avatar,
+                signature: account.bio || account.persona || account.signature || '',
+                bio: account.bio || account.persona || account.signature || '',
+                banner: account.banner || account.cover || '',
+                cover: account.banner || account.cover || '',
+                persona: account.bio || account.persona || account.signature || '',
+                contacts: user.contacts
+            };
+            localStorage.setItem('wx_user', JSON.stringify(newUser));
+        } catch(e) {}
+        
         wxShowToast(`已切换到 ${account.nickname || '我'}`);
         
         wxRenderMe();
@@ -13261,6 +13628,8 @@ function mtUnmountReactApp() {
         wxRenderMoments();
         wxRenderChatList();
         wxRenderContacts();
+        if (typeof wxRenderAccounts === 'function') wxRenderAccounts();
+        if (typeof wxRenderAccountList === 'function') wxRenderAccountList();
         
         wxCloseAccountManager();
     };
@@ -13283,32 +13652,52 @@ function mtUnmountReactApp() {
     };
 
     window.wxSaveNewAccount = function() {
-        const nickname = document.getElementById('wxAddAccountNickname')?.value?.trim() || '';
-        const wxid = document.getElementById('wxAddAccountWxid')?.value?.trim() || '';
-        const persona = document.getElementById('wxAddAccountPersona')?.value?.trim() || '';
+        try {
+            const nickname = document.getElementById('wxAddAccountNickname')?.value?.trim() || '';
+            const wxid = document.getElementById('wxAddAccountWxid')?.value?.trim() || '';
+            const persona = document.getElementById('wxAddAccountPersona')?.value?.trim() || '';
 
-        if (!nickname) {
-            wxShowToast('请输入昵称');
-            return;
+            if (!nickname) {
+                wxShowToast('请输入昵称');
+                return;
+            }
+            if (!wxid) {
+                wxShowToast('请输入微信号');
+                return;
+            }
+
+            wxEnsureCurrentAccountInList();
+            const accounts = wxGetAccounts();
+            if (accounts.find(a => a.wxid === wxid)) {
+                wxShowToast('该微信号已存在');
+                return;
+            }
+
+            const newAccount = {
+                id: 'account_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+                avatar: wxAddAccountAvatar || '',
+                nickname: nickname,
+                wxid: wxid,
+                bio: persona,
+                banner: '',
+                signature: persona,
+                persona: persona,
+                cover: ''
+            };
+
+            accounts.push(newAccount);
+            wxSaveAccounts(accounts);
+
+            if (typeof wxRenderAccounts === 'function') wxRenderAccounts();
+            if (typeof wxRenderAccountList === 'function') wxRenderAccountList();
+
+            wxShowToast('添加成功');
+            wxCloseAddAccount();
+            wxOpenAccountManager();
+        } catch (err) {
+            console.error('wxSaveNewAccount error:', err);
+            wxShowToast('保存失败：' + (err && err.message ? err.message : '未知错误'));
         }
-
-        const newAccount = {
-            id: 'account_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
-            avatar: wxAddAccountAvatar,
-            nickname: nickname,
-            wxid: wxid || 'wxid_' + Math.random().toString(36).substr(2, 10),
-            persona: persona,
-            cover: '',
-            signature: ''
-        };
-
-        const accounts = wxGetAccounts();
-        accounts.push(newAccount);
-        wxSaveAccounts(accounts);
-
-        wxShowToast('添加成功');
-        wxCloseAddAccount();
-        wxOpenAccountManager();
     };
 
     document.getElementById('wxAddAccountAvatarUpload')?.addEventListener('click', function() {
@@ -13875,10 +14264,15 @@ function mtUnmountReactApp() {
         catch(e) { return []; }
     }
     function wxSaveAccounts(list) {
-        localStorage.setItem('wx_accounts', JSON.stringify(list));
+        if (!wxSafeSave('wx_accounts', list)) {
+            console.error('Failed to save accounts');
+            return false;
+        }
+        return true;
     }
 
     window.wxMeAccounts = function() {
+        wxEnsureCurrentAccountInList();
         wxRenderAccounts();
         const page = document.getElementById('wxPageAccounts');
         if (page) page.classList.add('wx-page-show');
@@ -13889,22 +14283,11 @@ function mtUnmountReactApp() {
     };
 
     function wxRenderAccounts() {
-        let list = wxGetAccounts();
+        const list = wxGetAccounts();
         const user = wxGetUser();
         const container = document.getElementById('wxAccountsList');
         if (!container) return;
-        // 确保当前登录账号在列表中
-        const hasCurrent = list.some(a => a.wxid === user.wxid);
-        if (!hasCurrent) {
-            list = [{
-                nickname: user.nickname || '我',
-                wxid: user.wxid || 'wxid_default',
-                avatar: user.avatar || '',
-                bio: user.signature || user.bio || '',
-                banner: user.banner || ''
-            }, ...list];
-            wxSaveAccounts(list);
-        }
+
         const banners = [
             'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             'linear-gradient(135deg, #f09433 0%, #dc2743 100%)',
@@ -13912,10 +14295,13 @@ function mtUnmountReactApp() {
             'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
             'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
         ];
+        const userWxid = user.wxid;
         container.innerHTML = list.map((acc, idx) => {
-            const isCurrent = acc.wxid === user.wxid;
-            const bannerBg = acc.banner ? `url(${acc.banner})` : banners[idx % banners.length];
-            const bannerStyle = acc.banner
+            const isCurrent = userWxid && acc.wxid === userWxid;
+            const banner = acc.banner || acc.cover || '';
+            const bio = acc.bio || acc.persona || acc.signature || '';
+            const bannerBg = banner ? `url(${banner})` : banners[idx % banners.length];
+            const bannerStyle = banner
                 ? `background-image:${bannerBg};background-size:cover;background-position:center;`
                 : `background:${bannerBg};`;
             const avatarHtml = acc.avatar
@@ -13930,7 +14316,7 @@ function mtUnmountReactApp() {
                     '<div class="wx-account-card-avatar">' + avatarHtml + '</div>' +
                     '<div class="wx-account-card-name">' + (acc.nickname || '未命名') + '</div>' +
                     '<div class="wx-account-card-wxid">微信号：' + (acc.wxid || '未设置') + '</div>' +
-                    (acc.bio ? '<div class="wx-account-card-bio">' + acc.bio + '</div>' : '') +
+                    (bio ? '<div class="wx-account-card-bio">' + bio + '</div>' : '') +
                     '<div class="wx-account-card-actions">' +
                         (isCurrent
                             ? '<div class="wx-account-card-btn wx-account-card-btn-light" onclick="wxShowToast(\'当前已在使用此账号\')">当前使用</div>'
@@ -13959,13 +14345,16 @@ function mtUnmountReactApp() {
                     const list = wxGetAccounts();
                     if (list[idx]) {
                         list[idx].banner = bannerData;
+                        list[idx].cover = bannerData;
                         wxSaveAccounts(list);
                         const user = wxGetUser();
                         if (list[idx].wxid === user.wxid) {
                             user.banner = bannerData;
+                            user.cover = bannerData;
                             wxSaveUser(user);
                         }
-                        wxRenderAccounts();
+                        if (typeof wxRenderAccounts === 'function') wxRenderAccounts();
+                        if (typeof wxRenderAccountList === 'function') wxRenderAccountList();
                         wxShowToast('封面已更换');
                     }
                 }).catch(function(err) {
@@ -13987,25 +14376,52 @@ function mtUnmountReactApp() {
         const accounts = wxGetAccounts();
         if (!accounts.find(a => a.wxid === user.wxid)) {
             accounts.unshift({
+                id: user.id || 'me',
                 nickname: user.nickname,
                 wxid: user.wxid,
                 avatar: user.avatar,
-                bio: user.signature
+                bio: user.signature || user.bio || user.persona || '',
+                banner: user.banner || user.cover || '',
+                signature: user.signature || user.bio || user.persona || '',
+                persona: user.signature || user.bio || user.persona || '',
+                cover: user.banner || user.cover || ''
             });
             wxSaveAccounts(accounts);
         }
-        // 切换到目标账号
+        // 切换到目标账号 - 更新 activeId
+        if (acc.id) {
+            localStorage.setItem('wx_active_account_id', acc.id);
+        }
+        // 同时确保用户数据也更新（兼容旧代码）
         const newUser = {
+            id: acc.id,
             nickname: acc.nickname,
             wxid: acc.wxid,
             avatar: acc.avatar,
-            signature: acc.bio,
+            signature: acc.bio || acc.persona || acc.signature || '',
+            bio: acc.bio || acc.persona || acc.signature || '',
+            banner: acc.banner || acc.cover || '',
+            cover: acc.banner || acc.cover || '',
+            persona: acc.bio || acc.persona || acc.signature || '',
             contacts: user.contacts
         };
-        wxSaveUser(newUser);
+        try {
+            localStorage.setItem('wx_user', JSON.stringify(newUser));
+        } catch(e) {}
         wxRenderProfile();
+        if (typeof wxRenderMe === 'function') wxRenderMe();
+        if (typeof wxRenderMoments === 'function') wxRenderMoments();
+        if (typeof wxRenderChatList === 'function') wxRenderChatList();
+        if (typeof wxRenderContacts === 'function') wxRenderContacts();
+        if (typeof wxRenderAccounts === 'function') wxRenderAccounts();
+        if (typeof wxRenderAccountList === 'function') wxRenderAccountList();
         wxShowToast('已切换到 ' + (acc.nickname || '新账号'));
-        setTimeout(() => { wxCloseAccounts(); wxCloseProfile(); wxOpenApp(); }, 800);
+        setTimeout(() => {
+            if (typeof wxCloseAccounts === 'function') wxCloseAccounts();
+            if (typeof wxCloseAccountManager === 'function') wxCloseAccountManager();
+            if (typeof wxCloseProfile === 'function') wxCloseProfile();
+            if (typeof wxOpenApp === 'function') wxOpenApp();
+        }, 800);
     };
 
     window.wxDeleteAccount = function(idx) {
@@ -14021,13 +14437,15 @@ function mtUnmountReactApp() {
             wxShowConfirm('确认删除账号「' + (acc.nickname || '未命名') + '」？', function() {
                 list.splice(idx, 1);
                 wxSaveAccounts(list);
-                wxRenderAccounts();
+                if (typeof wxRenderAccounts === 'function') wxRenderAccounts();
+                if (typeof wxRenderAccountList === 'function') wxRenderAccountList();
                 wxShowToast('已删除');
             });
         } else if (confirm('确认删除账号「' + (acc.nickname || '未命名') + '」？')) {
             list.splice(idx, 1);
             wxSaveAccounts(list);
-            wxRenderAccounts();
+            if (typeof wxRenderAccounts === 'function') wxRenderAccounts();
+            if (typeof wxRenderAccountList === 'function') wxRenderAccountList();
         }
     };
 
@@ -14066,9 +14484,20 @@ function mtUnmountReactApp() {
             const bio = bioInput ? bioInput.value.trim() : '';
             if (!nickname) { wxShowToast('请输入昵称'); return; }
             if (!wxid) { wxShowToast('请输入微信号'); return; }
+            wxEnsureCurrentAccountInList();
             const list = wxGetAccounts();
             if (list.find(a => a.wxid === wxid)) { wxShowToast('该微信号已存在'); return; }
-            list.push({ nickname, wxid, avatar: wxNewAccountAvatar || '', bio });
+            list.push({
+                id: 'account_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+                nickname: nickname,
+                wxid: wxid,
+                avatar: wxNewAccountAvatar || '',
+                bio: bio,
+                banner: '',
+                signature: bio,
+                persona: bio,
+                cover: ''
+            });
             wxSaveAccounts(list);
             if (typeof wxRenderAccounts === 'function') wxRenderAccounts();
             if (typeof wxRenderAccountList === 'function') wxRenderAccountList();

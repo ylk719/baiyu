@@ -15112,6 +15112,7 @@ body .mt-app-container .mt-success-btn:active {
     display: none;
     width: 100%;
     min-height: 100%;
+    position: relative;
 }
 .wx-tab-page.active {
     display: block;
@@ -16942,8 +16943,8 @@ select.wx-form-input {
 /* 账号管理页面 - Instagram风格 */
 .wx-account-list {
     padding: 16px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: 16px;
 }
 .wx-account-item {
@@ -17007,6 +17008,60 @@ select.wx-form-input {
     border-radius: 12px;
     margin-top: 10px;
     font-weight: 600;
+}
+/* 账号卡片封面（切换账号页） */
+.wx-account-item-banner {
+    width: 100%;
+    height: 80px;
+    border-radius: 14px 14px 0 0;
+    margin-bottom: -20px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: opacity 0.2s ease;
+}
+.wx-account-item-banner:active {
+    opacity: 0.85;
+}
+.wx-account-item-banner .wx-account-banner-hint {
+    position: absolute;
+    bottom: 6px;
+    right: 8px;
+    font-size: 10px;
+    color: #fff;
+    background: rgba(0,0,0,0.4);
+    padding: 3px 8px;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+.wx-account-item-banner:hover .wx-account-banner-hint {
+    opacity: 1;
+}
+.wx-account-item-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    justify-content: center;
+}
+.wx-account-item-btn {
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 14px;
+    background: #f2f2f2;
+    color: #262626;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.wx-account-item-btn:active {
+    transform: scale(0.96);
+    opacity: 0.85;
+}
+.wx-account-item-btn-dark {
+    background: linear-gradient(135deg, #f09433 0%, #dc2743 100%);
+    color: #fff;
 }
 
 /* 添加账号页面 - Instagram风格 */
@@ -21422,6 +21477,37 @@ body{
     transition: transform 0.15s;
 }
 .wx-disco-fab:active { transform: scale(0.92); }
+/* 发现页顶部透明导航栏 */
+.wx-disco-topbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    z-index: 15;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.25), transparent);
+}
+.wx-disco-topbar-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.15s;
+}
+.wx-disco-topbar-btn:active { background: rgba(255,255,255,0.15); }
+.wx-disco-topbar-title {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
 .wx-disco-cover {
     position: relative;
     width: 100%;
