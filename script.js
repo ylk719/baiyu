@@ -7404,9 +7404,9 @@ function mtUnmountReactApp() {
                     ? `wxOpenGroupChat('${chat.id}')`
                     : `wxOpenChat('${chat.id}')`;
                 const groupIcon = isGroup ? '<div class="wx-chat-group-tag"></div>' : '';
-                const groupTypeTag = (isGroup && chat.groupType === 'empty')
-                    ? '<span class="wx-chat-empty-group-tag">空白群聊</span>'
-                    : (isGroup && chat.groupType === 'members')
+                const groupTypeTag = (isGroup && chat.includeUser === 'no')
+                    ? '<span class="wx-chat-empty-group-tag">不含用户</span>'
+                    : (isGroup && (chat.groupType === 'members' || chat.groupType === 'empty'))
                         ? '<span class="wx-chat-members-group-tag">成员群聊</span>'
                         : '';
                 const draftText = drafts[chat.id];
@@ -8262,6 +8262,13 @@ function mtUnmountReactApp() {
         if (typeof wxOpenPostTextMoment === 'function') wxOpenPostTextMoment();
     };
 
+    // 发布纯图片
+    window.wxDiscoPostImageOnly = function() {
+        const menu = document.getElementById('wxDiscoAddMenu');
+        if (menu) menu.classList.remove('show');
+        if (typeof wxOpenPostImageMoment === 'function') wxOpenPostImageMoment();
+    };
+
     // 封面上传
     window.wxTriggerDiscoCoverUpload = function(e) {
         if (e) { e.stopPropagation(); e.preventDefault(); }
@@ -8650,72 +8657,28 @@ function mtUnmountReactApp() {
     };
 
     // AI生成朋友圈内容（全新实现）
+    // 使用用户本人的头像和名字，以选中char的人设口吻发布，内容由char定义
     function wxGenerateAIMoment(type, contact) {
-        const name = contact.displayName || contact.remark || contact.name || '未知';
+        const user = wxGetUser();
+        // 使用用户本人的头像和名字
+        const myName = user.nickname || '我';
+        const myAvatar = user.avatar || '';
 
-        // 根据联系人名字生成稳定的"人设风格"文案
-        const personaTexts = {
-            literary: [
-                '窗外的雨下了一整天，适合读一本旧书。',
-                '把日子过成诗，在平凡里寻找温柔。',
-                '今天的云很好看，像揉碎的棉花糖。'
-            ],
-            foodie: [
-                '今天终于吃到心心念念的那家店，满足！',
-                '没有什么是一顿火锅解决不了的，如果有，那就两顿。',
-                '深夜放毒：刚做好的红烧肉，香迷糊了。'
-            ],
-            travel: [
-                '在路上，总能遇见不一样的风景。',
-                '今天去了个新地方，空气都是甜的。',
-                '远方很远，但一步一步总会到达。'
-            ],
-            daily: [
-                '今天又是元气满满的一天呀～',
-                '加班到深夜，但是看到路灯也很温柔。',
-                '周末的快乐来自睡到自然醒。'
-            ]
-        };
+        // 使用联系人的人设作为口吻依据
+        const persona = contact.persona || contact.bio || '';
+        const contactName = contact.displayName || contact.remark || contact.name || '未知';
 
-        const personaKeys = Object.keys(personaTexts);
-        const personaIdx = name.charCodeAt(0) % personaKeys.length;
-        const personaKey = personaKeys[personaIdx];
-
+        // 根据联系人人设生成文案
         let text = '';
         if (type !== 'image') {
-            const texts = personaTexts[personaKey];
-            text = texts[Math.floor(Math.random() * texts.length)];
+            // 基于人设文本生成口吻
+            text = wxGeneratePersonaText(contact, persona);
         }
 
         let images = [];
         if (type === 'imageText' || type === 'image') {
-            const colorPairs = [
-                ['#ffecd2', '#fcb69f'],
-                ['#a8edea', '#fed6e3'],
-                ['#d299c2', '#fef9d7'],
-                ['#fbc2eb', '#a6c1ee'],
-                ['#fdcbf1', '#e6dee9'],
-                ['#84fab0', '#8fd3f4'],
-                ['#f6d365', '#fda085'],
-                ['#c2e9fb', '#a1c4fd']
-            ];
-            const pair = colorPairs[Math.floor(Math.random() * colorPairs.length)];
-            const canvas = document.createElement('canvas');
-            canvas.width = 400;
-            canvas.height = 400;
-            const ctx = canvas.getContext('2d');
-            const gradient = ctx.createLinearGradient(0, 0, 400, 400);
-            gradient.addColorStop(0, pair[0]);
-            gradient.addColorStop(1, pair[1]);
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, 400, 400);
-            ctx.fillStyle = 'rgba(255,255,255,0.35)';
-            ctx.font = '48px serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            const emojis = ['🌸', '🌿', '☁️', '🌙', '✨', '🍃', '🌺', '🦋'];
-            ctx.fillText(emojis[Math.floor(Math.random() * emojis.length)], 200, 200);
-            images = [canvas.toDataURL('image/png')];
+            // 基于人设生成配图
+            images = wxGeneratePersonaImage(contact);
         }
 
         const now = new Date();
@@ -8723,16 +8686,113 @@ function mtUnmountReactApp() {
 
         return {
             id: 'moment_' + Date.now(),
-            nickname: name,
-            avatar: contact.avatar || '',
+            userId: user.id || 'me',
+            nickname: myName,
+            avatar: myAvatar,
             text: text,
             images: images,
             time: timeStr,
             location: '',
             mention: '',
             likes: [],
-            comments: []
+            comments: [],
+            aiGenerated: true,
+            aiPersonaName: contactName,
+            aiPersonaId: contact.id || ''
         };
+    }
+
+    // 根据联系人人设生成文案
+    function wxGeneratePersonaText(contact, persona) {
+        const contactName = contact.displayName || contact.remark || contact.name || '未知';
+        // 根据人设文本关键词判断风格
+        const personaLower = (persona || '').toLowerCase();
+        let style = 'daily';
+
+        if (personaLower.match(/文艺|诗|书|雨|云|温柔|风|光|花|月|夜/)) {
+            style = 'literary';
+        } else if (personaLower.match(/吃|美食|火锅|做饭|料理|甜|奶茶|宵夜/)) {
+            style = 'foodie';
+        } else if (personaLower.match(/旅行|远方|风景|路上|出发|世界|冒险/)) {
+            style = 'travel';
+        } else if (personaLower.match(/元气|开心|快乐|加油|冲|努力|奋斗/)) {
+            style = 'energetic';
+        }
+
+        const styleTexts = {
+            literary: [
+                '窗外的雨下了一整天，适合读一本旧书。',
+                '把日子过成诗，在平凡里寻找温柔。',
+                '今天的云很好看，像揉碎的棉花糖。',
+                '风里有秋天的味道，你闻到了吗？',
+                '愿你被这世界温柔以待。'
+            ],
+            foodie: [
+                '今天终于吃到心心念念的那家店，满足！',
+                '没有什么是一顿火锅解决不了的，如果有，那就两顿。',
+                '深夜放毒：刚做好的红烧肉，香迷糊了。',
+                '生活有点苦，需要一点甜。',
+                '胃满了，心也就满了。'
+            ],
+            travel: [
+                '在路上，总能遇见不一样的风景。',
+                '今天去了个新地方，空气都是甜的。',
+                '远方很远，但一步一步总会到达。',
+                '世界很大，我想去看看。',
+                '每一次出发，都是一次新的遇见。'
+            ],
+            energetic: [
+                '今天又是元气满满的一天呀～',
+                '加班到深夜，但是看到路灯也很温柔。',
+                '周末的快乐来自睡到自然醒。',
+                '冲鸭！今天也要加油！',
+                '笑一笑，没什么大不了。'
+            ],
+            daily: [
+                '今天又是普通的一天呢。',
+                '生活就是这样，平平淡淡才是真。',
+                '记录一下今天的小确幸。',
+                '日子一天天过，记得给自己一个微笑。',
+                '简单的生活，也有小小的幸福。'
+            ]
+        };
+
+        const texts = styleTexts[style] || styleTexts.daily;
+        // 基于联系人名字稳定选择
+        const idx = contactName.charCodeAt(0) % texts.length;
+        return texts[idx];
+    }
+
+    // 根据联系人人设生成配图
+    function wxGeneratePersonaImage(contact) {
+        const contactName = contact.displayName || contact.remark || contact.name || '未知';
+        const colorPairs = [
+            ['#ffecd2', '#fcb69f'],
+            ['#a8edea', '#fed6e3'],
+            ['#d299c2', '#fef9d7'],
+            ['#fbc2eb', '#a6c1ee'],
+            ['#fdcbf1', '#e6dee9'],
+            ['#84fab0', '#8fd3f4'],
+            ['#f6d365', '#fda085'],
+            ['#c2e9fb', '#a1c4fd']
+        ];
+        const pair = colorPairs[contactName.charCodeAt(0) % colorPairs.length];
+        const canvas = document.createElement('canvas');
+        canvas.width = 400;
+        canvas.height = 400;
+        const ctx = canvas.getContext('2d');
+        const gradient = ctx.createLinearGradient(0, 0, 400, 400);
+        gradient.addColorStop(0, pair[0]);
+        gradient.addColorStop(1, pair[1]);
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 400, 400);
+        ctx.fillStyle = 'rgba(255,255,255,0.35)';
+        ctx.font = '48px serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        const emojis = ['🌸', '🌿', '☁️', '🌙', '✨', '🍃', '🌺', '🦋'];
+        ctx.fillText(emojis[contactName.charCodeAt(0) % emojis.length], 200, 200);
+        return [canvas.toDataURL('image/jpeg', 0.6)];
     }
     // ========== AI代发朋友圈 END ==========
 
@@ -8843,7 +8903,9 @@ function mtUnmountReactApp() {
             return;
         }
         pinnedEl.innerHTML = groups.map(group => {
-            const count = (group.members ? group.members.length : 0) + 1;
+            const memberCount = group.members ? group.members.length : 0;
+            const includeUser = group.includeUser !== 'no';
+            const count = includeUser ? (memberCount + 1) : memberCount;
             const groupName = (group.name || '').replace(/</g, '&lt;') || '未命名';
             const firstChar = groupName.charAt(0) || '?';
             const avatarHtml = group.avatar
@@ -8901,18 +8963,19 @@ function mtUnmountReactApp() {
         wxCreateGroupAvatar = '';
         wxSelectedGroupMembers = [];
         wxCurrentGroupType = 'members';
+        wxCurrentGroupIncludeUser = 'yes';
         const avatarImg = document.getElementById('wxGroupAvatarImg');
         const nameInput = document.getElementById('wxGroupNameInput');
         const introInput = document.getElementById('wxGroupIntroInput');
         const memberSection = document.querySelector('.wx-group-select-section');
-        const typeItems = document.querySelectorAll('.wx-group-type-item');
+        const includeItems = document.querySelectorAll('.wx-group-include-user-item');
         if (avatarImg) { avatarImg.src = ''; avatarImg.style.display = 'none'; }
         if (nameInput) nameInput.value = '';
         if (introInput) introInput.value = '';
         if (memberSection) memberSection.style.display = 'block';
-        if (typeItems) {
-            typeItems.forEach(function(item) {
-                item.classList.toggle('active', item.getAttribute('data-type') === 'members');
+        if (includeItems) {
+            includeItems.forEach(function(item) {
+                item.classList.toggle('active', item.getAttribute('data-include') === 'yes');
             });
         }
         wxRenderGroupMemberList();
@@ -8922,18 +8985,19 @@ function mtUnmountReactApp() {
     };
 
     let wxCurrentGroupType = 'members';
-    window.wxSwitchGroupType = function(type) {
-        wxCurrentGroupType = type;
-        const typeItems = document.querySelectorAll('.wx-group-type-item');
-        const memberSection = document.querySelector('.wx-group-select-section');
-        if (typeItems) {
-            typeItems.forEach(function(item) {
-                item.classList.toggle('active', item.getAttribute('data-type') === type);
+    let wxCurrentGroupIncludeUser = 'yes';
+    window.wxSwitchGroupIncludeUser = function(include) {
+        wxCurrentGroupIncludeUser = include;
+        const includeItems = document.querySelectorAll('.wx-group-include-user-item');
+        if (includeItems) {
+            includeItems.forEach(function(item) {
+                item.classList.toggle('active', item.getAttribute('data-include') === include);
             });
         }
-        if (memberSection) {
-            memberSection.style.display = type === 'members' ? 'block' : 'none';
-        }
+    };
+    // 兼容旧调用
+    window.wxSwitchGroupType = function(type) {
+        wxCurrentGroupType = type === 'empty' ? 'members' : type;
     };
 
     // 打开添加角色页面
@@ -9921,6 +9985,73 @@ function mtUnmountReactApp() {
         wxProactiveLocks[chatId] = false;
     }
     /* ============ 联系人主动发消息 END ============ */
+
+    // 图片压缩工具函数
+    function wxCompressImage(file, maxWidth, maxHeight, quality) {
+        maxWidth = maxWidth || 1280;
+        maxHeight = maxHeight || 1280;
+        quality = quality || 0.7;
+        return new Promise(function(resolve, reject) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    let width = img.width;
+                    let height = img.height;
+                    if (width > maxWidth || height > maxHeight) {
+                        const ratio = Math.min(maxWidth / width, maxHeight / height);
+                        width = Math.round(width * ratio);
+                        height = Math.round(height * ratio);
+                    }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    const compressed = canvas.toDataURL('image/jpeg', quality);
+                    resolve(compressed);
+                };
+                img.onerror = function() {
+                    reject(new Error('图片加载失败'));
+                };
+                img.src = e.target.result;
+            };
+            reader.onerror = function() {
+                reject(new Error('文件读取失败'));
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // 压缩base64图片
+    function wxCompressBase64(base64Str, maxWidth, maxHeight, quality) {
+        maxWidth = maxWidth || 1280;
+        maxHeight = maxHeight || 1280;
+        quality = quality || 0.7;
+        return new Promise(function(resolve, reject) {
+            const img = new Image();
+            img.onload = function() {
+                let width = img.width;
+                let height = img.height;
+                if (width > maxWidth || height > maxHeight) {
+                    const ratio = Math.min(maxWidth / width, maxHeight / height);
+                    width = Math.round(width * ratio);
+                    height = Math.round(height * ratio);
+                }
+                const canvas = document.createElement('canvas');
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+                const compressed = canvas.toDataURL('image/jpeg', quality);
+                resolve(compressed);
+            };
+            img.onerror = function() {
+                reject(new Error('图片加载失败'));
+            };
+            img.src = base64Str;
+        });
+    }
 
     // Toast提示
     window.wxShowToast = function(msg) {
@@ -11589,11 +11720,11 @@ function mtUnmountReactApp() {
     document.getElementById('wxChatImageFile')?.addEventListener('change', function(e) {
         const file = e.target.files?.[0];
         if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-            wxSendChatImage(evt.target?.result);
-        };
-        reader.readAsDataURL(file);
+        wxCompressImage(file, 1080, 1080, 0.7).then(function(compressed) {
+            wxSendChatImage(compressed);
+        }).catch(function() {
+            wxShowToast('图片发送失败');
+        });
         e.target.value = '';
     });
     window.wxSendChatImage = function(base64) {
@@ -12318,11 +12449,14 @@ function mtUnmountReactApp() {
             drafts.unshift(draftData);
         }
         
-        localStorage.setItem('wx_moment_drafts', JSON.stringify(drafts));
-        wxShowToast('已保存到草稿');
-        
-        wxClosePostMoment();
-        wxRenderDiscoverPage();
+        try {
+            localStorage.setItem('wx_moment_drafts', JSON.stringify(drafts));
+            wxShowToast('已保存到草稿');
+            wxClosePostMoment();
+            wxRenderDiscoverPage();
+        } catch (e) {
+            wxShowToast('草稿内容过大，保存失败');
+        }
     };
 
     window.wxSaveTextMomentDraft = function() {
@@ -12354,11 +12488,14 @@ function mtUnmountReactApp() {
             mention: wxPostMomentMention.slice()
         });
         
-        localStorage.setItem('wx_moment_drafts', JSON.stringify(drafts));
-        wxShowToast('已保存到草稿');
-        
-        wxClosePostTextMoment();
-        wxRenderDiscoverPage();
+        try {
+            localStorage.setItem('wx_moment_drafts', JSON.stringify(drafts));
+            wxShowToast('已保存到草稿');
+            wxClosePostTextMoment();
+            wxRenderDiscoverPage();
+        } catch (e) {
+            wxShowToast('保存失败');
+        }
     };
 
     window.wxSubmitPostMoment = function() {
@@ -12455,6 +12592,8 @@ function mtUnmountReactApp() {
         wxPostMomentLocation = locations[nextIndex];
         const textEl = document.getElementById('wxPostMomentLocationText');
         if (textEl) textEl.textContent = wxPostMomentLocation;
+        const textEl2 = document.getElementById('wxPostImageMomentLocationText');
+        if (textEl2) textEl2.textContent = wxPostMomentLocation;
         wxShowToast('位置已改为：' + wxPostMomentLocation);
     };
 
@@ -12473,6 +12612,8 @@ function mtUnmountReactApp() {
         if (textEl) textEl.textContent = visibilities[nextIndex].text;
         const textEl2 = document.getElementById('wxPostTextMomentVisibilityText');
         if (textEl2) textEl2.textContent = visibilities[nextIndex].text;
+        const textEl3 = document.getElementById('wxPostImageMomentVisibilityText');
+        if (textEl3) textEl3.textContent = visibilities[nextIndex].text;
         wxShowToast('可见范围已改为：' + visibilities[nextIndex].text);
     };
 
@@ -12560,6 +12701,8 @@ function mtUnmountReactApp() {
             if (textEl) textEl.textContent = displayText;
             const textEl2 = document.getElementById('wxPostTextMomentMentionText');
             if (textEl2) textEl2.textContent = displayText;
+            const textEl3 = document.getElementById('wxPostImageMomentMentionText');
+            if (textEl3) textEl3.textContent = displayText;
             closePicker();
         });
     };
@@ -12625,6 +12768,155 @@ function mtUnmountReactApp() {
         }
 
         wxClosePostTextMoment();
+        wxRenderMoments();
+        wxRenderDiscoverPage();
+        wxShowToast('发表成功');
+        wxTriggerMomentsAiInteraction(newMoment.id);
+    };
+
+    // 发布纯图片朋友圈
+    let wxPostImageMomentImages = [];
+
+    window.wxOpenPostImageMoment = function() {
+        wxPostImageMomentImages = [];
+        wxPostMomentVisibility = 'public';
+        wxPostMomentVisibleTo = [];
+        wxPostMomentMention = [];
+        wxPostMomentLocation = '';
+        const imagesEl = document.getElementById('wxPostImageMomentImages');
+        if (imagesEl) {
+            imagesEl.innerHTML = `
+                <div class="wx-post-moment-add-btn" onclick="wxTriggerImageMomentImageUpload()">
+                    <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#ccc" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </div>
+            `;
+        }
+        const locEl = document.getElementById('wxPostImageMomentLocationText');
+        if (locEl) locEl.textContent = '不显示位置';
+        const visEl = document.getElementById('wxPostImageMomentVisibilityText');
+        if (visEl) visEl.textContent = '公开';
+        const menEl = document.getElementById('wxPostImageMomentMentionText');
+        if (menEl) menEl.textContent = '';
+        const page = document.getElementById('wxPagePostImageMoment');
+        if (page) page.classList.add('wx-page-show');
+    };
+
+    window.wxClosePostImageMoment = function() {
+        const page = document.getElementById('wxPagePostImageMoment');
+        if (page) page.classList.remove('wx-page-show');
+    };
+
+    window.wxTriggerImageMomentImageUpload = function() {
+        const fileInput = document.getElementById('wxImageMomentImageFile');
+        if (fileInput) fileInput.click();
+    };
+
+    function wxRenderPostImageMomentImages() {
+        const imagesEl = document.getElementById('wxPostImageMomentImages');
+        if (!imagesEl) return;
+
+        let html = '';
+        wxPostImageMomentImages.forEach((img, idx) => {
+            html += `
+                <div class="wx-post-moment-img-item">
+                    <img src="${img}" alt="">
+                    <div class="wx-post-moment-img-delete" onclick="wxDeleteImageMomentImage(${idx})">×</div>
+                </div>
+            `;
+        });
+
+        if (wxPostImageMomentImages.length < 9) {
+            html += `
+                <div class="wx-post-moment-add-btn" onclick="wxTriggerImageMomentImageUpload()">
+                    <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#ccc" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </div>
+            `;
+        }
+
+        imagesEl.innerHTML = html;
+    }
+
+    window.wxDeleteImageMomentImage = function(index) {
+        wxPostImageMomentImages.splice(index, 1);
+        wxRenderPostImageMomentImages();
+    };
+
+    window.wxSaveImageMomentDraft = function() {
+        if (wxPostImageMomentImages.length === 0) {
+            wxShowToast('请添加图片');
+            return;
+        }
+
+        const user = wxGetUser();
+        const now = new Date();
+        const timeStr = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + ' ' + 
+                        now.getHours() + ':' + (now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes());
+
+        let drafts = [];
+        try { drafts = JSON.parse(localStorage.getItem('wx_moment_drafts') || '[]'); } catch (e) {}
+        
+        drafts.unshift({
+            id: 'draft_' + Date.now(),
+            userId: user.id || 'me',
+            nickname: user.nickname || '我',
+            text: '',
+            images: [...wxPostImageMomentImages],
+            time: timeStr,
+            visibility: wxPostMomentVisibility,
+            location: wxPostMomentLocation || '',
+            mention: wxPostMomentMention.slice()
+        });
+        
+        try {
+            localStorage.setItem('wx_moment_drafts', JSON.stringify(drafts));
+            wxShowToast('已保存到草稿');
+            wxClosePostImageMoment();
+            wxRenderDiscoverPage();
+        } catch (e) {
+            wxShowToast('草稿内容过大，保存失败');
+        }
+    };
+
+    window.wxSubmitPostImageMoment = function() {
+        if (wxPostImageMomentImages.length === 0) {
+            wxShowToast('请添加图片');
+            return;
+        }
+
+        const user = wxGetUser();
+        const now = new Date();
+        const timeStr = now.getMonth() + 1 + '月' + now.getDate() + '日';
+
+        let newMoment = {
+            id: 'moment_' + Date.now(),
+            userId: user.id || 'me',
+            nickname: user.nickname || '我',
+            avatar: user.avatar || '',
+            text: '',
+            images: [...wxPostImageMomentImages],
+            time: timeStr,
+            likes: [],
+            comments: [],
+            visibility: wxPostMomentVisibility,
+            visibleTo: [...wxPostMomentVisibleTo],
+            location: wxPostMomentLocation || '',
+            mention: wxPostMomentMention.slice()
+        };
+
+        let moments = [];
+        try {
+            moments = JSON.parse(localStorage.getItem('wx_moments') || '[]');
+        } catch (e) {}
+
+        moments.unshift(newMoment);
+        try {
+            localStorage.setItem('wx_moments', JSON.stringify(moments));
+        } catch (e) {
+            wxShowToast('内容过大，保存失败');
+            return;
+        }
+
+        wxClosePostImageMoment();
         wxRenderMoments();
         wxRenderDiscoverPage();
         wxShowToast('发表成功');
@@ -12803,15 +13095,46 @@ function mtUnmountReactApp() {
 
                 let loaded = 0;
                 toAdd.forEach(file => {
-                    const reader = new FileReader();
-                    reader.onload = function(ev) {
-                        wxPostMomentImages.push(ev.target.result);
+                    wxCompressImage(file, 800, 800, 0.5).then(function(compressed) {
+                        wxPostMomentImages.push(compressed);
                         loaded++;
                         if (loaded === toAdd.length) {
                             wxRenderPostMomentImages();
                         }
-                    };
-                    reader.readAsDataURL(file);
+                    }).catch(function() {
+                        loaded++;
+                        if (loaded === toAdd.length) {
+                            wxRenderPostMomentImages();
+                        }
+                    });
+                });
+
+                e.target.value = '';
+            });
+        }
+
+        // 纯图片朋友圈图片上传
+        const imageMomentFileInput = document.getElementById('wxImageMomentImageFile');
+        if (imageMomentFileInput) {
+            imageMomentFileInput.addEventListener('change', function(e) {
+                const files = Array.from(e.target.files);
+                const remaining = 9 - wxPostImageMomentImages.length;
+                const toAdd = files.slice(0, remaining);
+
+                let loaded = 0;
+                toAdd.forEach(file => {
+                    wxCompressImage(file, 800, 800, 0.5).then(function(compressed) {
+                        wxPostImageMomentImages.push(compressed);
+                        loaded++;
+                        if (loaded === toAdd.length) {
+                            wxRenderPostImageMomentImages();
+                        }
+                    }).catch(function() {
+                        loaded++;
+                        if (loaded === toAdd.length) {
+                            wxRenderPostImageMomentImages();
+                        }
+                    });
                 });
 
                 e.target.value = '';
@@ -12823,9 +13146,7 @@ function mtUnmountReactApp() {
             profileAvatarFile.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (!file) return;
-                const reader = new FileReader();
-                reader.onload = function(ev) {
-                    const avatarData = ev.target.result;
+                wxCompressImage(file, 512, 512, 0.8).then(function(avatarData) {
                     const user = wxGetUser();
                     user.avatar = avatarData;
                     wxSaveUser(user);
@@ -12842,8 +13163,9 @@ function mtUnmountReactApp() {
                         img.style.display = 'block';
                         if (enPlaceholder) enPlaceholder.style.display = 'none';
                     }
-                };
-                reader.readAsDataURL(file);
+                }).catch(function() {
+                    wxShowToast('头像上传失败');
+                });
                 e.target.value = '';
             });
         }
@@ -13567,13 +13889,21 @@ function mtUnmountReactApp() {
     };
 
     function wxRenderAccounts() {
-        const list = wxGetAccounts();
+        let list = wxGetAccounts();
         const user = wxGetUser();
         const container = document.getElementById('wxAccountsList');
         if (!container) return;
-        if (!list.length) {
-            container.innerHTML = '<div class="wx-accounts-empty">还没有添加其他账号<br>点击右上角 + 添加账号</div>';
-            return;
+        // 确保当前登录账号在列表中
+        const hasCurrent = list.some(a => a.wxid === user.wxid);
+        if (!hasCurrent) {
+            list = [{
+                nickname: user.nickname || '我',
+                wxid: user.wxid || 'wxid_default',
+                avatar: user.avatar || '',
+                bio: user.signature || user.bio || '',
+                banner: user.banner || ''
+            }, ...list];
+            wxSaveAccounts(list);
         }
         const banners = [
             'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -13584,12 +13914,17 @@ function mtUnmountReactApp() {
         ];
         container.innerHTML = list.map((acc, idx) => {
             const isCurrent = acc.wxid === user.wxid;
-            const banner = banners[idx % banners.length];
+            const bannerBg = acc.banner ? `url(${acc.banner})` : banners[idx % banners.length];
+            const bannerStyle = acc.banner
+                ? `background-image:${bannerBg};background-size:cover;background-position:center;`
+                : `background:${bannerBg};`;
             const avatarHtml = acc.avatar
                 ? '<img src="' + acc.avatar + '">'
                 : (acc.nickname || '?').charAt(0);
             return '<div class="wx-account-card">' +
-                '<div class="wx-account-card-banner" style="background:' + banner + '"></div>' +
+                '<div class="wx-account-card-banner" style="' + bannerStyle + '" onclick="wxChangeAccountBanner(' + idx + ')">' +
+                '<span class="wx-account-banner-hint">点击更换封面</span>' +
+                '</div>' +
                 (isCurrent ? '<div class="wx-account-card-current">当前账号</div>' : '') +
                 '<div class="wx-account-card-body">' +
                     '<div class="wx-account-card-avatar">' + avatarHtml + '</div>' +
@@ -13606,6 +13941,42 @@ function mtUnmountReactApp() {
             '</div>';
         }).join('');
     }
+
+    window.wxChangeAccountBanner = function(idx) {
+        const inputId = 'wxAccountBannerFile_' + idx;
+        let fileInput = document.getElementById(inputId);
+        if (!fileInput) {
+            fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.id = inputId;
+            fileInput.accept = 'image/*';
+            fileInput.style.display = 'none';
+            document.body.appendChild(fileInput);
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                wxCompressImage(file, 800, 600, 0.6).then(function(bannerData) {
+                    const list = wxGetAccounts();
+                    if (list[idx]) {
+                        list[idx].banner = bannerData;
+                        wxSaveAccounts(list);
+                        const user = wxGetUser();
+                        if (list[idx].wxid === user.wxid) {
+                            user.banner = bannerData;
+                            wxSaveUser(user);
+                        }
+                        wxRenderAccounts();
+                        wxShowToast('封面已更换');
+                    }
+                }).catch(function(err) {
+                    wxShowToast('封面上传失败');
+                    console.error('banner upload error:', err);
+                });
+                fileInput.value = '';
+            });
+        }
+        setTimeout(function() { fileInput.click(); }, 0);
+    };
 
     window.wxSwitchAccount = function(idx) {
         const list = wxGetAccounts();
@@ -13686,21 +14057,27 @@ function mtUnmountReactApp() {
         if (fileInput) fileInput.click();
     };
     window.wxSaveNewAccount = function() {
-        const nameInput = document.getElementById('wxAddAccountName');
-        const wxidInput = document.getElementById('wxAddAccountWxId');
-        const bioInput = document.getElementById('wxAddAccountBio');
-        const nickname = nameInput ? nameInput.value.trim() : '';
-        const wxid = wxidInput ? wxidInput.value.trim() : '';
-        const bio = bioInput ? bioInput.value.trim() : '';
-        if (!nickname) { wxShowToast('请输入昵称'); return; }
-        if (!wxid) { wxShowToast('请输入微信号'); return; }
-        const list = wxGetAccounts();
-        if (list.find(a => a.wxid === wxid)) { wxShowToast('该微信号已存在'); return; }
-        list.push({ nickname, wxid, avatar: wxNewAccountAvatar, bio });
-        wxSaveAccounts(list);
-        wxRenderAccounts();
-        wxCloseAddAccountForm();
-        wxShowToast('账号添加成功');
+        try {
+            const nameInput = document.getElementById('wxAddAccountName');
+            const wxidInput = document.getElementById('wxAddAccountWxId');
+            const bioInput = document.getElementById('wxAddAccountBio');
+            const nickname = nameInput ? nameInput.value.trim() : '';
+            const wxid = wxidInput ? wxidInput.value.trim() : '';
+            const bio = bioInput ? bioInput.value.trim() : '';
+            if (!nickname) { wxShowToast('请输入昵称'); return; }
+            if (!wxid) { wxShowToast('请输入微信号'); return; }
+            const list = wxGetAccounts();
+            if (list.find(a => a.wxid === wxid)) { wxShowToast('该微信号已存在'); return; }
+            list.push({ nickname, wxid, avatar: wxNewAccountAvatar || '', bio });
+            wxSaveAccounts(list);
+            if (typeof wxRenderAccounts === 'function') wxRenderAccounts();
+            if (typeof wxRenderAccountList === 'function') wxRenderAccountList();
+            wxCloseAddAccountForm();
+            wxShowToast('账号添加成功');
+        } catch (err) {
+            console.error('wxSaveNewAccount error:', err);
+            wxShowToast('保存失败：' + (err && err.message ? err.message : '未知错误'));
+        }
     };
 
     // 账号头像上传处理
@@ -13891,18 +14268,19 @@ function mtUnmountReactApp() {
             contacts = JSON.parse(localStorage.getItem('wx_contacts') || '[]');
         } catch (e) {}
         if (contacts.length === 0) {
-            listEl.innerHTML = '<div style="text-align:center;color:#999;padding:20px 0;font-size:13px;">暂无联系人</div>';
+            listEl.innerHTML = '<div style="text-align:center;color:#999;padding:30px 20px;font-size:13px;line-height:1.6;">暂无联系人<br><span style="color:#07c160;font-size:12px;cursor:pointer;" onclick="wxCloseCreateGroup();wxOpenAddContact();">去添加角色 →</span></div>';
             return;
         }
         listEl.innerHTML = contacts.map(contact => {
             const checked = wxSelectedGroupMembers.indexOf(contact.id) > -1;
+            const displayName = contact.displayName || contact.remark || contact.name || '未命名';
             return `
                 <div class="wx-group-member-item ${checked ? 'checked' : ''}" onclick="wxToggleGroupMember('${contact.id}')">
                     <div class="wx-group-member-checkbox">
                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
                     <div class="wx-group-member-avatar">${wxBuildAvatarHtml(contact.avatar, contact.name)}</div>
-                    <div class="wx-group-member-name">${contact.name || '未命名'}</div>
+                    <div class="wx-group-member-name">${displayName}</div>
                 </div>
             `;
         }).join('');
@@ -13963,20 +14341,27 @@ function mtUnmountReactApp() {
             return;
         }
         const groupId = 'group_' + Date.now();
+        const includeUser = wxCurrentGroupIncludeUser === 'no' ? 'no' : 'yes';
         const group = {
             id: groupId,
             name: name,
             avatar: wxCreateGroupAvatar,
             intro: intro,
-            members: wxCurrentGroupType === 'members' ? wxSelectedGroupMembers.slice() : [],
-            ownerId: 'me',
+            members: wxSelectedGroupMembers.slice(),
+            ownerId: includeUser === 'yes' ? 'me' : '',
+            includeUser: includeUser,
             createTime: Date.now(),
             type: 'group',
-            groupType: wxCurrentGroupType
+            groupType: 'members'
         };
         const groups = wxGetGroups();
         groups.push(group);
-        wxSaveGroups(groups);
+        try {
+            wxSaveGroups(groups);
+        } catch (e) {
+            wxShowToast('创建失败，请清理存储空间');
+            return;
+        }
 
         // 加入聊天列表
         let chats = [];
@@ -13993,9 +14378,16 @@ function mtUnmountReactApp() {
             time: timeStr,
             unread: 0,
             bg: '',
-            type: 'group'
+            type: 'group',
+            groupType: 'members',
+            includeUser: includeUser
         });
-        localStorage.setItem('wx_chats', JSON.stringify(chats));
+        try {
+            localStorage.setItem('wx_chats', JSON.stringify(chats));
+        } catch (e) {
+            wxShowToast('保存失败，请清理存储空间');
+            return;
+        }
 
         // 初始化消息记录
         let messages = {};
@@ -14021,7 +14413,9 @@ function mtUnmountReactApp() {
         }
         const titleEl = document.getElementById('wxGroupChatTitle');
         if (titleEl) {
-            const count = (group.members ? group.members.length : 0) + 1; // 含自己
+            const memberCount = group.members ? group.members.length : 0;
+            const includeUser = group.includeUser !== 'no'; // 默认包含用户
+            const count = includeUser ? (memberCount + 1) : memberCount;
             titleEl.textContent = `${group.name}(${count})`;
         }
         // 清除未读
@@ -14534,9 +14928,10 @@ ${memberList}
             bodyEl.innerHTML = '<div style="text-align:center;color:#999;padding:40px 0;">群聊不存在</div>';
             return;
         }
-        const isOwner = group.ownerId === 'me';
+        const includeUser = group.includeUser !== 'no';
+        const isOwner = includeUser && group.ownerId === 'me';
         const memberIds = group.members || [];
-        const totalCount = memberIds.length + 1; // 含自己
+        const totalCount = includeUser ? (memberIds.length + 1) : memberIds.length;
 
         const membersHtml = memberIds.map(id => {
             const m = wxGetGroupMemberInfo(id);
@@ -14553,15 +14948,15 @@ ${memberList}
             `;
         }).join('');
 
-        // 自己作为群主显示在最前
+        // 自己作为群主显示在最前（仅当群包含用户时显示）
         const meMember = wxGetGroupMemberInfo('me');
         const meOwnerTag = isOwner ? '<div class="wx-group-settings-owner-tag">群主</div>' : '';
-        const meHtml = `
+        const meHtml = includeUser ? `
             <div class="wx-group-settings-member" onclick="wxShowToast('我')">
                 <div class="wx-group-settings-member-avatar">${wxBuildAvatarHtml(meMember.avatar, meMember.name)}${meOwnerTag}</div>
                 <div class="wx-group-settings-member-name">${meMember.name || '我'}</div>
             </div>
-        `;
+        ` : '';
 
         const addBtn = isOwner ? `
             <div class="wx-group-settings-member wx-group-settings-add-member" onclick="wxAddGroupMember()">
@@ -14681,7 +15076,9 @@ ${memberList}
             let idx = chats.findIndex(c => c.id === group.id);
             if (idx === -1) {
                 if (group[key]) {
-                    const memberCount = (group.members ? group.members.length : 0) + 1;
+                    const memberCount = group.members ? group.members.length : 0;
+                    const includeUser = group.includeUser !== 'no';
+                    const totalCount = includeUser ? (memberCount + 1) : memberCount;
                     chats.unshift({
                         id: group.id,
                         name: group.name || '群聊',
@@ -14762,7 +15159,9 @@ ${memberList}
             // 更新群聊标题
             const titleEl = document.getElementById('wxGroupChatTitle');
             if (titleEl) {
-                const count = (group.members ? group.members.length : 0) + 1;
+                const memberCount = group.members ? group.members.length : 0;
+                const includeUser = group.includeUser !== 'no';
+                const count = includeUser ? (memberCount + 1) : memberCount;
                 titleEl.textContent = `${newName}(${count})`;
             }
         }
@@ -14951,7 +15350,9 @@ ${memberList}
             return;
         }
         bodyEl.innerHTML = groups.map(group => {
-            const count = (group.members ? group.members.length : 0) + 1;
+            const memberCount = group.members ? group.members.length : 0;
+            const includeUser = group.includeUser !== 'no';
+            const count = includeUser ? (memberCount + 1) : memberCount;
             return `
                 <div class="wx-group-list-item" data-group-id="${group.id}">
                     <div class="wx-group-list-avatar" onclick="wxOpenGroupChat('${group.id}')">

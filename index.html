@@ -1767,35 +1767,6 @@
 
                 <!-- 发现页（个人主页风格） -->
                 <div class="wx-tab-page" id="wxTabDiscover">
-                    <!-- 0. 顶部白色栏（返回箭头 + 加号按钮） -->
-                    <div class="wx-disco-topbar">
-                        <div class="wx-disco-topbar-btn" onclick="wxFilterChats('all')">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#333" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-                        </div>
-                        <div class="wx-disco-topbar-btn" id="wxDiscoAddBtn" onclick="wxShowDiscoAddMenu(event)">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#333" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                            <div class="wx-disco-add-menu" id="wxDiscoAddMenu">
-                                <div class="wx-disco-add-menu-item" onclick="wxDiscoSelectContact()">
-                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                                    <span>代替AI发朋友圈</span>
-                                </div>
-                                <div class="wx-disco-add-menu-item" onclick="wxDiscoPostText()">
-                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                                    <span>发布纯文字</span>
-                                </div>
-                                <div class="wx-disco-add-menu-item" onclick="wxDiscoPostImage()">
-                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg>
-                                    <span>发布纯图文</span>
-                                </div>
-                                <div class="wx-disco-add-menu-divider"></div>
-                                <div class="wx-disco-add-menu-item" onclick="wxOpenAIPostModal()">
-                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M12 2v6l3 3"/><circle cx="12" cy="12" r="1.5"/></svg>
-                                    <span>AI代发朋友圈</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- 1. 全屏背景封面区 -->
                     <div class="wx-disco-cover" id="wxDiscoCover" onclick="wxTriggerDiscoCoverUpload()">
                         <div class="wx-disco-cover-bg" id="wxDiscoCoverBg"></div>
@@ -1858,6 +1829,34 @@
                         </div>
                         <div class="wx-disco-tab-page" id="wxDiscoTabDrafts">
                             <div class="wx-disco-feed" id="wxDiscoDraftsList"></div>
+                        </div>
+                    </div>
+
+                    <!-- 浮动加号按钮（替代原顶部白色导航栏的加号） -->
+                    <div class="wx-disco-fab" id="wxDiscoAddBtn" onclick="wxShowDiscoAddMenu(event)">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#fff" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        <div class="wx-disco-add-menu" id="wxDiscoAddMenu">
+                            <div class="wx-disco-add-menu-item" onclick="wxDiscoSelectContact()">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                <span>代替AI发朋友圈</span>
+                            </div>
+                            <div class="wx-disco-add-menu-item" onclick="wxDiscoPostText()">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                                <span>发布纯文字</span>
+                            </div>
+                            <div class="wx-disco-add-menu-item" onclick="wxDiscoPostImageOnly()">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+                                <span>发布纯图片</span>
+                            </div>
+                            <div class="wx-disco-add-menu-item" onclick="wxDiscoPostImage()">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                <span>发布纯图文</span>
+                            </div>
+                            <div class="wx-disco-add-menu-divider"></div>
+                            <div class="wx-disco-add-menu-item" onclick="wxOpenAIPostModal()">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M12 2v6l3 3"/><circle cx="12" cy="12" r="1.5"/></svg>
+                                <span>AI代发朋友圈</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2086,52 +2085,13 @@
                         </div>
                         <div class="wx-nav-title">切换账号</div>
                         <div class="wx-nav-right">
-                            <div class="wx-nav-btn wx-nav-btn-green" onclick="wxAddNewAccount()">
+                            <div class="wx-nav-btn wx-nav-btn-green" onclick="wxOpenAddAccountForm()">
                                 <span>添加账号</span>
                             </div>
                         </div>
                     </div>
                     <div class="wx-account-list" id="wxAccountList">
                     </div>
-                </div>
-
-                <!-- 添加账号页面 -->
-                <div class="wx-page" id="wxPageAddAccount">
-                    <div class="wx-nav-bar">
-                        <div class="wx-nav-left">
-                            <div class="wx-nav-btn" onclick="wxCloseAddAccount()">
-                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#000" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-                            </div>
-                        </div>
-                        <div class="wx-nav-title">添加账号</div>
-                        <div class="wx-nav-right">
-                            <div class="wx-nav-btn wx-nav-btn-green" onclick="wxSaveNewAccount()">
-                                <span>完成</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="wx-add-account-body">
-                        <div class="wx-avatar-upload-wrap">
-                            <div class="wx-avatar-upload" id="wxAddAccountAvatarUpload">
-                                <svg class="wx-avatar-placeholder" viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#ccc" stroke-width="1.5"><path d="M12 20v-2M12 14v.01M4.93 10.93a9 9 0 1 1 14.14 0"/><path d="M12 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
-                                <img id="wxAddAccountAvatarImg" class="wx-avatar-img" src="" alt="头像">
-                            </div>
-                            <div class="wx-avatar-tip">点击上传头像</div>
-                        </div>
-                        <div class="wx-form-group">
-                            <div class="wx-form-label">昵称</div>
-                            <input type="text" class="wx-form-input" id="wxAddAccountNickname" placeholder="请输入昵称">
-                        </div>
-                        <div class="wx-form-group">
-                            <div class="wx-form-label">微信号</div>
-                            <input type="text" class="wx-form-input" id="wxAddAccountWxid" placeholder="请输入微信号">
-                        </div>
-                        <div class="wx-form-group">
-                            <div class="wx-form-label">我的人设</div>
-                            <textarea class="wx-form-textarea" id="wxAddAccountPersona" placeholder="请输入你的人设描述..."></textarea>
-                        </div>
-                    </div>
-                    <input type="file" id="wxAddAccountAvatarFile" accept="image/*" style="display:none;">
                 </div>
 
                 <!-- 编辑个性签名页面 -->
@@ -2920,14 +2880,19 @@
                         <div class="wx-nav-right"></div>
                     </div>
                     <div class="wx-create-group-body">
-                        <div class="wx-group-type-selector">
-                            <div class="wx-group-type-item active" data-type="members" onclick="wxSwitchGroupType('members')">
-                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                                <span>成员群聊</span>
-                            </div>
-                            <div class="wx-group-type-item" data-type="empty" onclick="wxSwitchGroupType('empty')">
-                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-                                <span>空白群聊</span>
+                        <div class="wx-group-include-user-section">
+                            <div class="wx-group-include-user-title">是否包含用户</div>
+                            <div class="wx-group-include-user-options">
+                                <div class="wx-group-include-user-item active" data-include="yes" onclick="wxSwitchGroupIncludeUser('yes')">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    <span>包含用户</span>
+                                    <div class="wx-group-include-user-desc">群内包含成员和用户</div>
+                                </div>
+                                <div class="wx-group-include-user-item" data-include="no" onclick="wxSwitchGroupIncludeUser('no')">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21v-2a4 4 0 0 1 4-4h5"/><line x1="17" y1="17" x2="23" y2="17"/><line x1="20" y1="14" x2="20" y2="20"/></svg>
+                                    <span>不包含用户</span>
+                                    <div class="wx-group-include-user-desc">群内仅显示成员</div>
+                                </div>
                             </div>
                         </div>
                         <div class="wx-group-avatar-upload-wrap">
@@ -3321,6 +3286,59 @@
                                 <span class="wx-post-moment-option-label">提醒谁看</span>
                                 <div class="wx-post-moment-option-value">
                                     <span id="wxPostTextMomentMentionText"></span>
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 发布纯图片朋友圈页面 -->
+                <div class="wx-page" id="wxPagePostImageMoment">
+                    <div class="wx-nav-bar">
+                        <div class="wx-nav-left">
+                            <div class="wx-nav-btn" onclick="wxClosePostImageMoment()">
+                                <span style="font-size:16px;color:#000;">取消</span>
+                            </div>
+                        </div>
+                        <div class="wx-nav-title">发表图片</div>
+                        <div class="wx-nav-right">
+                            <div class="wx-nav-btn" onclick="wxSaveImageMomentDraft()" style="margin-right:10px;">
+                                <span style="font-size:16px;color:#999;">存草稿</span>
+                            </div>
+                            <div class="wx-nav-btn" onclick="wxSubmitPostImageMoment()">
+                                <span style="font-size:16px;color:#07c160;font-weight:500;">发表</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wx-post-image-moment-body">
+                        <div class="wx-post-image-moment-images" id="wxPostImageMomentImages">
+                            <div class="wx-post-moment-add-btn" onclick="wxTriggerImageMomentImageUpload()">
+                                <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#ccc" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            </div>
+                        </div>
+                        <input type="file" id="wxImageMomentImageFile" accept="image/*" multiple style="display:none;">
+                        <div class="wx-post-moment-options" style="margin-top:16px;">
+                            <div class="wx-post-moment-option-row" onclick="wxPostMomentSelectLocation()">
+                                <span class="wx-post-moment-option-label">所在位置</span>
+                                <div class="wx-post-moment-option-value">
+                                    <span id="wxPostImageMomentLocationText">不显示位置</span>
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                            <div class="wx-post-moment-divider"></div>
+                            <div class="wx-post-moment-option-row" onclick="wxPostMomentSelectVisibility()">
+                                <span class="wx-post-moment-option-label">谁可以看</span>
+                                <div class="wx-post-moment-option-value">
+                                    <span id="wxPostImageMomentVisibilityText">公开</span>
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                </div>
+                            </div>
+                            <div class="wx-post-moment-divider"></div>
+                            <div class="wx-post-moment-option-row" onclick="wxPostMomentSelectMention()">
+                                <span class="wx-post-moment-option-label">提醒谁看</span>
+                                <div class="wx-post-moment-option-value">
+                                    <span id="wxPostImageMomentMentionText"></span>
                                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ccc" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
                                 </div>
                             </div>

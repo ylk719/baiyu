@@ -16741,6 +16741,64 @@ select.wx-form-input {
     color: #bbb;
 }
 
+/* 发布纯图片朋友圈页面 */
+.wx-post-image-moment-body {
+    flex: 1;
+    background: #fff;
+    padding: 20px 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+.wx-post-image-moment-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+.wx-post-image-moment-images .wx-post-moment-add-btn {
+    width: calc((100% - 16px) / 3);
+    aspect-ratio: 1 / 1;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: #f9f9f9;
+    box-sizing: border-box;
+}
+.wx-post-image-moment-images .wx-post-moment-img-item {
+    width: calc((100% - 16px) / 3);
+    aspect-ratio: 1 / 1;
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.wx-post-image-moment-images .wx-post-moment-img-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.wx-post-image-moment-images .wx-post-moment-img-delete {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 22px;
+    height: 22px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+}
+
 /* 我页面 - Instagram风格 */
 .wx-me-container {
     min-height: 100%;
@@ -17372,6 +17430,8 @@ select.wx-form-input {
     background-size: cover;
     background-position: center;
     position: relative;
+    cursor: pointer;
+    overflow: hidden;
 }
 .wx-account-card-banner::after {
     content: '';
@@ -17380,6 +17440,22 @@ select.wx-form-input {
     background:
         linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 100%),
         linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(0,0,0,0.12) 100%);
+}
+.wx-account-banner-hint {
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    font-size: 11px;
+    color: #fff;
+    background: rgba(0,0,0,0.4);
+    padding: 2px 8px;
+    border-radius: 10px;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.wx-account-card-banner:hover .wx-account-banner-hint {
+    opacity: 1;
 }
 .wx-account-card-body {
     padding: 12px 16px 16px;
@@ -21328,31 +21404,24 @@ body{
 
 /* ==================== 发现页（个人主页风格） ==================== */
 /* 1. 全屏背景封面 */
-.wx-disco-topbar {
+/* 浮动加号按钮（替代原顶部白色导航栏） */
+.wx-disco-fab {
+    position: fixed;
+    right: 16px;
+    bottom: 90px;
+    width: 48px;
     height: 48px;
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 12px;
-    flex-shrink: 0;
-    border-bottom: 1px solid #f0f0f0;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-.wx-disco-topbar-btn {
-    width: 36px;
-    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c4dff 0%, #ec407a 100%);
+    box-shadow: 0 4px 12px rgba(124, 77, 255, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border-radius: 50%;
-    transition: background 0.15s;
-    position: relative;
+    z-index: 20;
+    transition: transform 0.15s;
 }
-.wx-disco-topbar-btn:active { background: #f0f0f0; }
+.wx-disco-fab:active { transform: scale(0.92); }
 .wx-disco-cover {
     position: relative;
     width: 100%;
@@ -21447,7 +21516,7 @@ body{
 /* 加号下拉菜单 */
 .wx-disco-add-menu {
     position: absolute;
-    top: 44px; right: 0;
+    bottom: 56px; right: 0;
     background: #fff;
     border-radius: 14px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.12);
@@ -22748,6 +22817,58 @@ body{
 .wx-group-type-item svg {
     width: 24px;
     height: 24px;
+}
+
+/* 是否包含用户选择器 */
+.wx-group-include-user-section {
+    padding: 16px;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+}
+.wx-group-include-user-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+}
+.wx-group-include-user-options {
+    display: flex;
+    gap: 12px;
+}
+.wx-group-include-user-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 14px 10px;
+    border-radius: 12px;
+    border: 2px solid #e5e5e5;
+    cursor: pointer;
+    color: #666;
+    transition: all 0.2s;
+    gap: 6px;
+    text-align: center;
+}
+.wx-group-include-user-item span {
+    font-size: 14px;
+    font-weight: 500;
+}
+.wx-group-include-user-item.active {
+    border-color: #07c160;
+    background: rgba(7, 193, 96, 0.05);
+    color: #07c160;
+}
+.wx-group-include-user-item svg {
+    width: 22px;
+    height: 22px;
+}
+.wx-group-include-user-desc {
+    font-size: 11px;
+    color: #999;
+    line-height: 1.4;
+}
+.wx-group-include-user-item.active .wx-group-include-user-desc {
+    color: #07c160;
 }
 
 /* 聊天列表 - 群类型标签 */
