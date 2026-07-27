@@ -1,0 +1,44 @@
+/* Soft glassmorphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Slightly more opaque glass for prominent widgets */
+.glass-strong {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Base theme background */
+body {
+  background-color: #e8ecef; /* Soft greyish blue base */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #5a5f63; /* Soft dark grey for text */
+}
+
+/* Custom shadow for floating polaroids */
+.polaroid-shadow {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+/* Sparkle overlay simulation */
+.sparkle-bg {
+  position: relative;
+}
+.sparkle-bg::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M10 0 L11 9 L20 10 L11 11 L10 20 L9 11 L0 10 L9 9 Z" fill="rgba(255,255,255,0.8)" transform="scale(0.3) translate(15,15)"/></svg>');
+  background-size: 100px 100px;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: -1;
+}
