@@ -1,339 +1,648 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Ins 韩系软萌</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#e8ecef">
+  <meta name="apple-mobile-web-app-title" content="CosmicLove">
+  <title>CosmicLove</title>
+  <link rel="manifest" href='data:application/manifest+json,{"name":"CosmicLove","short_name":"CosmicLove","display":"fullscreen","orientation":"portrait","background_color":"%23e8ecef","theme_color":"%23e8ecef","icons":[]}'>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 </head>
-<body>
+<body class="m-0 p-0 overflow-hidden">
+  <div id="app-root">
+    <!-- BEGIN: Mobile Container (375 x 812 fixed canvas, scaled by JS) -->
+    <main id="mobile-canvas" class="relative overflow-hidden bg-cover bg-center" style="width: 375px; height: 812px; background-color: rgb(255, 255, 255); transform-origin: top left;">
+      <div class="sparkle-bg absolute inset-0"></div>
 
-  <!-- 页面容器 -->
-  <div class="page-wrapper" id="pageWrapper">
-    <!-- 星空背景（手机页面内） -->
-    <canvas id="starsCanvas"></canvas>
+      <div class="relative h-full flex flex-col z-10">
+        <!-- Pages container: horizontal swipe -->
+        <div id="pages" class="pages-container flex-1 overflow-x-auto overflow-y-hidden no-scrollbar">
 
-    <!-- ========== 第一页 ========== -->
-    <div class="page page-1 active" id="page1">
-      <div class="page-content">
-        <!-- 顶部两组单选条目 -->
-        <div class="top-selectors">
-          <div class="selector-row">
-            <div class="selector-avatar avatar-pink" data-upload="avatar" data-key="p1-avatar1">
-              <svg viewBox="0 0 40 40"><circle cx="20" cy="15" r="7" fill="#fff" opacity="0.9"/><ellipse cx="20" cy="32" rx="12" ry="8" fill="#fff" opacity="0.9"/></svg>
-            </div>
-            <div class="selector-input-box">
-              <span class="selector-label" contenteditable="true" data-key="p1-label1">我的日常</span>
-            </div>
-          </div>
-          <div class="selector-row">
-            <div class="selector-avatar avatar-blue" data-upload="avatar" data-key="p1-avatar2">
-              <svg viewBox="0 0 40 40"><circle cx="20" cy="15" r="7" fill="#fff" opacity="0.9"/><ellipse cx="20" cy="32" rx="12" ry="8" fill="#fff" opacity="0.9"/></svg>
-            </div>
-            <div class="selector-input-box">
-              <span class="selector-label" contenteditable="true" data-key="p1-label2">好友动态</span>
-            </div>
-          </div>
+          <!-- ====================== PAGE 1 ====================== -->
+          <section class="page page-1 snap-center flex-shrink-0 w-full h-full overflow-y-auto no-scrollbar flex flex-col gap-5 px-5 pt-12 pb-3">
+
+            <!-- BEGIN: Music Widget -->
+            <section class="glass rounded-4xl p-4 flex flex-col gap-4 shadow-sm">
+              <div class="flex items-center gap-4">
+                <div class="w-20 h-20 rounded-2xl bg-white/60 overflow-hidden shadow-inner flex-shrink-0">
+                  <img alt="Album Art" class="w-full h-full object-cover opacity-80 mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWsQ5iOnBDixu8a8_mWHq4RysRlKfHwU9tSKhlxQSOyZTXhe9rpZ0pRQf170zs0rB1MmH1IviVnilFxm0_JK1HtIE3d27xkgG1YvzlzyrScrt_-vtZiubYPA36Vh9fNTG8G8G4y9DcHbnvWzAfKs0apMs7FQphP4PsYoxT5sduDQRjOWU6kKEq7Gc-Zlssw84OipNH6RA0eW3gk3AQkyOVO7ErOKP7lB36yoMOxX2FWwTzQLunLKMd9Myr9zZ_YvN0Y1l9xEqYwhIR">
+                </div>
+                <div class="flex-1 flex flex-col justify-center">
+                  <div class="text-center font-serif text-lg text-theme-icon tracking-wide mb-2">CosmicLove</div>
+                  <div class="w-full h-1 bg-white/50 rounded-full overflow-hidden">
+                    <div class="w-1/3 h-full bg-theme-accent rounded-full"></div>
+                  </div>
+                  <div class="flex justify-between mt-1 text-[10px] text-theme-accent uppercase tracking-widest">
+                    <span>Shining</span>
+                    <span>Finne</span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-between items-center px-4 text-theme-icon">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"></path></svg>
+                <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"></path></svg>
+                <svg class="w-5 h-5 fill-current opacity-70 ml-2" viewBox="0 0 24 24"><path d="M3 15h14v-2H3v2zm0 4h14v-2H3v2zm0-8h14V9H3v2zm0-6v2h14V5H3zm16 0v14h2V5h-2z"></path></svg>
+                <svg class="w-5 h-5 fill-current opacity-70" viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"></path></svg>
+              </div>
+            </section>
+            <!-- END: Music Widget -->
+
+            <!-- BEGIN: Middle Section (Icons & Polaroids) -->
+            <section class="flex gap-4 relative h-48">
+              <div class="w-1/2 grid grid-cols-2 gap-3 place-content-start pt-2">
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-14 h-14 glass-strong rounded-2xl flex items-center justify-center">
+                    <svg class="w-6 h-6 text-theme-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect height="12" rx="2" width="16" x="4" y="6"></rect><path d="M9 12h.01M15 12h.01"></path></svg>
+                  </div>
+                  <span class="text-xs text-theme-text font-medium">Chat</span>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-14 h-14 glass-strong rounded-2xl flex items-center justify-center">
+                    <svg class="w-6 h-6 text-theme-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect height="18" rx="2" ry="2" width="18" x="3" y="4"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
+                  </div>
+                  <span class="text-xs text-theme-text font-medium">Date</span>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-14 h-14 glass-strong rounded-2xl flex items-center justify-center">
+                    <svg class="w-6 h-6 text-theme-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  </div>
+                  <span class="text-xs text-theme-text font-medium">Forum</span>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-14 h-14 glass-strong rounded-2xl flex items-center justify-center">
+                    <svg class="w-6 h-6 text-theme-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  </div>
+                  <span class="text-xs text-theme-text font-medium">Group</span>
+                </div>
+              </div>
+              <div class="w-1/2 relative h-full">
+                <div class="absolute top-12 right-0 w-28 h-32 bg-white p-2 pb-6 rounded-sm polaroid-shadow rotate-[15deg] z-0">
+                  <div class="w-full h-full bg-slate-100 overflow-hidden relative">
+                    <img alt="Photo 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvDfGkcquljAQ6wB8llusJ0OIp8MfG_I8OnrptznffYlkhtZrxeQO84Mjra0ZU-kH9MxztP2XfxQ_RWoLJ4C60TWaqj10euXNNEi2J1Gr2QyXLF3MRUL2YInLfXBrSK9bn29OaGWIjwFtZWxdItsW7o6C7O6lDA3xPKo3pFlUDf32k3or4VMkar1LQfxFONa5I8Vkaw6QvE87Q3U1LHp1s2ieCofiI0__RDgohNG9I1PJVtRn9L0bBiU2IU8PucOjcKbydW01OypDi">
+                  </div>
+                </div>
+                <div class="absolute top-0 right-4 w-32 h-36 bg-white p-2 pb-8 rounded-sm polaroid-shadow -rotate-6 z-10">
+                  <div class="w-full h-full bg-slate-100 overflow-hidden relative">
+                    <img alt="Photo 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx0KiwzCdGUwVTmZcO31S-vNgOhYiH-Dbw8mCUXOtTXNI8cVuj8QP5UDJFjtG3sIRrXSx2Vq4LrQo1mTfAQu-HbrNe0--1IU_cmwWFTuDtVjwFUoVhH-ijhmWb4ds-IVLkXKO-lCXdEDP40f9FO0AePdIyQN8yXbkGcqKLFckTDnDNsbmiOzyaKO7z95M6xjSmGKXYYc73QZaluVcs0QrDbWpF25xv-aOheN0ug2UwGloboSg86FjUt3uBuFlkpmktcwu5R38twvfk">
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-- END: Middle Section -->
+
+            <!-- BEGIN: Lower Section (Memo & Utilities) -->
+            <section class="flex gap-4">
+              <div class="w-3/5 glass-strong rounded-3xl p-4 flex flex-col justify-between shadow-sm">
+                <div class="flex items-center gap-2 mb-4">
+                  <img alt="Avatar" class="w-8 h-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGttBTc_tUBYFFhmaDpMbXWWNTcDAtPeVJhLg2A24pTvTkfnwRLS5vMjSHDeOGxKRxcO-98UxpxX29uXO_P-kJLDbvWxVcTWlUiL6-WxL5D1s231JTz-3p3NL9Dd1qsj526Qvhvf1n5NtbgN8p6fbydE-0bvxYvBlzVtYUE1dWCeVnWrg-k64B-2eA5Gcjl8PcAdPfcDtIV4ffFCseV6f0KPaAq0iYNA9wUE928_DS70XRH1n9c1QjMSmhmpNC8pzQcXV6I_156YS4">
+                  <div class="flex-1">
+                    <div class="text-sm font-semibold text-theme-icon leading-tight">Daily Note</div>
+                    <div class="text-[10px] text-theme-accent">@user</div>
+                  </div>
+                  <div class="text-[10px] text-theme-accent text-right">
+                    Apr 8<br>Wed 2026
+                  </div>
+                </div>
+                <div class="flex-1">
+                  <p class="text-sm text-theme-text leading-relaxed font-serif">
+                    Perhaps we should<br>
+                    cling to our passionate freedom.
+                  </p>
+                </div>
+                <div class="flex items-center gap-1 mt-4 text-theme-accent text-xs">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+                  19:27
+                </div>
+              </div>
+              <div class="w-2/5 grid grid-cols-2 gap-3">
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-12 h-12 glass rounded-2xl flex items-center justify-center shadow-sm">
+                    <svg class="w-5 h-5 text-theme-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                  </div>
+                  <span class="text-[10px] text-theme-text font-medium">Health</span>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-12 h-12 glass rounded-2xl flex items-center justify-center shadow-sm">
+                    <svg class="w-6 h-6 text-theme-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path></svg>
+                  </div>
+                  <span class="text-[10px] text-theme-text font-medium">Record</span>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-12 h-12 glass rounded-2xl flex items-center justify-center shadow-sm">
+                    <svg class="w-5 h-5 text-theme-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+                  </div>
+                  <span class="text-[10px] text-theme-text font-medium">Search</span>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-12 h-12 glass rounded-2xl flex items-center justify-center shadow-sm">
+                    <svg class="w-6 h-6 text-theme-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                  </div>
+                  <span class="text-[10px] text-theme-text font-medium">Finance</span>
+                </div>
+              </div>
+            </section>
+            <!-- END: Lower Section -->
+
+          </section>
+          <!-- ====================== END PAGE 1 ====================== -->
+
+          <!-- ====================== PAGE 2 ====================== -->
+          <section class="page page-2 snap-center flex-shrink-0 w-full h-full overflow-y-auto no-scrollbar flex flex-col gap-4 px-4 pt-12 pb-6">
+
+            <!-- BEGIN: Top Section - Widgets -->
+            <section class="flex flex-col gap-3 mt-6 z-10">
+              <!-- Widget Row 1 -->
+              <div class="flex items-center gap-3 w-full">
+                <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-white/50 backdrop-blur-sm p-0.5">
+                  <img alt="Avatar 1" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZnD17zqOWhiOoOYEanC7rlGycxQ8eF3foeR9hDtmgzeYmrSG65KqY2E4ID8QPhnm8e43-_kTE0jNuNcObyUvYUGpaDaTbEwsXpjnrEj4bITqHeFQOORss_djLmqGBtjVgt3OQiHa1aPE4RiFlQIP8-c8Chqv3UwbrzXzMzsZaqgFoY9XuL-ay78OtJ9yqh4psXTKme1nQStv8SlKy08XzDTiyIlA3349Rl_ZLooFR9yFqSdTWnRGgOYU5CBrSkXIyNaIv1vjjasPQ">
+                </div>
+                <div class="flex-grow bg-white/70 backdrop-blur-md rounded-2xl h-12 flex items-center justify-between px-4 shadow-md">
+                  <span class="text-gray-600 text-sm font-medium">少女糖霜绘本册</span>
+                  <div class="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center">
+                    <svg class="h-3 w-3 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <!-- Widget Row 2 -->
+              <div class="flex items-center gap-3 w-full">
+                <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-white/50 backdrop-blur-sm p-0.5">
+                  <img alt="Avatar 2" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcdtxU8PTSCXL96q7jG0rztMdgaGfy1yE2slU_VYs-f05qAO1uACpoGlsiaupB5_lsmI4-XLzLESEKfQh1OB6jLDSaUQwHXa1AYVh7hOrnsMNguhPmkyRq_w56gFj7BAOVpxXs0kgANT6NkKkBEcsKTNKFX5CKJg-yj0wANKzAD0817pF7d6TrmID0MC_RVK8_9gfEX75-X-71FArKdrlXElXMJeU9kYtgpnlUeGUmb_HS-jD7sh3vvYd-Ero2O7S8wRSKfYpqCUFe">
+                </div>
+                <div class="flex-grow bg-white/70 backdrop-blur-md rounded-2xl h-12 flex items-center justify-between px-4 shadow-md">
+                  <span class="text-gray-500 text-sm font-medium">Girl's frosting picture book</span>
+                  <div class="w-5 h-5 rounded-full border-2 border-gray-300"></div>
+                </div>
+              </div>
+            </section>
+            <!-- END: Top Section - Widgets -->
+
+            <!-- BEGIN: 4 Apps Row -->
+            <section class="px-1 z-10">
+              <div class="grid grid-cols-4 gap-x-3 gap-y-2">
+
+                <!-- App 1 -->
+                <div class="flex flex-col items-center gap-1.5">
+                  <div class="w-[52px] h-[52px] glass-strong rounded-2xl flex items-center justify-center shadow-sm">
+                    <svg class="w-6 h-6 text-theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                  </div>
+                  <span class="text-[10px] text-theme-text font-medium">Heart</span>
+                </div>
+
+                <!-- App 2 -->
+                <div class="flex flex-col items-center gap-1.5">
+                  <div class="w-[52px] h-[52px] glass-strong rounded-2xl flex items-center justify-center shadow-sm">
+                    <svg class="w-6 h-6 text-theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect height="18" rx="2" ry="2" width="18" x="3" y="4"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
+                  </div>
+                  <span class="text-[10px] text-theme-text font-medium">Date</span>
+                </div>
+
+                <!-- App 3 -->
+                <div class="flex flex-col items-center gap-1.5">
+                  <div class="w-[52px] h-[52px] glass-strong rounded-2xl flex items-center justify-center shadow-sm">
+                    <svg class="w-6 h-6 text-theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+                  </div>
+                  <span class="text-[10px] text-theme-text font-medium">Search</span>
+                </div>
+
+                <!-- App 4 -->
+                <div class="flex flex-col items-center gap-1.5">
+                  <div class="w-[52px] h-[52px] glass-strong rounded-2xl flex items-center justify-center shadow-sm">
+                    <svg class="w-6 h-6 text-theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+                  </div>
+                  <span class="text-[10px] text-theme-text font-medium">Clock</span>
+                </div>
+
+              </div>
+            </section>
+            <!-- END: 4 Apps Row -->
+
+            <!-- Spacer to center PhotoBook -->
+            <div class="flex-1"></div>
+
+            <!-- BEGIN: Middle Section - PhotoBook -->
+            <section class="px-1 z-10 w-full" data-purpose="photobook-widget">
+              <div class="bg-white/90 backdrop-blur-lg rounded-3xl p-4 shadow-md">
+                <div class="flex justify-between items-center mb-3 px-1">
+                  <h2 class="text-gray-800 font-semibold text-sm">PhotoBook</h2>
+                  <span class="text-gray-500 text-xs">今日 周日</span>
+                </div>
+                <div class="flex items-center justify-between gap-2">
+                  <div class="flex gap-3 flex-grow overflow-hidden">
+                    <div class="w-1/3 aspect-[3/4] rounded-2xl overflow-hidden bg-blue-50">
+                      <img alt="Photo 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhSILRYfSGfj3l5ynO-bARIIuftzE4SLwNJy6NUWmaQ7p790BSqbxTSfKcTDC1S8mHB3rQRUCcLno9uhjDPwPcroPpoofbeUNFiKHWRvLOQjaTEuhufa-yZgupjlJ4ztoKfyAW5zES62kZy-BtnTuKaZLd5TzcGqIKvrLdSFXrRubPt51qTmppD_fd3VTZ6y7dFHa4uDTvIRKgO9l0YRf3ESyHX1nu1c4ZXPXMZAj_uBJbZ_EE1HA8r603s7_mInqCR0HnwWsTdmQa">
+                    </div>
+                    <div class="w-1/3 aspect-[3/4] rounded-2xl overflow-hidden bg-blue-50">
+                      <img alt="Photo 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAH1eITiowpTWZasDZfuC_nTKKP3gucp90wNkcJ6HqNSaN-rgw8dmyXlzL25dZp_kdJJZqK3Gisvwl8a9N4fWCrne82oY_8zzqQlap2iOSUkhx4sWBtMDhVlgUhSetodABVvVxo7dJ8U031p7i7JO-Y2CM3Wx82XgD6KOMeA_T_uI3jwKjW8usoVlZkuRXLs4AX0y3wpfgyoWdRs3LaLWhOk0GmL9tEG2HnccP_CU4cYojKpngPeweNBrS1IKukkKsbq4y97nDHh2dk">
+                    </div>
+                    <div class="w-1/3 aspect-[3/4] rounded-2xl overflow-hidden bg-blue-50 relative">
+                      <img alt="Photo 3" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZNOr8cyhrr5y7HlYeNe7VNT0NSU13LJm4tvlxg8w64phOoh62cSOP4WeWwuFTxMC8l3-X5b-c9BBw6RU1D9ffQX-R1bnZJOz1V7nP21y2aVTkpjplJf6Zh2rqL1G1S4vjhR9BmgTJw4ERPSY9UOky73TNt7bSkiAlx5AQFqT9VwiSR22AakfiIzHn77Yb-L6FJy_qaznMP8hCKsZWbJ1iGi49OLfI2HJufWX2-hZELSLNzGeINKh0ai7qieTSz1kbFbEoYNUDZirO">
+                      <div class="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white to-transparent"></div>
+                    </div>
+                  </div>
+                  <div class="flex-shrink-0 pr-2">
+                    <svg class="h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path clip-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" fill-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="text-center mt-2">
+                  <span class="text-gray-500 text-xs">★ Top Widgets⁺ ★</span>
+                </div>
+              </div>
+            </section>
+            <!-- END: Middle Section - PhotoBook -->
+
+            <!-- Spacer to keep PhotoBook centered -->
+            <div class="flex-1"></div>
+
+          </section>
+          <!-- ====================== END PAGE 2 ====================== -->
+
         </div>
+        <!-- END: Pages container -->
 
-        <!-- 4×2 应用图标网格 -->
-        <div class="app-grid">
-          <div class="app-item">
-            <div class="app-icon icon-dot-pink">
-              <div class="dot-pattern"></div>
+        <!-- BEGIN: Shared Bottom Dock -->
+        <nav class="glass rounded-full mx-5 mb-4 px-6 py-3 flex justify-between items-center shadow-sm flex-shrink-0">
+          <div class="flex flex-col items-center dock-item active" data-page="0">
+            <div class="w-11 h-11 bg-white/70 rounded-2xl flex items-center justify-center shadow-sm">
+              <svg class="w-5 h-5 text-theme-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
             </div>
-            <span class="app-label">日历</span>
+            <span class="text-[10px] text-theme-text mt-1">World</span>
           </div>
-          <div class="app-item">
-            <div class="app-icon icon-dot-blue">
-              <div class="dot-pattern"></div>
+          <div class="flex flex-col items-center dock-item" data-page="1">
+            <div class="w-11 h-11 bg-white/70 rounded-2xl flex items-center justify-center shadow-sm">
+              <svg class="w-5 h-5 text-theme-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect height="18" rx="2" ry="2" width="18" x="3" y="3"></rect><line x1="3" x2="21" y1="9" y2="9"></line><line x1="9" x2="9" y1="21" y2="9"></line></svg>
             </div>
-            <span class="app-label">相册</span>
+            <span class="text-[10px] text-theme-text mt-1">Terminal</span>
           </div>
-          <div class="app-item">
-            <div class="app-icon icon-dot-mint">
-              <div class="dot-pattern"></div>
+          <div class="flex flex-col items-center dock-item">
+            <div class="w-11 h-11 bg-white/70 rounded-2xl flex items-center justify-center shadow-sm">
+              <svg class="w-5 h-5 text-theme-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
             </div>
-            <span class="app-label">音乐</span>
+            <span class="text-[10px] text-theme-text mt-1">Theme</span>
           </div>
-          <div class="app-item">
-            <div class="app-icon icon-dot-lavender">
-              <div class="dot-pattern"></div>
+          <div class="flex flex-col items-center dock-item" id="dock-settings" data-action="open-settings">
+            <div class="w-11 h-11 bg-white/70 rounded-2xl flex items-center justify-center shadow-sm">
+              <svg class="w-5 h-5 text-theme-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
             </div>
-            <span class="app-label">天气</span>
+            <span class="text-[10px] text-theme-text mt-1">Settings</span>
           </div>
-          <div class="app-item">
-            <div class="app-icon icon-dot-peach">
-              <div class="dot-pattern"></div>
-            </div>
-            <span class="app-label">备忘录</span>
-          </div>
-          <div class="app-item">
-            <div class="app-icon icon-dot-sky">
-              <div class="dot-pattern"></div>
-            </div>
-            <span class="app-label">时钟</span>
-          </div>
-          <div class="app-item">
-            <div class="app-icon icon-dot-rose">
-              <div class="dot-pattern"></div>
-            </div>
-            <span class="app-label">相机</span>
-          </div>
-          <div class="app-item">
-            <div class="app-icon icon-dot-lilac">
-              <div class="dot-pattern"></div>
-            </div>
-            <span class="app-label">地图</span>
-          </div>
-        </div>
+        </nav>
+        <!-- END: Shared Bottom Dock -->
 
-        <!-- PhotoBook 相册小组件 -->
-        <div class="photobook-card">
-          <div class="photobook-header">
-            <div class="photobook-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8a8a9a" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/><circle cx="8" cy="16" r="1.5" fill="#8a8a9a"/></svg>
-              <span contenteditable="true" data-key="p1-pb-title">PhotoBook</span>
-            </div>
-            <div class="photobook-actions">
-              <span class="photobook-date" contenteditable="true" data-key="p1-pb-date">7月27日</span>
-              <button class="heart-btn" id="heartBtn1">
-                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="none" stroke="#d0a0b0" stroke-width="1.5"/></svg>
+      </div>
+    </main>
+    <!-- END: Mobile Container -->
+
+    <!-- ====================== SETTINGS HOME (设置主页) ====================== -->
+    <section id="settings-home" class="settings-overlay settings-home" aria-hidden="true">
+      <div class="settings-inner">
+
+        <!-- Top App Bar -->
+        <header class="settings-header">
+          <button class="settings-back-btn" id="settings-home-back-btn" aria-label="返回">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </button>
+          <h1 class="settings-title">设置</h1>
+          <button class="settings-back-btn !invisible" aria-hidden="true" tabindex="-1">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></svg>
+          </button>
+        </header>
+
+        <!-- Main Content -->
+        <div class="settings-main settings-home-main">
+
+          <!-- Profile Section (Glassmorphism Card) -->
+          <section class="glass-panel profile-card">
+            <div class="profile-glow"></div>
+            <div class="profile-avatar-wrap">
+              <img alt="User Avatar" class="profile-avatar"
+                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5uBu4C0WhMuUxrOKFbKzm-DWJjIPq9z0M_Fqm8fN_Hyz1poPGxhtg5zCILyZutE1gRcCfR3A9gZZ5I2IxDwvkSP4D1YLyq4JgG1tpYlRijoEffOBA7gyFhfbRq85n9vlrk3CTmK6eZMtt0jeF8CyH_HtYHatsdXikxr5uyhrPT9_vLVrWfz4XJCaFNQRNemfFMKbDjPJ50fmXIhFWUJTWd-8Y74gIEO9i4ZitgrwIm8E-5OC1CpEXE1FxPHbWmyQNMjPFwbVvhHI">
+              <button class="profile-edit-badge" aria-label="编辑头像">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
               </button>
             </div>
-          </div>
-          <div class="photobook-preview">
-            <div class="preview-img" data-upload="photo" data-key="p1-photo1" style="background-image: linear-gradient(160deg, #fce4ec 0%, #f8d0dc 30%, #f0c0d0 60%, #e8b8d0 100%)"></div>
-            <div class="preview-img" data-upload="photo" data-key="p1-photo2" style="background-image: linear-gradient(160deg, #e3f0fc 0%, #d0e4f8 30%, #c8dcf0 60%, #bcd4ec 100%)"></div>
-            <div class="preview-img" data-upload="photo" data-key="p1-photo3" style="background-image: linear-gradient(160deg, #e8f4ec 0%, #d0e8d8 30%, #c8e0d0 60%, #bcd8c8 100%)"></div>
-          </div>
+            <h2 class="profile-name">Alex Rivera</h2>
+            <p class="profile-handle">@alexr_design</p>
+            <button class="profile-edit-btn">编辑资料</button>
+          </section>
+
+          <!-- 外观 Group -->
+          <section class="settings-group">
+            <h3 class="settings-group-title">外观</h3>
+            <div class="settings-card">
+              <!-- 更改背景 -->
+              <div class="settings-row interactive-row" id="row-wallpaper">
+                <div class="settings-row-left">
+                  <div class="settings-row-icon bg-secondary-container/50">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect height="18" rx="2" width="18" x="3" y="3"></rect><line x1="3" x2="21" y1="9" y2="9"></line><line x1="9" x2="9" y1="21" y2="9"></line></svg>
+                  </div>
+                  <span class="settings-row-label">更改背景</span>
+                </div>
+                <svg class="settings-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </div>
+              <!-- 更改图标 -->
+              <div class="settings-row interactive-row" id="row-icon-config">
+                <div class="settings-row-left">
+                  <div class="settings-row-icon bg-secondary-container/50">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect height="7" width="7" x="3" y="3"></rect><rect height="7" width="7" x="14" y="3"></rect><rect height="7" width="7" x="14" y="14"></rect><rect height="7" width="7" x="3" y="14"></rect></svg>
+                  </div>
+                  <span class="settings-row-label">更改图标</span>
+                </div>
+                <svg class="settings-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </div>
+              <!-- 深色模式 -->
+              <div class="settings-row interactive-row">
+                <div class="settings-row-left">
+                  <div class="settings-row-icon bg-secondary-container/50">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                  </div>
+                  <span class="settings-row-label">深色模式</span>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" id="dark-mode-toggle">
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+            </div>
+          </section>
+
+          <!-- 技术 Group -->
+          <section class="settings-group">
+            <h3 class="settings-group-title">技术</h3>
+            <div class="settings-card">
+              <!-- API 配置 -->
+              <div class="settings-row interactive-row" id="row-api-config">
+                <div class="settings-row-left">
+                  <div class="settings-row-icon bg-secondary-container/50">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path><circle cx="8" cy="6" r="1.5" fill="currentColor"></circle><circle cx="16" cy="12" r="1.5" fill="currentColor"></circle><circle cx="10" cy="18" r="1.5" fill="currentColor"></circle></svg>
+                  </div>
+                  <span class="settings-row-label">API 配置</span>
+                </div>
+                <svg class="settings-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </div>
+              <!-- 退出登录 -->
+              <div class="settings-row interactive-row">
+                <div class="settings-row-left">
+                  <div class="settings-row-icon bg-error-container/30 !text-error">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                  <span class="settings-row-label !text-error">退出登录</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
         </div>
       </div>
+    </section>
+    <!-- ====================== END SETTINGS HOME ====================== -->
 
-      <!-- 底部 Dock 栏 -->
-      <div class="dock-bar">
-        <div class="dock-item active">
-          <div class="dock-icon dock-icon-home"></div>
-          <span>主页</span>
+    <!-- ====================== SETTINGS OVERLAY (更改背景) ====================== -->
+    <section id="settings-overlay" class="settings-overlay" aria-hidden="true">
+      <div class="settings-inner">
+
+        <!-- Top App Bar -->
+        <header class="settings-header">
+          <button class="settings-back-btn" id="settings-back-btn" aria-label="返回">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </button>
+          <h1 class="settings-title">更改背景</h1>
+          <button class="settings-back-btn !invisible" aria-hidden="true" tabindex="-1">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></svg>
+          </button>
+        </header>
+
+        <!-- Main Content -->
+        <div class="settings-main">
+
+          <!-- Text Hint -->
+          <p class="settings-hint">预览新壁纸效果</p>
+
+          <!-- Preview Area (Phone Mockup) -->
+          <div class="settings-preview-wrap">
+            <div class="settings-preview-inner">
+              <div id="settings-wallpaper" class="settings-wallpaper"></div>
+            </div>
+          </div>
+
+          <!-- Preset Wallpaper Row -->
+          <div class="settings-presets">
+            <div class="preset-item active" data-preset="default"
+                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuATzNgnIhxMBqQTkDuj_PJam75h1syX5osCGi1gX6vQiwoZfrX0zvtO4wDEyQ-lYI5ToXGKDd_vD0XCYxNs6IBmot7nSbP1znfchkY716Iq38HCy-GA7Psh_7eVT47nKI8sssE2fpjVBtrym7D4zxBRSCEipKosUj_wvu3TM_yk6MYVYe65dpYSsF1U6vbP8JFdKstNdgxo8KGLLULD01-i0O3Vr1WpydPByK4iVO-Bf2XMWXpKDMuffQBCp5IhnbM73Ihf_3DP1aM')"></div>
+            <div class="preset-item" data-preset="p1"
+                 style="background-image: url('https://images.unsplash.com/photo-1557682250-33bd709cbe85?w=600&q=80')"></div>
+            <div class="preset-item" data-preset="p2"
+                 style="background-image: url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=600&q=80')"></div>
+            <div class="preset-item" data-preset="p3"
+                 style="background-image: url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=600&q=80')"></div>
+          </div>
+
+          <!-- Custom Upload Button -->
+          <div class="settings-upload-wrap">
+            <input accept="image/*" class="settings-upload-input" id="wallpaper-upload" type="file"/>
+            <div class="settings-upload-btn">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <span>自定义上传</span>
+            </div>
+          </div>
+
         </div>
-        <div class="dock-item">
-          <div class="dock-icon dock-icon-discover"></div>
-          <span>发现</span>
+
+        <!-- Bottom Action Bar -->
+        <div class="settings-actions">
+          <button id="settings-reset-btn" class="settings-btn settings-btn-secondary">恢复默认</button>
+          <button id="settings-save-btn" class="settings-btn settings-btn-primary">保存壁纸</button>
         </div>
-        <div class="dock-item">
-          <div class="dock-icon dock-icon-post"></div>
-          <span>发布</span>
+
+      </div>
+    </section>
+    <!-- ====================== END SETTINGS OVERLAY ====================== -->
+
+    <!-- ====================== ICON CONFIG OVERLAY (更改图标) ====================== -->
+    <section id="icon-config-overlay" class="settings-overlay" aria-hidden="true">
+      <div class="settings-inner">
+
+        <!-- Top App Bar -->
+        <header class="settings-header">
+          <button class="settings-back-btn" id="icon-back-btn" aria-label="返回">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </button>
+          <h1 class="settings-title">更改图标</h1>
+          <button class="settings-back-btn !invisible" aria-hidden="true" tabindex="-1">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></svg>
+          </button>
+        </header>
+
+        <!-- Main Content -->
+        <div class="settings-main icon-config-main">
+
+          <!-- Instructional Header -->
+          <div class="icon-intro">
+            <h2 class="icon-intro-title">自定义你的工作区</h2>
+            <p class="icon-intro-sub">点击图标上传自定义设计,或从精选简约包中选择。</p>
+          </div>
+
+          <!-- 3x4 Icon Grid -->
+          <div class="icon-grid" id="icon-grid">
+            <!-- 12 个图标占位 -->
+            <div class="app-icon" data-icon="Music"><svg class="w-7 h-7 text-theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm12-3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path></svg><span class="edit-badge"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+            <div class="app-icon" data-icon="Chat"><svg class="w-7 h-7 text-theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="edit-badge"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+            <div class="app-icon" data-icon="Date"><svg class="w-7 h-7 text-theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect height="18" rx="2" ry="2" width="18" x="3" y="4"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg><span class="edit-badge"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+            <div class="app-icon" data-icon="Forum"><svg class="w-7 h-7 text-theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="edit-badge"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+            <div class="app-icon" data-icon="Group"><svg class="w-7 h-7 text-theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span class="edit-badge"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+            <div class="app-icon" data-icon="Health"><svg class="w-7 h-7 text-theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg><span class="edit-badge"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+            <div class="app-icon" data-icon="Search"><svg class="w-7 h-7 text-theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg><span class="edit-badge"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+            <div class="app-icon" data-icon="Finance"><svg class="w-7 h-7 text-theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg><span class="edit-badge"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+            <div class="app-icon" data-icon="World"><svg class="w-7 h-7 text-theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg><span class="edit-badge"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+            <div class="app-icon" data-icon="Terminal"><svg class="w-7 h-7 text-theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect height="18" rx="2" ry="2" width="18" x="3" y="3"></rect><line x1="3" x2="21" y1="9" y2="9"></line><line x1="9" x2="9" y1="21" y2="9"></line></svg><span class="edit-badge"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+            <div class="app-icon" data-icon="Theme"><svg class="w-7 h-7 text-theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg><span class="edit-badge"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+            <div class="app-icon" data-icon="Settings"><svg class="w-7 h-7 text-theme-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg><span class="edit-badge"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+          </div>
+
+          <div class="flex-1"></div>
+
         </div>
-        <div class="dock-item">
-          <div class="dock-icon dock-icon-profile"></div>
-          <span>设置</span>
+
+        <!-- Bottom Action Bar -->
+        <div class="settings-actions icon-actions">
+          <button id="icon-save-btn" class="icon-save-btn">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            <span>保存更改</span>
+          </button>
         </div>
+
+      </div>
+    </section>
+
+    <!-- Action Sheet (编辑图标弹窗) -->
+    <div class="action-sheet-overlay" id="icon-action-sheet" aria-hidden="true">
+      <div class="action-sheet-backdrop" id="icon-sheet-backdrop"></div>
+      <div class="action-sheet">
+        <div class="action-sheet-handle"></div>
+        <div class="action-sheet-header">
+          <h3 class="action-sheet-title"><span id="selected-icon-name">Edit Icon</span></h3>
+          <button class="action-sheet-close" id="icon-sheet-close" aria-label="关闭">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </button>
+        </div>
+        <div class="action-sheet-options">
+          <button class="sheet-option" data-action="upload">
+            <div class="sheet-option-icon bg-secondary-container/50">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+            <div class="sheet-option-text">
+              <span class="sheet-option-title">Upload Image</span>
+              <span class="sheet-option-sub">From Photo Library</span>
+            </div>
+            <svg class="sheet-option-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </button>
+          <button class="sheet-option" data-action="browse">
+            <div class="sheet-option-icon bg-primary-container/30 !text-primary">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect height="7" width="7" x="3" y="3"></rect><rect height="7" width="7" x="14" y="3"></rect><rect height="7" width="7" x="14" y="14"></rect><rect height="7" width="7" x="3" y="14"></rect></svg>
+            </div>
+            <div class="sheet-option-text">
+              <span class="sheet-option-title">Browse Packs</span>
+              <span class="sheet-option-sub">Minimalist Collection</span>
+            </div>
+            <svg class="sheet-option-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </button>
+          <button class="sheet-option sheet-option-danger" data-action="reset">
+            <div class="sheet-option-icon bg-error/10 !text-error">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+            <span class="sheet-option-title !text-error flex-1 text-left">Reset to Default</span>
+          </button>
+        </div>
+        <input type="file" accept="image/*" class="icon-upload-input" id="icon-upload-input">
       </div>
     </div>
+    <!-- ====================== END ICON CONFIG OVERLAY ====================== -->
 
-    <!-- ========== 第二页 ========== -->
-    <div class="page page-2" id="page2">
-      <div class="page-content">
-        <!-- 顶部两组单选条目 -->
-        <div class="top-selectors">
-          <div class="selector-row">
-            <div class="selector-avatar avatar-mint" data-upload="avatar" data-key="p2-avatar1">
-              <svg viewBox="0 0 40 40"><circle cx="20" cy="15" r="7" fill="#fff" opacity="0.9"/><ellipse cx="20" cy="32" rx="12" ry="8" fill="#fff" opacity="0.9"/></svg>
-            </div>
-            <div class="selector-input-box">
-              <span class="selector-label" contenteditable="true" data-key="p2-label1">推荐关注</span>
-            </div>
-          </div>
-          <div class="selector-row">
-            <div class="selector-avatar avatar-peach" data-upload="avatar" data-key="p2-avatar2">
-              <svg viewBox="0 0 40 40"><circle cx="20" cy="15" r="7" fill="#fff" opacity="0.9"/><ellipse cx="20" cy="32" rx="12" ry="8" fill="#fff" opacity="0.9"/></svg>
-            </div>
-            <div class="selector-input-box">
-              <span class="selector-label" contenteditable="true" data-key="p2-label2">旅行日记</span>
-            </div>
-          </div>
-        </div>
+    <!-- ====================== API CONFIG OVERLAY (API 配置) ====================== -->
+    <section id="api-config-overlay" class="settings-overlay" aria-hidden="true">
+      <div class="settings-inner">
 
-        <!-- 4×2 应用图标网格 -->
-        <div class="app-grid">
-          <div class="app-item">
-            <div class="app-icon icon-dot-coral">
-              <div class="dot-pattern"></div>
-            </div>
-            <span class="app-label">笔记</span>
-          </div>
-          <div class="app-item">
-            <div class="app-icon icon-dot-teal">
-              <div class="dot-pattern"></div>
-            </div>
-            <span class="app-label">健身</span>
-          </div>
-          <div class="app-item">
-            <div class="app-icon icon-dot-apricot">
-              <div class="dot-pattern"></div>
-            </div>
-            <span class="app-label">阅读</span>
-          </div>
-          <div class="app-item">
-            <div class="app-icon icon-dot-periwinkle">
-              <div class="dot-pattern"></div>
-            </div>
-            <span class="app-label">闹钟</span>
-          </div>
-          <div class="app-item">
-            <div class="app-icon icon-dot-blush">
-              <div class="dot-pattern"></div>
-            </div>
-            <span class="app-label">提醒</span>
-          </div>
-          <div class="app-item">
-            <div class="app-icon icon-dot-aqua">
-              <div class="dot-pattern"></div>
-            </div>
-            <span class="app-label">设置</span>
-          </div>
-          <div class="app-item">
-            <div class="app-icon icon-dot-butter">
-              <div class="dot-pattern"></div>
-            </div>
-            <span class="app-label">邮件</span>
-          </div>
-          <div class="app-item">
-            <div class="app-icon icon-dot-mauve">
-              <div class="dot-pattern"></div>
-            </div>
-            <span class="app-label">浏览器</span>
-          </div>
-        </div>
+        <!-- Top App Bar -->
+        <header class="settings-header">
+          <button class="settings-back-btn" id="api-back-btn" aria-label="返回">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </button>
+          <h1 class="settings-title">API 设置</h1>
+          <button class="settings-back-btn !invisible" aria-hidden="true" tabindex="-1">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></svg>
+          </button>
+        </header>
 
-        <!-- PhotoBook 相册小组件 -->
-        <div class="photobook-card">
-          <div class="photobook-header">
-            <div class="photobook-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8a8a9a" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/><circle cx="8" cy="16" r="1.5" fill="#8a8a9a"/></svg>
-              <span contenteditable="true" data-key="p2-pb-title">PhotoBook</span>
+        <!-- Main Content -->
+        <div class="settings-main api-config-main">
+
+          <!-- Status Indicator -->
+          <div class="api-status">
+            <span class="api-status-dot-wrap">
+              <span class="api-status-ping"></span>
+              <span class="api-status-dot"></span>
+            </span>
+            <span class="api-status-text" id="api-status-text">已准备好拉取模型</span>
+          </div>
+
+          <!-- Configuration Form -->
+          <div class="glass-card api-form-card">
+
+            <!-- API Key -->
+            <div class="api-field">
+              <label class="api-label" for="apiKey">API 密钥</label>
+              <div class="api-input-wrap">
+                <span class="api-input-icon">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.5 7.5a5 5 0 1 1-7-7 5 5 0 0 1 7 7zM14 7l3 3m4-3l-3 3m3 3l-3-3M9 16l-3 3m0-3l3 3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </span>
+                <input id="apiKey" class="api-input" type="text" placeholder="请输入 API 密钥">
+              </div>
             </div>
-            <div class="photobook-actions">
-              <span class="photobook-date" contenteditable="true" data-key="p2-pb-date">7月25日</span>
-              <button class="heart-btn" id="heartBtn2">
-                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="none" stroke="#d0a0b0" stroke-width="1.5"/></svg>
+
+            <!-- Secret Key -->
+            <div class="api-field">
+              <label class="api-label" for="secretKey">私钥</label>
+              <div class="api-input-wrap">
+                <span class="api-input-icon">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect height="11" width="18" rx="2" ry="2" x="3" y="11"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </span>
+                <input id="secretKey" class="api-input" type="password" placeholder="请输入私钥">
+                <button type="button" class="api-input-toggle" id="secret-toggle" aria-label="显示/隐藏">
+                  <svg class="w-5 h-5 eye-open" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                  <svg class="w-5 h-5 eye-closed hidden" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22"></path></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="api-actions">
+              <button id="api-test-btn" class="api-btn api-btn-secondary">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span>测试连接 / 拉取模型</span>
+              </button>
+              <button id="api-save-btn" class="api-btn api-btn-primary">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><path d="M17 21v-8H7v8M7 3v5h8"></path></svg>
+                <span>保存配置</span>
               </button>
             </div>
+
           </div>
-          <div class="photobook-preview">
-            <div class="preview-img" data-upload="photo" data-key="p2-photo1" style="background-image: linear-gradient(160deg, #fef4e8 0%, #fce8d0 30%, #f8dcc0 60%, #f0d0b8 100%)"></div>
-            <div class="preview-img" data-upload="photo" data-key="p2-photo2" style="background-image: linear-gradient(160deg, #ede8f8 0%, #dcd0f0 30%, #d0c4e8 60%, #c4b8e0 100%)"></div>
-            <div class="preview-img" data-upload="photo" data-key="p2-photo3" style="background-image: linear-gradient(160deg, #e0f4f0 0%, #c8e8e0 30%, #bcdcd4 60%, #b0d0c8 100%)"></div>
-          </div>
+
         </div>
       </div>
+    </section>
+    <!-- ====================== END API CONFIG OVERLAY ====================== -->
 
-      <!-- 底部 Dock 栏 -->
-      <div class="dock-bar">
-        <div class="dock-item">
-          <div class="dock-icon dock-icon-home"></div>
-          <span>主页</span>
-        </div>
-        <div class="dock-item active">
-          <div class="dock-icon dock-icon-discover"></div>
-          <span>发现</span>
-        </div>
-        <div class="dock-item">
-          <div class="dock-icon dock-icon-post"></div>
-          <span>发布</span>
-        </div>
-        <div class="dock-item">
-          <div class="dock-icon dock-icon-profile"></div>
-          <span>设置</span>
-        </div>
-      </div>
-    </div>
-    <!-- ========== 第三页：设置 ========== -->
-    <div class="page page-3" id="page3">
-      <div class="page-content settings-content">
-        <!-- 设置页头部 -->
-        <div class="settings-header">
-          <button class="settings-back" id="settingsBack">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8a8a9a" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <span class="settings-title">设置</span>
-          <div style="width:36px"></div>
-        </div>
-
-        <!-- 背景预览 -->
-        <div class="bg-preview-card">
-          <div class="bg-preview-label">背景预览</div>
-          <div class="bg-preview-frame" id="bgPreviewFrame">
-            <div class="bg-preview-stars">✦ ✧ ⋆ ✦ ✧ ⋆ ✦ ✧ ⋆</div>
-          </div>
-        </div>
-
-        <!-- 预设背景 -->
-        <div class="settings-section">
-          <div class="settings-section-title">预设背景</div>
-          <div class="preset-bg-grid">
-            <div class="preset-bg-item" data-bg="default" style="background: linear-gradient(180deg, #e8f4fd 0%, #d4eafc 35%, #c5e0f5 70%, #beddf5 100%)"></div>
-            <div class="preset-bg-item" data-bg="pink" style="background: linear-gradient(180deg, #fce4ec 0%, #f8d0dc 35%, #f0c0d0 70%, #e8b8c8 100%)"></div>
-            <div class="preset-bg-item" data-bg="lavender" style="background: linear-gradient(180deg, #f0e8f8 0%, #e0d0f0 35%, #d0c0e8 70%, #c4b4e0 100%)"></div>
-            <div class="preset-bg-item" data-bg="mint" style="background: linear-gradient(180deg, #e8f8f0 0%, #d0f0e0 35%, #c0e8d4 70%, #b4dcc8 100%)"></div>
-            <div class="preset-bg-item" data-bg="peach" style="background: linear-gradient(180deg, #fef4e8 0%, #fce8d0 35%, #f8dcc0 70%, #f0d0b8 100%)"></div>
-            <div class="preset-bg-item" data-bg="sky" style="background: linear-gradient(180deg, #e0f0fc 0%, #c8e4f8 35%, #b8d8f4 70%, #a8cce8 100%)"></div>
-            <div class="preset-bg-item" data-bg="warm" style="background: linear-gradient(180deg, #fef8f0 0%, #fcf0e0 35%, #f8e8d0 70%, #f0dcc0 100%)"></div>
-            <div class="preset-bg-item" data-bg="lilac" style="background: linear-gradient(180deg, #f4f0f8 0%, #e8e0f4 35%, #dcd0ec 70%, #d0c4e4 100%)"></div>
-          </div>
-        </div>
-
-        <!-- 自定义上传 -->
-        <div class="settings-section">
-          <div class="settings-section-title">自定义背景</div>
-          <button class="upload-bg-btn" id="uploadBgBtn">
-            <div class="upload-bg-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            </div>
-            <span>从相册上传背景图</span>
-          </button>
-          <button class="reset-bg-btn" id="resetBgBtn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a8a8b4" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 10 9 10"/></svg>
-            <span>恢复默认</span>
-          </button>
-        </div>
-
-        <!-- 保存提示 -->
-        <div class="save-hint">✓ 修改后自动保存</div>
-      </div>
-
-      <!-- 底部 Dock 栏 -->
-      <div class="dock-bar">
-        <div class="dock-item">
-          <div class="dock-icon dock-icon-home"></div>
-          <span>主页</span>
-        </div>
-        <div class="dock-item">
-          <div class="dock-icon dock-icon-discover"></div>
-          <span>发现</span>
-        </div>
-        <div class="dock-item">
-          <div class="dock-icon dock-icon-post"></div>
-          <span>发布</span>
-        </div>
-        <div class="dock-item active">
-          <div class="dock-icon dock-icon-profile"></div>
-          <span>设置</span>
-        </div>
-      </div>
-    </div>
-    <!-- 页面指示器 -->
-    <div class="page-indicator" id="pageIndicator">
-      <span class="dot active" data-page="0"></span>
-      <span class="dot" data-page="1"></span>
-      <span class="dot" data-page="2"></span>
-    </div>
   </div>
-
-  <!-- 隐藏的文件上传输入 -->
-  <input type="file" id="fileInput" accept="image/*" style="display:none">
-  <input type="file" id="bgFileInput" accept="image/*" style="display:none">
-
   <script src="script.js"></script>
 </body>
 </html>
